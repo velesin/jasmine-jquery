@@ -55,7 +55,7 @@ In _myfixture.html_ file:
     <div id="my-fixture">some complex content here</div>
     
 Inside your test:
-    loadFixture(myfixture.html);
+    loadFixtures('myfixture.html');
     $('#my-fixture').myTestedPlugin();
     expect($('#my-fixture')).to...;
     
