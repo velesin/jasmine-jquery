@@ -14,38 +14,38 @@ Simply download _jasmine-jquery.js_ from the [downloads page](http://github.com/
 jasmine-jquery provides following custom matchers (in alphabetical order):
 
 - `toBe(jQuerySelector)`
-  - e.g. `expect('<div id="some-id"></div>').toBe('div#some-id')`
+  - e.g. `expect($('<div id="some-id"></div>')).toBe('div#some-id')`
 - `toBeChecked()`
   - only for tags that have checked attribute
-  - e.g. `expect('<input type="checkbox" checked="checked"/>').toBeChecked()` 
+  - e.g. `expect($('<input type="checkbox" checked="checked"/>')).toBeChecked()` 
 - `toBeEmpty()`  
 - `toBeHidden()`
 - `toBeSelected()`
   - only for tags that have selected attribute
-  - e.g. `expect('<option selected="selected"></option>').toBeSelected()`
+  - e.g. `expect($('<option selected="selected"></option>')).toBeSelected()`
 - `toBeVisible()`
 - `toContain(jQuerySelector)`
-  - e.g. `expect('<div><span class="some-class"></span></div>').toContain('span.some-class')`
+  - e.g. `expect($('<div><span class="some-class"></span></div>')).toContain('span.some-class')`
 - `toExist()`
 - `toHaveAttr(attributeName, attributeValue)`
   - attribute value is optional, if omitted it will check only if attribute exists
 - `toHaveClass(className)`
-  - e.g. `expect('<div class="some-class"></div>').toHaveClass("some-class")`  
+  - e.g. `expect($('<div class="some-class"></div>')).toHaveClass("some-class")`  
 - `toHaveData(key, value)`
   - value is optional, if omitted it will check only if an entry for that key exists
 - `toHaveHtml(string)`
-  - e.g. `expect('<div><span></span></div>').toHaveHtml('<span></span>')`
+  - e.g. `expect($('<div><span></span></div>')).toHaveHtml('<span></span>')`
 - `toHaveId(id)`
-  - e.g. `expect('<div id="some-id"></div>').toHaveId("some-id")`
+  - e.g. `expect($('<div id="some-id"></div>')).toHaveId("some-id")`
 - `toHaveText(string)`
-  - e.g. `expect('<div>some text</div>').toHaveText('some text')`
+  - e.g. `expect($('<div>some text</div>')).toHaveText('some text')`
 - `toHaveValue(value)`
   - only for tags that have value attribute
-  - e.g. `expect('<input type="text" value="some text"/>').toHaveValue('some text')`
+  - e.g. `expect($('<input type="text" value="some text"/>')).toHaveValue('some text')`
  
 The same as with standard Jasmine matchers, all of above custom matchers may be inverted by using `.not` prefix, e.g.:
 
-    expect('<div>some text</div>').not.toHaveText('other text')
+    expect($('<div>some text</div>')).not.toHaveText('other text')
 
 ## Fixtures
 
