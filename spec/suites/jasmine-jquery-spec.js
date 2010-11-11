@@ -15,6 +15,16 @@ describe("jasmine.Fixtures", function() {
       options.success(ajaxData);
     });
   });
+  
+  describe("default initial config values", function() {
+    it("should set 'jasmine-fixtures' as the default container id", function() {
+      expect(jasmine.getFixtures().containerId).toEqual('jasmine-fixtures');
+    });
+    
+    it("should set 'spec/javascripts/fixtures' as the default fixtures path", function() {
+      expect(jasmine.getFixtures().fixturesPath).toEqual('spec/javascripts/fixtures');
+    });
+  });
 
   describe("cache", function() {
     describe("clearCache", function() {
@@ -56,6 +66,18 @@ describe("jasmine.Fixtures", function() {
     it("should have shortcut global method readFixtures", function() {
       var html = readFixtures(fixtureUrl, anotherFixtureUrl);
       expect(html).toEqual(ajaxData + ajaxData);
+    });
+    
+    it("should use the configured fixtures path concatenating it to the requested url (without concatenating a slash if it already has an ending one)", function() {
+      jasmine.getFixtures().fixturesPath = 'a path ending with slash/'
+      readFixtures(fixtureUrl);
+      expect($.ajax.mostRecentCall.args[0].url).toEqual('a path ending with slash/'+fixtureUrl);
+    });
+    
+    it("should use the configured fixtures path concatenating it to the requested url (concatenating a slash if it doesn't have an ending one)", function() {
+      jasmine.getFixtures().fixturesPath = 'a path without an ending slash'
+      readFixtures(fixtureUrl);
+      expect($.ajax.mostRecentCall.args[0].url).toEqual('a path without an ending slash/'+fixtureUrl);
     });
   });
 
