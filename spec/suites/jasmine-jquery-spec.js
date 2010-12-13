@@ -527,4 +527,20 @@ describe("jQuery matchers", function() {
       expect($('#sandbox')).not.toContain('div');
     });
   });
+
+  describe("toBeDisabled", function() {
+    beforeEach(function() {
+      setFixtures('\
+        <input type="text" disabled="disabled" id="disabled"/>          
+        <input type="text" id="enabled"/>');
+    });
+
+    it("should pass on disabled element", function() {
+      expect($('#disabled')).toBeDisabled();
+    });
+
+    it("should pass negated on not selected element", function() {
+      expect($('#enabled')).not.toBeDisabled();
+    });
+  });
 });
