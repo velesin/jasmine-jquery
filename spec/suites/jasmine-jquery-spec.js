@@ -535,4 +535,25 @@ describe("jQuery matchers", function() {
       expect($('#sandbox')).not.toContain('div');
     });
   });
+
+  describe('toHaveBeenTriggeredOn', function() {
+    beforeEach(function() {
+      setFixtures(sandbox().html('<a id="clickme">Click Me</a> <a id="otherlink">Other Link</a>'));
+      spyOnEvent($('#clickme'), 'click');
+    });
+
+    it('should pass if the event was triggered on the object', function() {
+      $('#clickme').click();
+      expect('click').toHaveBeenTriggeredOn($('#clickme'));
+    });
+
+    it('should pass negated if the event was never triggered', function() {
+      expect('click').not.toHaveBeenTriggeredOn($('#clickme'));
+    });
+
+    it('should pass negated if the event was triggered on another non-descendant object', function() {
+      $('#otherlink').click();
+      expect('click').not.toHaveBeenTriggeredOn($('#clickme'));
+    });
+  });
 });
