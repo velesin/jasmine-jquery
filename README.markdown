@@ -38,6 +38,7 @@ jasmine-jquery provides following custom matchers (in alphabetical order):
 - `toHaveId(id)`
   - e.g. `expect($('<div id="some-id"></div>')).toHaveId("some-id")`
 - `toHaveText(string)`
+  - accepts a String or regular expression
   - e.g. `expect($('<div>some text</div>')).toHaveText('some text')`
 - `toHaveValue(value)`
   - only for tags that have value attribute
@@ -45,7 +46,7 @@ jasmine-jquery provides following custom matchers (in alphabetical order):
  
 The same as with standard Jasmine matchers, all of above custom matchers may be inverted by using `.not` prefix, e.g.:
 
-    expect($('<div>some text</div>')).not.toHaveText('other text')
+    expect($('<div>some text</div>')).not.toHaveText(/other/)
 
 ## Fixtures
 

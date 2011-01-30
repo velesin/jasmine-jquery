@@ -351,6 +351,14 @@ describe("jQuery matchers", function() {
     it("should pass negated when text does not match", function() {
       expect(element).not.toHaveText(wrongText);
     });
+
+    it('should pass when text matches a regex', function() {
+      expect(element).toHaveText(/some/);
+    });
+
+    it('should pass negated when text does not match a regex', function() {
+      expect(element).not.toHaveText(/other/);
+    });
   });
 
   describe("toHaveValue", function() {
