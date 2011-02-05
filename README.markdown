@@ -42,6 +42,8 @@ jasmine-jquery provides following custom matchers (in alphabetical order):
 - `toHaveValue(value)`
   - only for tags that have value attribute
   - e.g. `expect($('<input type="text" value="some text"/>')).toHaveValue('some text')`
+- `toBeDisabled()`
+  - e.g. 'expect('<input type='submit' disabled='disabled'/>').toBeDisabled()'
  
 The same as with standard Jasmine matchers, all of above custom matchers may be inverted by using `.not` prefix, e.g.:
 
