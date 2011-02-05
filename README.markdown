@@ -29,6 +29,8 @@ jasmine-jquery provides following custom matchers (in alphabetical order):
 - `toExist()`
 - `toHaveAttr(attributeName, attributeValue)`
   - attribute value is optional, if omitted it will check only if attribute exists
+- `toHaveBeenTriggeredOn(selector)`
+  - if event has been triggered on `selector` (see "Event Spies", below)
 - `toHaveClass(className)`
   - e.g. `expect($('<div class="some-class"></div>')).toHaveClass("some-class")`  
 - `toHaveData(key, value)`
@@ -38,6 +40,7 @@ jasmine-jquery provides following custom matchers (in alphabetical order):
 - `toHaveId(id)`
   - e.g. `expect($('<div id="some-id"></div>')).toHaveId("some-id")`
 - `toHaveText(string)`
+  - accepts a String or regular expression
   - e.g. `expect($('<div>some text</div>')).toHaveText('some text')`
 - `toHaveValue(value)`
   - only for tags that have value attribute
@@ -47,7 +50,7 @@ jasmine-jquery provides following custom matchers (in alphabetical order):
  
 The same as with standard Jasmine matchers, all of above custom matchers may be inverted by using `.not` prefix, e.g.:
 
-    expect($('<div>some text</div>')).not.toHaveText('other text')
+    expect($('<div>some text</div>')).not.toHaveText(/other/)
 
 ## Fixtures
 
@@ -130,6 +133,18 @@ Additionally, two clean up methods are provided:
   - cleans-up fixtures container (this is done automatically between tests by Fixtures module, so there is no need to ever invoke this manually, unless you're testing a really fancy special case and need to clean-up fixtures in the middle of your test)
   
 These two methods do not have global short cut functions.
+
+## Event Spies
+
+Spying on jQuery events can be done with `spyOnEvent` and
+`assert(eventName).toHaveBeenTriggeredOn(selector)`. First, spy on the event:
+
+    spyOnEvent($('#some_element'), 'click');
+    $('#some_element').click();
+    expect('click').toHaveBeenTriggeredOn($('#some_element'));
+
+Much thanks to Luiz Fernando Ribeiro for his
+[article on Jasmine event spies](http://luizfar.wordpress.com/2011/01/10/testing-events-on-jquery-objects-with-jasmine/).
 
 ## Supported browsers and jQuery versions
 

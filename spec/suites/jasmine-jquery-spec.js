@@ -351,6 +351,14 @@ describe("jQuery matchers", function() {
     it("should pass negated when text does not match", function() {
       expect(element).not.toHaveText(wrongText);
     });
+
+    it('should pass when text matches a regex', function() {
+      expect(element).toHaveText(/some/);
+    });
+
+    it('should pass negated when text does not match a regex', function() {
+      expect(element).not.toHaveText(/other/);
+    });
   });
 
   describe("toHaveValue", function() {
@@ -541,6 +549,27 @@ describe("jQuery matchers", function() {
 
     it("should pass negated on not selected element", function() {
       expect($('#enabled')).not.toBeDisabled();
+    });
+  });
+
+  describe('toHaveBeenTriggeredOn', function() {
+    beforeEach(function() {
+      setFixtures(sandbox().html('<a id="clickme">Click Me</a> <a id="otherlink">Other Link</a>'));
+      spyOnEvent($('#clickme'), 'click');
+    });
+
+    it('should pass if the event was triggered on the object', function() {
+      $('#clickme').click();
+      expect('click').toHaveBeenTriggeredOn($('#clickme'));
+    });
+
+    it('should pass negated if the event was never triggered', function() {
+      expect('click').not.toHaveBeenTriggeredOn($('#clickme'));
+    });
+
+    it('should pass negated if the event was triggered on another non-descendant object', function() {
+      $('#otherlink').click();
+      expect('click').not.toHaveBeenTriggeredOn($('#clickme'));
     });
   });
 });
