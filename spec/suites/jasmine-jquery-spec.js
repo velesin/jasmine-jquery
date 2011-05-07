@@ -572,5 +572,47 @@ describe("jQuery matchers", function() {
       expect('click').not.toHaveBeenTriggeredOn($('#clickme'));
     });
   });
+  
+  describe('toHandle', function() {
+    beforeEach(function() {
+      setFixtures(sandbox().html('<a id="clickme">Click Me</a> <a id="otherlink">Other Link</a>'));
+    });
+
+    it('should pass if the event is bound', function() {
+      var handler = function(){ }; // noop
+      $('#clickme').bind("click", handler);
+      expect($('#clickme')).toHandle("click");
+    });
+    
+    it('should pass if the event is not bound', function() {
+      expect($('#clickme')).not.toHandle("click");
+    });
+
+  });
+  
+  describe('toHandleWith', function() {
+    beforeEach(function() {
+      setFixtures(sandbox().html('<a id="clickme">Click Me</a> <a id="otherlink">Other Link</a>'));
+    });
+
+    it('should pass if the event is bound with the given handler', function() {
+      var handler = function(){ }; // noop
+      $('#clickme').bind("click", handler);
+      expect($('#clickme')).toHandleWith("click", handler);
+    });
+    
+    it('should pass if the event is not bound with the given handler', function() {
+      var handler = function(){ };
+      $('#clickme').bind("click", handler);
+      
+      var aDifferentHandler = function(){ };
+      expect($('#clickme')).not.toHandleWith("click", aDifferentHandler);
+    });
+    
+    it('should pass if the event is not bound at all', function() {
+      expect($('#clickme')).not.toHandle("click");
+    });
+
+  });
 });
 
