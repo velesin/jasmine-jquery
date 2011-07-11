@@ -154,3 +154,7 @@ Much thanks to Luiz Fernando Ribeiro for his
 
 jasmine-jquery was tested for jQuery 1.4 on IE, FF, Chrome and Opera.
 
+## Testing with Javascript Test Driver
+
+When using [jstd](http://code.google.com/p/js-test-driver/) and the jasmine adapter you will need to include jasmine-jquery.js after your jasmine-jstd-adapter files, otherwise jasmine-jquery matchers will not be available when tests are executed. 
+
