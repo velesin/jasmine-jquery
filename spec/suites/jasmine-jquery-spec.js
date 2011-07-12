@@ -216,6 +216,38 @@ describe("jasmine.Fixtures", function() {
   });
 });
 
+describe("jasmine.Fixtures using real AJAX call", function() {
+  var defaultFixturesPath;
+
+  beforeEach(function() {
+    defaultFixturesPath = jasmine.getFixtures().fixturesPath;
+    jasmine.getFixtures().fixturesPath = 'spec/fixtures';
+  });
+
+  afterEach(function() {
+    jasmine.getFixtures().fixturesPath = defaultFixturesPath;
+  });
+
+  describe("when fixture file exists", function() {
+    var fixtureUrl = "real_non_mocked_fixture.html";
+
+    it("should load content of fixture file", function() {
+      var fixtureContent = jasmine.getFixtures().read(fixtureUrl);
+      expect(fixtureContent).toEqual('<div id="real_non_mocked_fixture"></div>');
+    });
+  });
+
+  describe("when fixture file does not exist", function() {
+    var fixtureUrl = "not_existing_fixture";
+
+    it("should throw an exception", function() {
+      expect(function() {
+        jasmine.getFixtures().read(fixtureUrl);
+      }).toThrow();
+    });
+  });
+});
+
 
 describe("jQuery matchers", function() {
   describe("when jQuery matcher hides original Jasmine matcher", function() {
