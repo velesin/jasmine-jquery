@@ -121,6 +121,33 @@ describe("jasmine.Fixtures", function() {
     });
   });
 
+  describe("preload", function() {
+    describe("read after preload", function() {
+      it("should go from cache", function() {
+        jasmine.getFixtures().preload(fixtureUrl, anotherFixtureUrl);
+        jasmine.getFixtures().read(fixtureUrl, anotherFixtureUrl);
+        expect($.ajax.callCount).toEqual(2);
+      })
+
+      it("should return correct HTMLs", function() {
+        jasmine.getFixtures().preload(fixtureUrl, anotherFixtureUrl);
+        var html = jasmine.getFixtures().read(fixtureUrl, anotherFixtureUrl);
+        expect(html).toEqual(ajaxData + ajaxData);
+      });
+    });
+
+    it("should not preload the same fixture twice", function() {
+      jasmine.getFixtures().preload(fixtureUrl, fixtureUrl);
+      expect($.ajax.callCount).toEqual(1);
+    });
+
+    it("should have shortcut global method preloadFixtures", function() {
+      preloadFixtures(fixtureUrl, anotherFixtureUrl);
+      jasmine.getFixtures().read(fixtureUrl, anotherFixtureUrl);
+      expect($.ajax.callCount).toEqual(2);
+    });
+  });
+
   describe("set", function() {
     var html = '<div>some HTML</div>';
     
