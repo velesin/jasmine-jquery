@@ -119,6 +119,17 @@ describe("jasmine.Fixtures", function() {
         expect(fixturesContainer().html()).toEqual(ajaxData);
       });
     });
+
+    describe("when fixture contains an inline <script> tag", function(){
+      beforeEach(function(){
+        ajaxData = "<div><a id=\"anchor_01\"></a><script>$(function(){ $('#anchor_01').addClass('foo')});</script></div>"
+      });
+
+      it("should execute the inline javascript after the fixture has been inserted into the body", function(){
+        jasmine.getFixtures().load(fixtureUrl);
+        expect($("#anchor_01")).toHaveClass('foo');
+      })
+    });
   });
 
   describe("preload", function() {
