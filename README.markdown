@@ -9,6 +9,8 @@ jasmine-jquery provides two extensions for [Jasmine](http://pivotal.github.com/j
 
 Simply download _jasmine-jquery.js_ from the [downloads page](http://github.com/velesin/jasmine-jquery/downloads) and include it in your Jasmine's test runner file (or add it to _jasmine.yml_ file if you're using Ruby with [jasmine-gem](http://github.com/pivotal/jasmine-gem)). Remember to include also jQuery library as jasmine-jquery relies on it.
 
+For Ruby on Rails I recommend to comply with the standard RSpec and Jasmine frameworks dir structure and keep your tests in `spec/javascripts/` dir. I put jasmine-jquery (and other libraries like jasmine-ajax) into `spec/javascripts/helpers` dir (so they are automatically loaded) and fixtures into `spec/javascripts/fixtures` dir.
+
 ## jQuery matchers
 
 jasmine-jquery provides following custom matchers (in alphabetical order):
@@ -61,9 +63,11 @@ The same as with standard Jasmine matchers, all of above custom matchers may be 
 Fixture module of jasmine-jquery allows you to load HTML content to be used by your tests. The overall workflow is like follows:
 
 In _myfixture.html_ file:
+
     <div id="my-fixture">some complex content here</div>
     
 Inside your test:
+
     loadFixtures('myfixture.html');
     $('#my-fixture').myTestedPlugin();
     expect($('#my-fixture')).to...;
@@ -88,6 +92,8 @@ Several methods for loading fixtures are provided:
   - Loads fixture(s) from one or more files but instead of appending them to the DOM returns them as a string (useful if you want to process fixture's content directly in your test).
 - `set(html)`
   - Doesn't load fixture from file, but instead gets it directly as a parameter (html parameter may be a string or a jQuery element, so both `set('<div></div>')` and `set($('<div/>'))` will work). Automatically appends fixture to the DOM (to the fixtures container). It is useful if your fixture is too simple to keep it in an external file or is constructed procedurally, but you still want Fixture module to automatically handle DOM insertion and clean-up between tests for you.
+- `preload(fixtureUrl[, fixtureUrl, ...])`
+  - Pre-loads fixture(s) from one or more files and stores them into cache, without returning them or appending them to the DOM. All subsequent calls to `load` or `read` methods will then get fixtures content from cache, without making any AJAX calls (unless cache is manually purged by using `clearCache` method). Pre-loading all fixtures before a test suite is run may be useful when working with libraries like jasmine-ajax that block or otherwise modify the inner workings of JS or jQuery AJAX calls.
   
 All of above methods have matching global short cuts:
 
@@ -150,9 +156,17 @@ Spying on jQuery events can be done with `spyOnEvent` and
 Much thanks to Luiz Fernando Ribeiro for his
 [article on Jasmine event spies](http://luizfar.wordpress.com/2011/01/10/testing-events-on-jquery-objects-with-jasmine/).
 
-## Supported browsers and jQuery versions
+## Dependencies
 
-jasmine-jquery was tested for jQuery 1.4 on IE, FF, Chrome and Opera.
+jasmine-jquery was tested with Jasmine 1.1 and jQuery 1.6 on IE, FF and Chrome. There is a high chance it will work with older versions and other browsers as well, but I don't typically run test suite against them when adding new features.
+
+## Cross domain policy problems under Chrome
+
+Newer versions of Chrome don't allow file:// URIs read other file:// URIs. In effect, jasmine-jquery cannot properly load fixtures under some versions of Chrome. An override for this is to run Chrome with a switch `--allow-file-access-from-files` (I have not verified if this works for all Chrome versions though). The full discussion on this topic can be found in [this GitHub ticket](https://github.com/velesin/jasmine-jquery/issues/4).
+
+## Mocking with jasmine-ajax
+
+jasmine-ajax library doesn't let user to manually start / stop XMLHttpRequest mocking, but instead it overrides XMLHttpRequest automatically when loaded. This breaks jasmine-jquery fixtures as fixture loading mechanism uses jQuery.ajax, that stops to function the very moment jasmine-ajax is loaded. A workaround for this may be to invoke jasmine-jquery `preloadFixtures` function (specifying all required fixtures) before jasmine-ajax is loaded. This way subsequent calls to `loadFixtures` or `readFixtures` methods will get fixtures content from cache, without need to use jQuery.ajax and thus will work correctly even after jasmine-ajax is loaded.
 
 ## Testing with Javascript Test Driver
 
