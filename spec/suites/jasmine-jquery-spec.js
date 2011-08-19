@@ -300,6 +300,12 @@ describe("jQuery matchers", function() {
         expect(true).toBe(true);
       });
     });
+    
+    describe("and tested item is a dom object", function() {
+      it("should invoke jquery version of matcher", function() {
+        expect($('<div />').get(0)).toBe('div');
+      });
+    });
   });
 
   describe("when jQuery matcher does not hide any original Jasmine matcher", function() {
@@ -324,11 +330,13 @@ describe("jQuery matchers", function() {
     it("should pass when class found", function() {
       setFixtures(sandbox({'class': className}));
       expect($('#sandbox')).toHaveClass(className);
+      expect($('#sandbox').get(0)).toHaveClass(className);
     });
 
     it("should pass negated when class not found", function() {
       setFixtures(sandbox());
       expect($('#sandbox')).not.toHaveClass(className);
+      expect($('#sandbox').get(0)).not.toHaveClass(className);
     });    
   });
 
@@ -347,24 +355,29 @@ describe("jQuery matchers", function() {
     describe("when only attribute name is provided", function() {
       it("should pass if element has matching attribute", function() {
         expect($('#sandbox')).toHaveAttr(attributeName);
+        expect($('#sandbox').get(0)).toHaveAttr(attributeName);
       });
 
       it("should pass negated if element has no matching attribute", function() {
         expect($('#sandbox')).not.toHaveAttr(wrongAttributeName);
+        expect($('#sandbox').get(0)).not.toHaveAttr(wrongAttributeName);
       });
     });
 
     describe("when both attribute name and value are provided", function() {
       it("should pass if element has matching attribute with matching value", function() {
         expect($('#sandbox')).toHaveAttr(attributeName, attributeValue);
+        expect($('#sandbox').get(0)).toHaveAttr(attributeName, attributeValue);
       });
 
       it("should pass negated if element has matching attribute but with wrong value", function() {
         expect($('#sandbox')).not.toHaveAttr(attributeName, wrongAttributeValue);
+        expect($('#sandbox').get(0)).not.toHaveAttr(attributeName, wrongAttributeValue);
       });
 
       it("should pass negated if element has no matching attribute", function() {
         expect($('#sandbox')).not.toHaveAttr(wrongAttributeName, attributeValue);
+        expect($('#sandbox').get(0)).not.toHaveAttr(wrongAttributeName, attributeValue);
       });
     });
   });
@@ -376,14 +389,17 @@ describe("jQuery matchers", function() {
 
     it("should pass if id attribute matches expectation", function() {
       expect($('#sandbox')).toHaveId('sandbox');
+      expect($('#sandbox').get(0)).toHaveId('sandbox');
     });
 
     it("should pass negated if id attribute does not match expectation", function() {
       expect($('#sandbox')).not.toHaveId('wrongId');
+      expect($('#sandbox').get(0)).not.toHaveId('wrongId');
     });
 
     it("should pass negated if id attribute is not present", function() {
       expect($('<div />')).not.toHaveId('sandbox');
+      expect($('<div />').get(0)).not.toHaveId('sandbox');
     });
   });
 
@@ -398,10 +414,12 @@ describe("jQuery matchers", function() {
 
     it("should pass when html matches", function() {
       expect(element).toHaveHtml(html);
+      expect(element.get(0)).toHaveHtml(html);
     });
 
     it("should pass negated when html does not match", function() {
       expect(element).not.toHaveHtml(wrongHtml);
+      expect(element.get(0)).not.toHaveHtml(wrongHtml);
     });
   });
 
@@ -416,18 +434,22 @@ describe("jQuery matchers", function() {
 
     it("should pass when text matches", function() {
       expect(element).toHaveText(text);
+      expect(element.get(0)).toHaveText(text);
     });
 
     it("should pass negated when text does not match", function() {
       expect(element).not.toHaveText(wrongText);
+      expect(element.get(0)).not.toHaveText(wrongText);
     });
 
     it('should pass when text matches a regex', function() {
       expect(element).toHaveText(/some/);
+      expect(element.get(0)).toHaveText(/some/);
     });
 
     it('should pass negated when text does not match a regex', function() {
       expect(element).not.toHaveText(/other/);
+      expect(element.get(0)).not.toHaveText(/other/);
     });
   });
 
@@ -441,14 +463,17 @@ describe("jQuery matchers", function() {
 
     it("should pass if value matches expectation", function() {
       expect($('#sandbox')).toHaveValue(value);
+      expect($('#sandbox').get(0)).toHaveValue(value);
     });
 
     it("should pass negated if value does not match expectation", function() {
       expect($('#sandbox')).not.toHaveValue(differentValue);
+      expect($('#sandbox').get(0)).not.toHaveValue(differentValue);
     });
 
     it("should pass negated if value attribute is not present", function() {
       expect(sandbox()).not.toHaveValue(value);
+      expect(sandbox().get(0)).not.toHaveValue(value);
     });
   });
 
@@ -465,24 +490,29 @@ describe("jQuery matchers", function() {
     describe("when only key is provided", function() {
       it("should pass if element has matching data key", function() {
         expect($('#sandbox')).toHaveData(key);
+        expect($('#sandbox').get(0)).toHaveData(key);
       });
 
       it("should pass negated if element has no matching data key", function() {
         expect($('#sandbox')).not.toHaveData(wrongKey);
+        expect($('#sandbox').get(0)).not.toHaveData(wrongKey);
       });
     });
 
     describe("when both key and value are provided", function() {
       it("should pass if element has matching key with matching value", function() {
         expect($('#sandbox')).toHaveData(key, value);
+        expect($('#sandbox').get(0)).toHaveData(key, value);
       });
 
       it("should pass negated if element has matching key but with wrong value", function() {
         expect($('#sandbox')).not.toHaveData(key, wrongValue);
+        expect($('#sandbox').get(0)).not.toHaveData(key, wrongValue);
       });
 
       it("should pass negated if element has no matching key", function() {
         expect($('#sandbox')).not.toHaveData(wrongKey, value);
+        expect($('#sandbox').get(0)).not.toHaveData(wrongKey, value);
       });
     });
   });
@@ -491,11 +521,13 @@ describe("jQuery matchers", function() {
     it("should pass on visible element", function() {
       setFixtures(sandbox());
       expect($('#sandbox')).toBeVisible();
+      expect($('#sandbox').get(0)).toBeVisible();
     });
 
     it("should pass negated on hidden element", function() {
       setFixtures(sandbox().hide());
       expect($('#sandbox')).not.toBeVisible();
+      expect($('#sandbox').get(0)).not.toBeVisible();
     });
   });
 
@@ -503,11 +535,13 @@ describe("jQuery matchers", function() {
     it("should pass on hidden element", function() {
       setFixtures(sandbox().hide());
       expect($('#sandbox')).toBeHidden();
+      expect($('#sandbox').get(0)).toBeHidden();
     });
 
     it("should pass negated on visible element", function() {
       setFixtures(sandbox());
       expect($('#sandbox')).not.toBeHidden();
+      expect($('#sandbox').get(0)).not.toBeHidden();
     });
   });
 
@@ -522,10 +556,12 @@ describe("jQuery matchers", function() {
 
     it("should pass on selected element", function() {
       expect($('#selected')).toBeSelected();
+      expect($('#selected').get(0)).toBeSelected();
     });
 
     it("should pass negated on not selected element", function() {
       expect($('#not-selected')).not.toBeSelected();
+      expect($('#not-selected').get(0)).not.toBeSelected();
     });
   });
 
@@ -538,10 +574,12 @@ describe("jQuery matchers", function() {
 
     it("should pass on checked element", function() {
       expect($('#checked')).toBeChecked();
+      expect($('#checked').get(0)).toBeChecked();
     });
 
     it("should pass negated on not checked element", function() {
       expect($('#not-checked')).not.toBeChecked();
+      expect($('#not-checked').get(0)).not.toBeChecked();
     });
   });
 
@@ -549,16 +587,19 @@ describe("jQuery matchers", function() {
     it("should pass on empty element", function() {
       setFixtures(sandbox());
       expect($('#sandbox')).toBeEmpty();
+      expect($('#sandbox').get(0)).toBeEmpty();
     });
 
     it("should pass negated on element with a tag inside", function() {
       setFixtures(sandbox().html($('<span />')));
       expect($('#sandbox')).not.toBeEmpty();
+      expect($('#sandbox').get(0)).not.toBeEmpty();
     });
 
     it("should pass negated on element with text inside", function() {
       setFixtures(sandbox().text('some text'));
       expect($('#sandbox')).not.toBeEmpty();
+      expect($('#sandbox').get(0)).not.toBeEmpty();
     });
   });
 
@@ -566,15 +607,18 @@ describe("jQuery matchers", function() {
     it("should pass on visible element", function() {
       setFixtures(sandbox());
       expect($('#sandbox')).toExist();
+      expect($('#sandbox').get(0)).toExist();
     });
 
     it("should pass on hidden element", function() {
       setFixtures(sandbox().hide());
       expect($('#sandbox')).toExist();
+      expect($('#sandbox').get(0)).toExist();
     });
 
     it("should pass negated if element is not present in DOM", function() {
       expect($('#non-existent-element')).not.toExist();
+      expect($('#non-existent-element').get(0)).not.toExist();
     });
   });
 
@@ -585,10 +629,12 @@ describe("jQuery matchers", function() {
 
     it("should pass if object matches selector", function() {
       expect($('#sandbox')).toBe('#sandbox');
+      expect($('#sandbox').get(0)).toBe('#sandbox');
     });
 
     it("should pass negated if object does not match selector", function() {
       expect($('#sandbox')).not.toBe('#wrong-id');
+      expect($('#sandbox').get(0)).not.toBe('#wrong-id');
     });
   });
 
@@ -599,10 +645,12 @@ describe("jQuery matchers", function() {
 
     it("should pass if object contains selector", function() {
       expect($('#sandbox')).toContain('span');
+      expect($('#sandbox').get(0)).toContain('span');
     });
 
     it("should pass negated if object does not contain selector", function() {
       expect($('#sandbox')).not.toContain('div');
+      expect($('#sandbox').get(0)).not.toContain('div');
     });
   });
 
@@ -615,10 +663,12 @@ describe("jQuery matchers", function() {
 
     it("should pass on disabled element", function() {
       expect($('#disabled')).toBeDisabled();
+      expect($('#disabled').get(0)).toBeDisabled();
     });
 
     it("should pass negated on not selected element", function() {
       expect($('#enabled')).not.toBeDisabled();
+      expect($('#enabled').get(0)).not.toBeDisabled();
     });
   });
 
@@ -631,15 +681,18 @@ describe("jQuery matchers", function() {
     it('should pass if the event was triggered on the object', function() {
       $('#clickme').click();
       expect('click').toHaveBeenTriggeredOn($('#clickme'));
+      expect('click').toHaveBeenTriggeredOn($('#clickme').get(0));
     });
 
     it('should pass negated if the event was never triggered', function() {
       expect('click').not.toHaveBeenTriggeredOn($('#clickme'));
+      expect('click').not.toHaveBeenTriggeredOn($('#clickme').get(0));
     });
 
     it('should pass negated if the event was triggered on another non-descendant object', function() {
       $('#otherlink').click();
       expect('click').not.toHaveBeenTriggeredOn($('#clickme'));
+      expect('click').not.toHaveBeenTriggeredOn($('#clickme').get(0));
     });
   });
   
@@ -652,10 +705,12 @@ describe("jQuery matchers", function() {
       var handler = function(){ }; // noop
       $('#clickme').bind("click", handler);
       expect($('#clickme')).toHandle("click");
+      expect($('#clickme').get(0)).toHandle("click");
     });
     
     it('should pass if the event is not bound', function() {
       expect($('#clickme')).not.toHandle("click");
+      expect($('#clickme').get(0)).not.toHandle("click");
     });
 
   });
@@ -669,6 +724,7 @@ describe("jQuery matchers", function() {
       var handler = function(){ }; // noop
       $('#clickme').bind("click", handler);
       expect($('#clickme')).toHandleWith("click", handler);
+      expect($('#clickme').get(0)).toHandleWith("click", handler);
     });
     
     it('should pass if the event is not bound with the given handler', function() {
@@ -677,10 +733,12 @@ describe("jQuery matchers", function() {
       
       var aDifferentHandler = function(){ };
       expect($('#clickme')).not.toHandleWith("click", aDifferentHandler);
+      expect($('#clickme').get(0)).not.toHandleWith("click", aDifferentHandler);
     });
     
     it('should pass if the event is not bound at all', function() {
       expect($('#clickme')).not.toHandle("click");
+      expect($('#clickme').get(0)).not.toHandle("click");
     });
 
   });
