@@ -369,6 +369,43 @@ describe("jQuery matchers", function() {
     });
   });
 
+  describe("toHaveProp", function() {
+      var propertyName = 'prop1';
+      var propertyValue = 'prop1 value';
+      var wrongPropertyName = 'wrongName';
+      var wrongPropertyValue = 'wrong value';
+
+      beforeEach(function() {
+        setFixtures(sandbox());
+        var element = $('#sandbox')[0];
+        element[propertyName] = propertyValue;
+      });
+
+      describe("when only property name is provided", function() {
+        it("should pass if element has matching property", function() {
+          expect($('#sandbox')).toHaveProp(propertyName);
+        });
+
+        it("should pass negated if element has no matching property", function() {
+          expect($('#sandbox')).not.toHaveProp(wrongPropertyName);
+        });
+      });
+
+      describe("when both property name and value are provided", function() {
+        it("should pass if element has matching property with matching value", function() {
+          expect($('#sandbox')).toHaveProp(propertyName, propertyValue);
+        });
+
+        it("should pass negated if element has matching property but with wrong value", function() {
+          expect($('#sandbox')).not.toHaveProp(propertyName, wrongPropertyValue);
+        });
+
+        it("should pass negated if element has no matching property", function() {
+          expect($('#sandbox')).not.toHaveProp(wrongPropertyName, propertyValue);
+        });
+      });
+  });
+
   describe("toHaveId", function() {
     beforeEach(function() {
       setFixtures(sandbox());

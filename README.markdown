@@ -31,6 +31,8 @@ jasmine-jquery provides following custom matchers (in alphabetical order):
 - `toExist()`
 - `toHaveAttr(attributeName, attributeValue)`
   - attribute value is optional, if omitted it will check only if attribute exists
+- `toHaveProp(propertyName, propertyValue)`
+  - property value is optional, if omitted it will check only if property exists
 - `toHaveBeenTriggeredOn(selector)`
   - if event has been triggered on `selector` (see "Event Spies", below)
 - `toHaveClass(className)`
