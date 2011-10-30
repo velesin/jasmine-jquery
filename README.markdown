@@ -48,13 +48,13 @@ jasmine-jquery provides following custom matchers (in alphabetical order):
   - only for tags that have value attribute
   - e.g. `expect($('<input type="text" value="some text"/>')).toHaveValue('some text')`
 - `toBeDisabled()`
-  - e.g. 'expect('<input type='submit' disabled='disabled'/>').toBeDisabled()'
+  - e.g. `expect('<input type='submit' disabled='disabled'/>').toBeDisabled()`
 - `toBeFocused()`
-  - e.g. 'expect($('<input type='text' />').focus()).toBeFocused()'
+  - e.g. `expect($('<input type='text' />').focus()).toBeFocused()`
 - `toHandle(eventName)`
-  - e.g. 'expect($form).toHandle("submit")'
+  - e.g. `expect($form).toHandle("submit")`
 - `toHandleWith(eventName, eventHandler)`
-  - e.g. 'expect($form).toHandle("submit", yourSubmitCallback)'
+  - e.g. `expect($form).toHandle("submit", yourSubmitCallback)`
   
 The same as with standard Jasmine matchers, all of above custom matchers may be inverted by using `.not` prefix, e.g.:
 
