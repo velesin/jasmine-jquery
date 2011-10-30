@@ -49,6 +49,8 @@ jasmine-jquery provides following custom matchers (in alphabetical order):
   - e.g. `expect($('<input type="text" value="some text"/>')).toHaveValue('some text')`
 - `toBeDisabled()`
   - e.g. 'expect('<input type='submit' disabled='disabled'/>').toBeDisabled()'
+- `toBeFocused()`
+  - e.g. 'expect($('<input type='text' />').focus()).toBeFocused()'
 - `toHandle(eventName)`
   - e.g. 'expect($form).toHandle("submit")'
 - `toHandleWith(eventName, eventHandler)`
