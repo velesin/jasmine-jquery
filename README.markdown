@@ -33,6 +33,8 @@ jasmine-jquery provides following custom matchers (in alphabetical order):
   - attribute value is optional, if omitted it will check only if attribute exists
 - `toHaveBeenTriggeredOn(selector)`
   - if event has been triggered on `selector` (see "Event Spies", below)
+- `toHaveBeenPreventedOn(selector)`
+  - if event has been prevented on `selector` (see "Event Spies", below)
 - `toHaveClass(className)`
   - e.g. `expect($('<div class="some-class"></div>')).toHaveClass("some-class")`  
 - `toHaveData(key, value)`
@@ -152,6 +154,12 @@ Spying on jQuery events can be done with `spyOnEvent` and
     spyOnEvent($('#some_element'), 'click');
     $('#some_element').click();
     expect('click').toHaveBeenTriggeredOn($('#some_element'));
+
+You can similarly check if triggered event was prevented:
+
+    spyOnEvent($('#some_element'), 'click');
+    $('#some_element').click();
+    expect('click').toHaveBeenPreventedOn($('#some_element'));
 
 Much thanks to Luiz Fernando Ribeiro for his
 [article on Jasmine event spies](http://luizfar.wordpress.com/2011/01/10/testing-events-on-jquery-objects-with-jasmine/).
