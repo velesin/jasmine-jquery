@@ -329,7 +329,22 @@ describe("jQuery matchers", function() {
     it("should pass negated when class not found", function() {
       setFixtures(sandbox());
       expect($('#sandbox')).not.toHaveClass(className);
-    });    
+    });
+  });
+
+  describe("when a string is passed, it should be treated as a jQuery selector and ", function () {
+    var className = "some-class";
+
+    it("should pass when class found", function() {
+      setFixtures(sandbox({'class': className}));
+      expect($('#sandbox')).toHaveClass(className);
+    });
+
+    it("should pass negated when class not found", function() {
+      setFixtures(sandbox());
+      expect($('#sandbox')).not.toHaveClass(className);
+    });
+
   });
 
   describe("toHaveAttr", function() {
