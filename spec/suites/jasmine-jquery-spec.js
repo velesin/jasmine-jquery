@@ -335,16 +335,20 @@ describe("jQuery matchers", function() {
   describe("when a string is passed, it should be treated as a jQuery selector and ", function () {
     var className = "some-class";
 
-    it("should pass when class found", function() {
+    it("should pass", function() {
       setFixtures(sandbox({'class': className}));
-      expect($('#sandbox')).toHaveClass(className);
+      expect('#sandbox').toHaveClass(className);
     });
 
-    it("should pass negated when class not found", function() {
+    it("should pass negated", function() {
       setFixtures(sandbox());
-      expect($('#sandbox')).not.toHaveClass(className);
+      expect('#sandbox').not.toHaveClass(className);
     });
 
+    it("should not break built in matchers", function() {
+      setFixtures(sandbox());
+      expect('#sandbox').toEqual('#sandbox');
+    });
   });
 
   describe("toHaveAttr", function() {
