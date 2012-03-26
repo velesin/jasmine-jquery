@@ -4,6 +4,20 @@ jasmine-jquery provides two extensions for [Jasmine](http://pivotal.github.com/j
   
 - a set of custom matchers for jQuery framework
 - an API for handling HTML fixtures in your specs
+
+- - -
+# !!! SEARCHING FOR CO-MAINTAINERS !!! #
+
+There were a lot of changes in my life and my current obligations don’t let me maintain this project as well as I’d like.
+
+Jasmine-jquery has an awesome community that helped and motivated me all the way throughout the project. I think you deserve much better support than I can provide right now.
+
+I am shocked my library gained such a traction. I’m really glad you find it useful and I don’t want this project to die. Therefore, I search for collaborators that would help me maintain the project.
+
+If you are interested, please leave me a message on GitHub (with a short info about you and why would you like to participate in the project).
+
+Big thanks to you all!
+- - -
   
 ## Installation
 
