@@ -779,5 +779,50 @@ describe("jQuery matchers", function() {
     });
 
   });
+
+  describe('toDelegateAndHandle', function() {
+    beforeEach(function() {
+      setFixtures(sandbox().html('<div id="container"><a id="clickme">Click Me</a> <a id="otherlink">Other Link</a></div>'));
+	});
+
+	it('should pass if the delegate binds an event on the delegated', function() {
+      var handler = function(){ }; // noop
+	  $('#container').delegate('#clickme', 'click', handler);
+	  expect($('#container')).toDelegateAndHandle($('#clickme'), 'click');
+	});
+	it('should pass if the delegate does not bind an event on the delegated', function() {
+      var handler = function(){ }; // noop
+	  expect($('#container')).not.toDelegateAndHandle($('#clickme'), 'click');
+	});
+  });
+  
+  describe('toDelegateAndHandleWith', function() {
+    var handler = function(){ }, // noop
+        aDifferentHandler = function(){ }; // noop
+    beforeEach(function() {
+      setFixtures(sandbox().html('<div id="container"><a id="clickme">Click Me</a> <a id="otherlink">Other Link</a></div>'));
+    });
+
+    it('should pass if the delegate binds a given handler on the delegated', function() {
+      $('#container').delegate('#clickme', 'click', handler);
+      expect($('#container')).toDelegateAndHandleWith($('#clickme'), 'click', handler);
+    });
+    it('should pass if the delegate binds a given handler on the delegated, regardless of other events', function() {
+      $('#container').delegate('#clickme', 'click', handler);
+      $('#container').delegate('#clickme', 'click', aDifferentHandler);
+      expect($('#container')).toDelegateAndHandleWith($('#clickme'), 'click', handler);
+    });
+    it('should pass if the delegate does not bind a given handler on the delegated', function() {
+      $('#container').delegate('#clickme', 'click', handler);
+      expect($('#container')).not.toDelegateAndHandleWith($('#clickme'), 'click', aDifferentHandler);
+    });
+    it('should pass if the delegate binds a given handler on the delegated, but a different event', function() {
+      $('#container').delegate('#clickme', 'select', handler);
+      expect($('#container')).not.toDelegateAndHandleWith($('#clickme'), 'click', handler);
+    });
+    it('should pass if no event is bound at all', function() {
+      expect($('#container')).not.toDelegateAndHandleWith($('#clickme'), 'click', handler);
+    });
+  });
 });
 

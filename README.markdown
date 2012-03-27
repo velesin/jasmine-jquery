@@ -69,6 +69,10 @@ jasmine-jquery provides following custom matchers (in alphabetical order):
   - e.g. 'expect($form).toHandle("submit")'
 - `toHandleWith(eventName, eventHandler)`
   - e.g. 'expect($form).toHandle("submit", yourSubmitCallback)'
+- `toDelegateAndHandle(delegated, eventName)`
+  - e.g. 'expect($form).toDelegateAndHandle($input, "click")'
+- `toDelegateAndHandleWith(delegated, eventName, eventHandler)`
+  - e.g. 'expect($form).toDelegateAndHandleWith($input, "click", validateFunc)'
   
 The same as with standard Jasmine matchers, all of above custom matchers may be inverted by using `.not` prefix, e.g.:
 
