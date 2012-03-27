@@ -709,6 +709,22 @@ describe("jQuery matchers", function() {
     });
   });
 
+  describe("toBeFocused", function() {
+
+    beforeEach(function() {
+      setFixtures('<input type="text" id="focused"/>');
+    });
+
+    it("should pass on focused element", function() {
+      expect($('#focused').focus()).toBeFocused();
+    });
+
+    it("should pass negated on not focused element", function() {
+      expect($('#focused')).not.toBeFocused();
+    });
+
+  });
+
   describe('toHaveBeenTriggeredOn', function() {
     beforeEach(function() {
       setFixtures(sandbox().html('<a id="clickme">Click Me</a> <a id="otherlink">Other Link</a>'));
