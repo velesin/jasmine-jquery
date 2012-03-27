@@ -165,7 +165,7 @@ These two methods do not have global short cut functions.
 ## Event Spies
 
 Spying on jQuery events can be done with `spyOnEvent` and
-`assert(eventName).toHaveBeenTriggeredOn(selector)`. First, spy on the event:
+`expect(eventName).toHaveBeenTriggeredOn(selector)`. First, spy on the event:
 
     spyOnEvent($('#some_element'), 'click');
     $('#some_element').click();
