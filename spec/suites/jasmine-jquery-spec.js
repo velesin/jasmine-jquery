@@ -474,6 +474,12 @@ describe("jQuery matchers", function() {
       expect(element.get(0)).toHaveText(text);
     });
 
+    it("should ignore surrounding whitespace", function() {
+      element = $('<div>\n' + text + '\n</div>');
+      expect(element).toHaveText(text);
+      expect(element.get(0)).toHaveText(text);
+    });
+
     it("should pass negated when text does not match", function() {
       expect(element).not.toHaveText(wrongText);
       expect(element.get(0)).not.toHaveText(wrongText);
