@@ -188,5 +188,41 @@ When using [jstd](http://code.google.com/p/js-test-driver/) and the jasmine adap
 
 jasmine-jquery is maintained by [Travis Jeffery](http://github.com/travisjeffery) and [Wojciech Zawistowski](http://github.com/velesin).
 
-Always include tests with your patches and follow the existing style.
+### Setup
 
+- Fork the project and clone the repository.
+
+    [Here's how.](http://help.github.com/fork-a-repo/)
+- Create a dedicated branch.
+
+    `git checkout -b your_feature`
+
+### Writing the Code
+
+- Get the code right.
+- Include tests that fail without your code, and pass with it.
+- Update the (surrounding) documentation, examples elsewhere, and the guides: whatever is affected by your contribution.
+- Follow the conventions in the source you see used already.
+
+If you can, have another developer sanity check your change.
+
+### Committing
+
+- Commit your change with a message on what you changed in the commit.
+
+    `git commit -am "A commit message on what you changed"`
+- Please squash your commits when appropriate. This simplifies future cherry picks, and also keeps the git log clean.
+
+    [Here's how.](http://gitready.com/advanced/2009/02/10/squashing-commits-with-rebase.html)
+- Push to your remote
+
+    `git push origin your_feature`
+
+### Issue a Pull Request
+
+- Navigate to the jasmine-jquery GitHub page, press "Pull Request".
+- Write your branch name in the branch field, press "Update Commit Range".
+- Fill in some details about your potential patch including a meaningful
+  title. When finished, press "Send pull request".
+
+(These guidelines are heavily inspired and similar to [Rails's](http://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html#contributing-to-the-rails-code)).
