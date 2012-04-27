@@ -17,15 +17,23 @@ jasmine-jquery provides following custom matchers (in alphabetical order):
 
 - `toBe(jQuerySelector)`
   - e.g. `expect($('<div id="some-id"></div>')).toBe('div#some-id')`
+  - e.g. `expect($('<div id="some-id"></div>')).toBe('div')`
 - `toBeChecked()`
   - only for tags that have checked attribute
   - e.g. `expect($('<input type="checkbox" checked="checked"/>')).toBeChecked()` 
-- `toBeEmpty()`  
+- `toBeEmpty()`
+  -Checks for child DOM elements or text.
 - `toBeHidden()`
+  -Elements can be considered hidden for several reasons:
+    *They have a CSS `display` value of `none`.
+    *They are form elements with `type` equal to `hidden`.
+    *Their `width` and height are explicitly set to `0`.
+    *An ancestor element is hidden, so the element is not shown on the page.
 - `toBeSelected()`
   - only for tags that have selected attribute
   - e.g. `expect($('<option selected="selected"></option>')).toBeSelected()`
 - `toBeVisible()`
+  -Elements are considered visible if they consume space in the document. Visible elements have a width or height that is greater than zero.
 - `toContain(jQuerySelector)`
   - e.g. `expect($('<div><span class="some-class"></span></div>')).toContain('span.some-class')`
 - `toExist()`
