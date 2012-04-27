@@ -16,8 +16,8 @@ For Ruby on Rails I recommend to comply with the standard RSpec and Jasmine fram
 jasmine-jquery provides following custom matchers (in alphabetical order):
 
 - `toBe(jQuerySelector)`
-  - e.g. `expect($('<div id="some-id"></div>')).toBe('div#some-id')`
   - e.g. `expect($('<div id="some-id"></div>')).toBe('div')`
+  - e.g. `expect($('<div id="some-id"></div>')).toBe('div#some-id')`
 - `toBeChecked()`
   - only for tags that have checked attribute
   - e.g. `expect($('<input type="checkbox" checked="checked"/>')).toBeChecked()` 
