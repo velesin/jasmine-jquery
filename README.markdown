@@ -24,10 +24,11 @@ jasmine-jquery provides following custom matchers (in alphabetical order):
 - `toBeEmpty()`
   - Checks for child DOM elements or text.
 - `toBeHidden()`
-  - Elements can be considered hidden for several reasons:
+  
+  Elements can be considered hidden for several reasons:
     - They have a CSS `display` value of `none`.
     - They are form elements with `type` equal to `hidden`.
-    - Their `width` and height are explicitly set to `0`.
+    - Their `width` and `height` are explicitly set to `0`.
     - An ancestor element is hidden, so the element is not shown on the page.
 - `toBeSelected()`
   - only for tags that have selected attribute
