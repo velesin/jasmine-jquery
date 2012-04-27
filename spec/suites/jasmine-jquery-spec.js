@@ -829,5 +829,31 @@ describe("jQuery matchers", function() {
     });
 
   });
+
+  describe("when a string is passed, it should be treated as a jQuery selector and ", function () {
+    var className = "some-class";
+
+    it("should pass", function() {
+      setFixtures(sandbox({'class': className}));
+      expect('#sandbox').toHaveClass(className);
+    });
+
+    it("should pass negated", function() {
+      setFixtures(sandbox());
+      expect('#sandbox').not.toHaveClass(className);
+    });
+
+    it("should not break built in matchers", function() {
+      setFixtures(sandbox());
+      expect('#sandbox').toEqual('#sandbox');
+    });
+
+    it("should not apply to built in matchers that are also in Jasmine jQuery", function() {
+      setFixtures(sandbox());
+      expect('+').toBe('+');
+      expect('just a string').toBe('just a string');
+    });
+
+  });
 });
 
