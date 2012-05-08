@@ -1,3 +1,24 @@
+var SUPPORT = {
+  jquery : (function() {
+    return ($.fn.jquery !== undefined);
+  })(),
+  zepto  : (function() {
+    return ($.zepto !== undefined);
+  })()
+};
+
+SUPPORT.includes = {
+  accessibleHandlers : (function() {
+    return SUPPORT.jquery;
+  })(),
+  complexData : (function() {
+    return SUPPORT.jquery || (SUPPORT.zepto && ($.fn.removeData !== undefined))
+  })(),
+  selectorExtensions : (function() {
+    return SUPPORT.jquery || (SUPPORT.zepto && ($.zepto.cssFilters !== undefined))
+  })()
+};
+
 describe("jasmine.Fixtures", function() {
   var ajaxData = 'some ajax data';
   var fixtureUrl = 'some_url';
@@ -11,8 +32,9 @@ describe("jasmine.Fixtures", function() {
 
   beforeEach(function() {
     jasmine.getFixtures().clearCache();
-    spyOn($, 'ajax').andCallFake(function(options) {
-      options.success(ajaxData);
+
+    spyOn(jasmine.Fixtures.prototype, 'retrieveRemoteFile_').andCallFake(function(url) {
+      return ajaxData;
     });
   });
   
@@ -32,18 +54,18 @@ describe("jasmine.Fixtures", function() {
         jasmine.getFixtures().read(fixtureUrl);
         jasmine.getFixtures().clearCache();
         jasmine.getFixtures().read(fixtureUrl);
-        expect($.ajax.callCount).toEqual(2);
+        expect(jasmine.Fixtures.prototype.retrieveRemoteFile_.callCount).toEqual(2);
       });
     });
 
     it("first-time read should go through AJAX", function() {
       jasmine.getFixtures().read(fixtureUrl);
-      expect($.ajax.callCount).toEqual(1);
+      expect(jasmine.Fixtures.prototype.retrieveRemoteFile_.callCount).toEqual(1);
     });
 
     it("subsequent read from the same URL should go from cache", function() {
       jasmine.getFixtures().read(fixtureUrl, fixtureUrl);
-      expect($.ajax.callCount).toEqual(1);
+      expect(jasmine.Fixtures.prototype.retrieveRemoteFile_.callCount).toEqual(1);
     });    
   });
 
@@ -71,13 +93,13 @@ describe("jasmine.Fixtures", function() {
     it("should use the configured fixtures path concatenating it to the requested url (without concatenating a slash if it already has an ending one)", function() {
       jasmine.getFixtures().fixturesPath = 'a path ending with slash/'
       readFixtures(fixtureUrl);
-      expect($.ajax.mostRecentCall.args[0].url).toEqual('a path ending with slash/'+fixtureUrl);
+      expect(jasmine.Fixtures.prototype.retrieveRemoteFile_.mostRecentCall.args[0]).toEqual('a path ending with slash/'+fixtureUrl);
     });
     
     it("should use the configured fixtures path concatenating it to the requested url (concatenating a slash if it doesn't have an ending one)", function() {
       jasmine.getFixtures().fixturesPath = 'a path without an ending slash'
       readFixtures(fixtureUrl);
-      expect($.ajax.mostRecentCall.args[0].url).toEqual('a path without an ending slash/'+fixtureUrl);
+      expect(jasmine.Fixtures.prototype.retrieveRemoteFile_.mostRecentCall.args[0]).toEqual('a path without an ending slash/'+fixtureUrl);
     });
   });
 
@@ -105,8 +127,8 @@ describe("jasmine.Fixtures", function() {
     describe("when fixture container does not exist", function() {
       it("should automatically create fixtures container and append it to DOM", function() {
         jasmine.getFixtures().load(fixtureUrl);
-        expect(fixturesContainer().size()).toEqual(1);
-      });      
+        expect(fixturesContainer().length).toEqual(1);
+      });
     });
 
     describe("when fixture container exists", function() {
@@ -122,13 +144,20 @@ describe("jasmine.Fixtures", function() {
 
     describe("when fixture contains an inline <script> tag", function(){
       beforeEach(function(){
-        ajaxData = "<div><a id=\"anchor_01\"></a><script>$(function(){ $('#anchor_01').addClass('foo')});</script></div>"
+        ajaxData = "<div><a id=\"anchor_01\"></a><script>$(function(){ $('#anchor_01').addClass('foo'); $('.jasmine_reporter').addClass('foo'); });</script></div>"
       });
 
-      it("should execute the inline javascript after the fixture has been inserted into the body", function(){
+      it("should execute the inline javascript", function() {
         jasmine.getFixtures().load(fixtureUrl);
-        expect($("#anchor_01")).toHaveClass('foo');
-      })
+        expect($(".jasmine_reporter")).toHaveClass('foo');
+      });
+
+      if(SUPPORT.jquery) {
+        it("should execute the inline javascript after the fixture has been inserted into the body", function(){
+          jasmine.getFixtures().load(fixtureUrl);
+          expect($("#anchor_01")).toHaveClass('foo');
+        })
+      }
     });
   });
 
@@ -137,7 +166,7 @@ describe("jasmine.Fixtures", function() {
       it("should go from cache", function() {
         jasmine.getFixtures().preload(fixtureUrl, anotherFixtureUrl);
         jasmine.getFixtures().read(fixtureUrl, anotherFixtureUrl);
-        expect($.ajax.callCount).toEqual(2);
+        expect(jasmine.Fixtures.prototype.retrieveRemoteFile_.callCount).toEqual(2);
       })
 
       it("should return correct HTMLs", function() {
@@ -149,13 +178,13 @@ describe("jasmine.Fixtures", function() {
 
     it("should not preload the same fixture twice", function() {
       jasmine.getFixtures().preload(fixtureUrl, fixtureUrl);
-      expect($.ajax.callCount).toEqual(1);
+      expect(jasmine.Fixtures.prototype.retrieveRemoteFile_.callCount).toEqual(1);
     });
 
     it("should have shortcut global method preloadFixtures", function() {
       preloadFixtures(fixtureUrl, anotherFixtureUrl);
       jasmine.getFixtures().read(fixtureUrl, anotherFixtureUrl);
-      expect($.ajax.callCount).toEqual(2);
+      expect(jasmine.Fixtures.prototype.retrieveRemoteFile_.callCount).toEqual(2);
     });
   });
 
@@ -180,7 +209,7 @@ describe("jasmine.Fixtures", function() {
     describe("when fixture container does not exist", function() {
       it("should automatically create fixtures container and append it to DOM", function() {
         jasmine.getFixtures().set(html);
-        expect(fixturesContainer().size()).toEqual(1);
+        expect(fixturesContainer().length).toEqual(1);
       });
     });
 
@@ -235,7 +264,7 @@ describe("jasmine.Fixtures", function() {
     it("should remove fixtures container from DOM", function() {
       appendFixturesContainerToDom();
       jasmine.getFixtures().cleanUp();
-      expect(fixturesContainer().size()).toEqual(0);
+      expect(fixturesContainer().length).toEqual(0);
     });
   });
 
@@ -249,7 +278,7 @@ describe("jasmine.Fixtures", function() {
 
     // WARNING: this test must be invoked second (after 'FIRST TEST')!
     it("SECOND TEST: should see the DOM in a blank state", function() {
-      expect(fixturesContainer().size()).toEqual(0);
+      expect(fixturesContainer().length).toEqual(0);
     });
   });
 });
@@ -521,70 +550,131 @@ describe("jQuery matchers", function() {
   });
 
   describe("toHaveData", function() {
-    var key = 'some key';
-    var value = 'some value';
-    var wrongKey = 'wrong key';
-    var wrongValue = 'wrong value';
+    describe("using simple keys", function() {
+      var key = 'some-key';
+      var value = 'some-value';
+      var wrongKey = 'wrong-key';
+      var wrongValue = 'wrong-value';
 
-    beforeEach(function() {
-      setFixtures(sandbox().data(key, value));
+      beforeEach(function() {
+        setFixtures(sandbox().data(key, value));
+      });
+
+      describe("when only key is provided", function() {
+        it("should pass if element has matching data key", function() {
+          expect($('#sandbox')).toHaveData(key);
+          expect($('#sandbox').get(0)).toHaveData(key);
+        });
+
+        it("should pass negated if element has no matching data key", function() {
+          expect($('#sandbox')).not.toHaveData(wrongKey);
+          expect($('#sandbox').get(0)).not.toHaveData(wrongKey);
+        });
+      });
+
+      describe("when both key and value are provided", function() {
+        it("should pass if element has matching key with matching value", function() {
+          expect($('#sandbox')).toHaveData(key, value);
+          expect($('#sandbox').get(0)).toHaveData(key, value);
+        });
+
+        it("should pass negated if element has matching key but with wrong value", function() {
+          expect($('#sandbox')).not.toHaveData(key, wrongValue);
+          expect($('#sandbox').get(0)).not.toHaveData(key, wrongValue);
+        });
+
+        it("should pass negated if element has no matching key", function() {
+          expect($('#sandbox')).not.toHaveData(wrongKey, value);
+          expect($('#sandbox').get(0)).not.toHaveData(wrongKey, value);
+        });
+      });
     });
 
-    describe("when only key is provided", function() {
-      it("should pass if element has matching data key", function() {
-        expect($('#sandbox')).toHaveData(key);
-        expect($('#sandbox').get(0)).toHaveData(key);
+    describe("using complex keys", function() {
+      var key = 'some key';
+      var value = 'some value';
+      var wrongKey = 'wrong key';
+      var wrongValue = 'wrong value';
+
+      describe("when only key is provided", function() {
+        it("should pass if element has matching data key", function() {
+          if(SUPPORT.includes.complexData) {
+            setFixtures(sandbox().data(key, value));
+            expect($('#sandbox')).toHaveData(key);
+            expect($('#sandbox').get(0)).toHaveData(key);
+          }
+        });
+
+        it("should pass negated if element has no matching data key", function() {
+          if(SUPPORT.includes.complexData) {
+            setFixtures(sandbox().data(key, value));
+            expect($('#sandbox')).not.toHaveData(wrongKey);
+            expect($('#sandbox').get(0)).not.toHaveData(wrongKey);
+          }
+        });
       });
 
-      it("should pass negated if element has no matching data key", function() {
-        expect($('#sandbox')).not.toHaveData(wrongKey);
-        expect($('#sandbox').get(0)).not.toHaveData(wrongKey);
-      });
-    });
+      describe("when both key and value are provided", function() {
+        it("should pass if element has matching key with matching value", function() {
+          if(SUPPORT.includes.complexData) {
+            setFixtures(sandbox().data(key, value));
+            expect($('#sandbox')).toHaveData(key, value);
+            expect($('#sandbox').get(0)).toHaveData(key, value);
+          }
+        });
 
-    describe("when both key and value are provided", function() {
-      it("should pass if element has matching key with matching value", function() {
-        expect($('#sandbox')).toHaveData(key, value);
-        expect($('#sandbox').get(0)).toHaveData(key, value);
-      });
+        it("should pass negated if element has matching key but with wrong value", function() {
+          if(SUPPORT.includes.complexData) {
+            setFixtures(sandbox().data(key, value));
+            expect($('#sandbox')).not.toHaveData(key, wrongValue);
+            expect($('#sandbox').get(0)).not.toHaveData(key, wrongValue);
+          }
+        });
 
-      it("should pass negated if element has matching key but with wrong value", function() {
-        expect($('#sandbox')).not.toHaveData(key, wrongValue);
-        expect($('#sandbox').get(0)).not.toHaveData(key, wrongValue);
-      });
-
-      it("should pass negated if element has no matching key", function() {
-        expect($('#sandbox')).not.toHaveData(wrongKey, value);
-        expect($('#sandbox').get(0)).not.toHaveData(wrongKey, value);
+        it("should pass negated if element has no matching key", function() {
+          if(SUPPORT.includes.complexData) {
+            setFixtures(sandbox().data(key, value));
+            expect($('#sandbox')).not.toHaveData(wrongKey, value);
+            expect($('#sandbox').get(0)).not.toHaveData(wrongKey, value);
+          }
+        });
       });
     });
   });
 
   describe("toBeVisible", function() {
     it("should pass on visible element", function() {
-      setFixtures(sandbox());
-      expect($('#sandbox')).toBeVisible();
-      expect($('#sandbox').get(0)).toBeVisible();
+      if(SUPPORT.includes.selectorExtensions) {
+        setFixtures(sandbox());
+        expect($('#sandbox')).toBeVisible();
+        expect($('#sandbox').get(0)).toBeVisible();
+      }
     });
 
     it("should pass negated on hidden element", function() {
-      setFixtures(sandbox().hide());
-      expect($('#sandbox')).not.toBeVisible();
-      expect($('#sandbox').get(0)).not.toBeVisible();
+      if(SUPPORT.includes.selectorExtensions) {
+        setFixtures(sandbox().hide());
+        expect($('#sandbox')).not.toBeVisible();
+        expect($('#sandbox').get(0)).not.toBeVisible();
+      }
     });
   });
 
   describe("toBeHidden", function() {
     it("should pass on hidden element", function() {
-      setFixtures(sandbox().hide());
-      expect($('#sandbox')).toBeHidden();
-      expect($('#sandbox').get(0)).toBeHidden();
+      if(SUPPORT.includes.selectorExtensions) {
+        setFixtures(sandbox().hide());
+        expect($('#sandbox')).toBeHidden();
+        expect($('#sandbox').get(0)).toBeHidden();
+      }
     });
 
     it("should pass negated on visible element", function() {
-      setFixtures(sandbox());
-      expect($('#sandbox')).not.toBeHidden();
-      expect($('#sandbox').get(0)).not.toBeHidden();
+      if(SUPPORT.includes.selectorExtensions) {
+        setFixtures(sandbox());
+        expect($('#sandbox')).not.toBeHidden();
+        expect($('#sandbox').get(0)).not.toBeHidden();
+      }
     });
   });
 
@@ -598,13 +688,17 @@ describe("jQuery matchers", function() {
     });
 
     it("should pass on selected element", function() {
-      expect($('#selected')).toBeSelected();
-      expect($('#selected').get(0)).toBeSelected();
+      if(SUPPORT.includes.selectorExtensions) {
+        expect($('#selected')).toBeSelected();
+        expect($('#selected').get(0)).toBeSelected();
+      }
     });
 
     it("should pass negated on not selected element", function() {
-      expect($('#not-selected')).not.toBeSelected();
-      expect($('#not-selected').get(0)).not.toBeSelected();
+      if(SUPPORT.includes.selectorExtensions) {
+        expect($('#not-selected')).not.toBeSelected();
+        expect($('#not-selected').get(0)).not.toBeSelected();
+      }
     });
   });
 
@@ -716,19 +810,21 @@ describe("jQuery matchers", function() {
   });
 
   describe("toBeFocused", function() {
-
     beforeEach(function() {
       setFixtures('<input type="text" id="focused"/>');
     });
 
     it("should pass on focused element", function() {
-      expect($('#focused').focus()).toBeFocused();
+      if(SUPPORT.includes.selectorExtensions) {
+        expect($('#focused').focus()).toBeFocused();
+      }
     });
 
     it("should pass negated on not focused element", function() {
-      expect($('#focused')).not.toBeFocused();
+      if(SUPPORT.includes.selectorExtensions) {
+        expect($('#focused')).not.toBeFocused();
+      }
     });
-
   });
 
   describe('toHaveBeenTriggeredOn', function() {
@@ -738,7 +834,7 @@ describe("jQuery matchers", function() {
     });
 
     it('should pass if the event was triggered on the object', function() {
-      $('#clickme').click();
+      $('#clickme').trigger('click');
       expect('click').toHaveBeenTriggeredOn($('#clickme'));
       expect('click').toHaveBeenTriggeredOn($('#clickme').get(0));
     });
@@ -764,13 +860,14 @@ describe("jQuery matchers", function() {
     it('should pass if the event was prevented on the object', function() {
       $('#clickme').bind('click', function(event) {
         event.preventDefault();
+        return false;
       });
-      $('#clickme').click();
+      $('#clickme').trigger('click');
       expect('click').toHaveBeenPreventedOn($('#clickme'));
     });
 
     it('should pass negated if the event was never prevented', function() {
-      $('#clickme').click();
+      $('#clickme').trigger('click');
       expect('click').not.toHaveBeenPreventedOn($('#clickme'));
     });
 
@@ -778,7 +875,7 @@ describe("jQuery matchers", function() {
       $('#otherlink').bind('click', function(event) {
         event.preventDefault();
       });
-      $('#clickme').click();
+      $('#clickme').trigger('click');
       expect('click').not.toHaveBeenPreventedOn($('#clickme'));
     });
   });
@@ -791,15 +888,18 @@ describe("jQuery matchers", function() {
     it('should pass if the event is bound', function() {
       var handler = function(){ }; // noop
       $('#clickme').bind("click", handler);
-      expect($('#clickme')).toHandle("click");
-      expect($('#clickme').get(0)).toHandle("click");
-    });
-    
-    it('should pass if the event is not bound', function() {
-      expect($('#clickme')).not.toHandle("click");
-      expect($('#clickme').get(0)).not.toHandle("click");
+      if(SUPPORT.includes.accessibleHandlers) {
+        expect($('#clickme')).toHandle("click");
+        expect($('#clickme').get(0)).toHandle("click");
+      }
     });
 
+    it('should pass if the event is not bound', function() {
+      if(SUPPORT.includes.accessibleHandlers) {
+        expect($('#clickme')).not.toHandle("click");
+        expect($('#clickme').get(0)).not.toHandle("click");
+      }
+    });
   });
   
   describe('toHandleWith', function() {
@@ -810,24 +910,29 @@ describe("jQuery matchers", function() {
     it('should pass if the event is bound with the given handler', function() {
       var handler = function(){ }; // noop
       $('#clickme').bind("click", handler);
-      expect($('#clickme')).toHandleWith("click", handler);
-      expect($('#clickme').get(0)).toHandleWith("click", handler);
+      if(SUPPORT.includes.accessibleHandlers) {
+        expect($('#clickme')).toHandleWith("click", handler);
+        expect($('#clickme').get(0)).toHandleWith("click", handler);
+      }
     });
-    
+
     it('should pass if the event is not bound with the given handler', function() {
       var handler = function(){ };
       $('#clickme').bind("click", handler);
-      
+
       var aDifferentHandler = function(){ };
-      expect($('#clickme')).not.toHandleWith("click", aDifferentHandler);
-      expect($('#clickme').get(0)).not.toHandleWith("click", aDifferentHandler);
-    });
-    
-    it('should pass if the event is not bound at all', function() {
-      expect($('#clickme')).not.toHandle("click");
-      expect($('#clickme').get(0)).not.toHandle("click");
+      if(SUPPORT.includes.accessibleHandlers) {
+        expect($('#clickme')).not.toHandleWith("click", aDifferentHandler);
+        expect($('#clickme').get(0)).not.toHandleWith("click", aDifferentHandler);
+      }
     });
 
+    it('should pass if the event is not bound at all', function() {
+      if(SUPPORT.includes.accessibleHandlers) {
+        expect($('#clickme')).not.toHandle("click");
+        expect($('#clickme').get(0)).not.toHandle("click");
+      }
+    });
   });
 });
 
