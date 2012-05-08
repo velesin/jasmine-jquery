@@ -121,6 +121,18 @@ All of above methods have matching global short cuts:
 - `readFixtures(fixtureUrl[, fixtureUrl, ...])`
 - `setFixtures(html)`
 
+loadFixtures and setFixtures can be passed a boolean as the first argument which will flag whether the fixture should be added to the fixture.  This is useful if a beforeEach method loads a fixture and you would like an individual test to add to the existing fixture.  Example:
+
+    describe("A test with a setup", function(){
+      beforeEach(function(){
+        loadFixtures('fixtureFile.html');
+      });
+      it("should do something else when this fixture exists", function(){
+        loadFixtures(true, 'another_fixture.html');
+        ...
+      });
+    });
+
 Also, a helper method for creating HTML elements for your tests is provided:
 
 - `sandbox([{attributeName: value[, attributeName: value, ...]}])`
