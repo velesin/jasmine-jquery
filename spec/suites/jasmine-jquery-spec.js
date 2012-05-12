@@ -129,65 +129,65 @@ describe("jasmine.Fixtures", function() {
       })
     });
 
-    describe("when adding", function() {
-      beforeEach(function(){
-        ajaxData = 'some ajax data';
-      });
-
-      it("should insert fixture HTML into container", function() {
-        jasmine.getFixtures().load(true,fixtureUrl);
-        expect(fixturesContainer().html()).toEqual(ajaxData);
-      });
-
-      it("should insert duplicated fixture HTML into container when the same url is provided twice in a single call", function() {
-        jasmine.getFixtures().load(true,fixtureUrl, fixtureUrl);
-        expect(fixturesContainer().html()).toEqual(ajaxData + ajaxData);
-      });
-
-      it("should insert merged HTML of two fixtures into container when two different urls are provided in a single call", function() {
-        jasmine.getFixtures().load(true,fixtureUrl, anotherFixtureUrl);
-        expect(fixturesContainer().html()).toEqual(ajaxData + ajaxData);
-      });
-
-      it("should have shortcut global method loadFixtures", function() {
-        loadFixtures(true,fixtureUrl, anotherFixtureUrl);
-        expect(fixturesContainer().html()).toEqual(ajaxData + ajaxData);
-      });
-
-      it("should automatically create fixtures container and append it to DOM", function() {
-        jasmine.getFixtures().load(true,fixtureUrl);
-        expect(fixturesContainer().size()).toEqual(1);
-      });
-
-      describe("with a prexisting fixture",function(){
-        beforeEach(function() {
-          jasmine.getFixtures().load(true,fixtureUrl);
-        });
-
-        it("should add new content", function() {
-          jasmine.getFixtures().load(true,fixtureUrl);
-          expect(fixturesContainer().html()).toEqual(ajaxData + ajaxData);
-        });
-
-        it("should not add a new fixture container", function(){
-          jasmine.getFixtures().load(true,fixtureUrl);
-          expect(fixturesContainer().size()).toEqual(1);
-        });
-      });
-
-      describe("when fixture contains an inline <script> tag", function(){
-        beforeEach(function(){
-          ajaxData = "<div><a id=\"anchor_01\"></a><script>$(function(){ $('#anchor_01').addClass('foo')});</script></div>"
-        });
-
-        it("should execute the inline javascript after the fixture has been inserted into the body", function(){
-          jasmine.getFixtures().load(true,fixtureUrl);
-          expect($("#anchor_01")).toHaveClass('foo');
-        })
-      });
-    });
   });
 
+  describe("appendLoad", function() {
+    beforeEach(function(){
+      ajaxData = 'some ajax data';
+    });
+
+    it("should insert fixture HTML into container", function() {
+      jasmine.getFixtures().appendLoad(fixtureUrl);
+      expect(fixturesContainer().html()).toEqual(ajaxData);
+    });
+
+    it("should insert duplicated fixture HTML into container when the same url is provided twice in a single call", function() {
+      jasmine.getFixtures().appendLoad(fixtureUrl, fixtureUrl);
+      expect(fixturesContainer().html()).toEqual(ajaxData + ajaxData);
+    });
+
+    it("should insert merged HTML of two fixtures into container when two different urls are provided in a single call", function() {
+      jasmine.getFixtures().appendLoad(fixtureUrl, anotherFixtureUrl);
+      expect(fixturesContainer().html()).toEqual(ajaxData + ajaxData);
+    });
+
+    it("should have shortcut global method loadFixtures", function() {
+      appendLoadFixtures(fixtureUrl, anotherFixtureUrl);
+      expect(fixturesContainer().html()).toEqual(ajaxData + ajaxData);
+    });
+
+    it("should automatically create fixtures container and append it to DOM", function() {
+      jasmine.getFixtures().appendLoad(fixtureUrl);
+      expect(fixturesContainer().size()).toEqual(1);
+    });
+
+    describe("with a prexisting fixture",function(){
+      beforeEach(function() {
+        jasmine.getFixtures().appendLoad(fixtureUrl);
+      });
+
+      it("should add new content", function() {
+        jasmine.getFixtures().appendLoad(fixtureUrl);
+        expect(fixturesContainer().html()).toEqual(ajaxData + ajaxData);
+      });
+
+      it("should not add a new fixture container", function(){
+        jasmine.getFixtures().appendLoad(fixtureUrl);
+        expect(fixturesContainer().size()).toEqual(1);
+      });
+    });
+
+    describe("when fixture contains an inline <script> tag", function(){
+      beforeEach(function(){
+        ajaxData = "<div><a id=\"anchor_01\"></a><script>$(function(){ $('#anchor_01').addClass('foo')});</script></div>"
+      });
+
+      it("should execute the inline javascript after the fixture has been inserted into the body", function(){
+        jasmine.getFixtures().appendLoad(fixtureUrl);
+        expect($("#anchor_01")).toHaveClass('foo');
+      })
+    });
+  });
 
   describe("preload", function() {
     describe("read after preload", function() {
@@ -251,39 +251,40 @@ describe("jasmine.Fixtures", function() {
         expect(fixturesContainer().html()).toEqual(jasmine.JQuery.browserTagCaseIndependentHtml(html));
       });
     });
+  });
 
-    describe("when adding",function(){ 
-      it("should insert HTML into container", function() {
-        jasmine.getFixtures().set(true,html);
-        expect(fixturesContainer().html()).toEqual(jasmine.JQuery.browserTagCaseIndependentHtml(html));
+  describe("appendSet",function(){ 
+    var html = '<div>some HTML</div>';
+    it("should insert HTML into container", function() {
+      jasmine.getFixtures().appendSet(html);
+      expect(fixturesContainer().html()).toEqual(jasmine.JQuery.browserTagCaseIndependentHtml(html));
+    });
+
+    it("should insert jQuery element into container", function() {
+      jasmine.getFixtures().appendSet($(html));
+      expect(fixturesContainer().html()).toEqual(jasmine.JQuery.browserTagCaseIndependentHtml(html));
+    });
+
+    it("should have shortcut global method setFixtures", function() {
+      appendSetFixtures(html);
+      expect(fixturesContainer().html()).toEqual(jasmine.JQuery.browserTagCaseIndependentHtml(html));
+    });
+
+    describe("when fixture container does not exist", function() {
+      it("should automatically create fixtures container and append it to DOM", function() {
+        jasmine.getFixtures().appendSet(html);
+        expect(fixturesContainer().size()).toEqual(1);
+      });
+    });
+
+    describe("when fixture container exists", function() {
+      beforeEach(function() {
+        jasmine.getFixtures().appendSet(html);
       });
 
-      it("should insert jQuery element into container", function() {
-        jasmine.getFixtures().set(true,$(html));
-        expect(fixturesContainer().html()).toEqual(jasmine.JQuery.browserTagCaseIndependentHtml(html));
-      });
-
-      it("should have shortcut global method setFixtures", function() {
-        setFixtures(true,html);
-        expect(fixturesContainer().html()).toEqual(jasmine.JQuery.browserTagCaseIndependentHtml(html));
-      });
-
-      describe("when fixture container does not exist", function() {
-        it("should automatically create fixtures container and append it to DOM", function() {
-          jasmine.getFixtures().set(html);
-          expect(fixturesContainer().size()).toEqual(1);
-        });
-      });
-
-      describe("when fixture container exists", function() {
-        beforeEach(function() {
-          jasmine.getFixtures().set(html);
-        });
-
-        it("should add new content", function() {
-          jasmine.getFixtures().set(true,html);
-          expect(fixturesContainer().html()).toEqual(jasmine.JQuery.browserTagCaseIndependentHtml(html)+jasmine.JQuery.browserTagCaseIndependentHtml(html));
-        });
+      it("should add new content", function() {
+        jasmine.getFixtures().appendSet(html);
+        expect(fixturesContainer().html()).toEqual(jasmine.JQuery.browserTagCaseIndependentHtml(html)+jasmine.JQuery.browserTagCaseIndependentHtml(html));
       });
     });
   });
