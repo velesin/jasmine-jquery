@@ -103,30 +103,24 @@ Several methods for loading fixtures are provided:
 
 - `load(fixtureUrl[, fixtureUrl, ...])`
   - Loads fixture(s) from one or more files and automatically appends them to the DOM (to the fixtures container).
+- `appendLoad(fixtureUrl[, fixtureUrl, ...])`
+  - Same as load, but adds the fixtures to the pre-existing fixture container.
 - `read(fixtureUrl[, fixtureUrl, ...])`
   - Loads fixture(s) from one or more files but instead of appending them to the DOM returns them as a string (useful if you want to process fixture's content directly in your test).
 - `set(html)`
   - Doesn't load fixture from file, but instead gets it directly as a parameter (html parameter may be a string or a jQuery element, so both `set('<div></div>')` and `set($('<div/>'))` will work). Automatically appends fixture to the DOM (to the fixtures container). It is useful if your fixture is too simple to keep it in an external file or is constructed procedurally, but you still want Fixture module to automatically handle DOM insertion and clean-up between tests for you.
+- `appendSet(html)
+  - Same as set, but adds the fixtures to the pre-existing fixture container.
 - `preload(fixtureUrl[, fixtureUrl, ...])`
   - Pre-loads fixture(s) from one or more files and stores them into cache, without returning them or appending them to the DOM. All subsequent calls to `load` or `read` methods will then get fixtures content from cache, without making any AJAX calls (unless cache is manually purged by using `clearCache` method). Pre-loading all fixtures before a test suite is run may be useful when working with libraries like jasmine-ajax that block or otherwise modify the inner workings of JS or jQuery AJAX calls.
   
 All of above methods have matching global short cuts:
 
 - `loadFixtures(fixtureUrl[, fixtureUrl, ...])`
+- `appendLoadFixtures(fixtureUrl[, fixtureUrl, ...])`
 - `readFixtures(fixtureUrl[, fixtureUrl, ...])`
 - `setFixtures(html)`
-
-loadFixtures and setFixtures can be passed a boolean as the first argument which will flag whether the fixture should be added to the fixture.  This is useful if a beforeEach method loads a fixture and you would like an individual test to add to the existing fixture.  Example:
-
-    describe("A test with a setup", function(){
-      beforeEach(function(){
-        loadFixtures('fixtureFile.html');
-      });
-      it("should do something else when this fixture exists", function(){
-        loadFixtures(true, 'another_fixture.html');
-        ...
-      });
-    });
+- `appendSetFixtures(html)`
 
 Also, a helper method for creating HTML elements for your tests is provided:
 
