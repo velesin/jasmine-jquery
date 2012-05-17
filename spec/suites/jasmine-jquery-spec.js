@@ -788,6 +788,11 @@ describe("jQuery matchers", function() {
       setFixtures(sandbox().html('<a id="clickme">Click Me</a> <a id="otherlink">Other Link</a>'));
     });
 
+    it("should handle events on the window object", function(){
+      $(window).bind("resize", function(){})
+      expect($(window)).toHandle("resize")
+    })
+
     it('should pass if the event is bound', function() {
       var handler = function(){ }; // noop
       $('#clickme').bind("click", handler);
