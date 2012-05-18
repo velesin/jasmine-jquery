@@ -663,6 +663,13 @@ describe("jQuery matchers", function() {
       expect($('#non-existent-element')).not.toExist();
       expect($('#non-existent-element').get(0)).not.toExist();
     });
+
+    it("should pass on negated removed element", function(){
+      setFixtures(sandbox())
+      var el = $("#sandbox")
+      el.remove()
+      expect(el).not.toExist()
+    })
   });
 
   describe("toBe", function() {
