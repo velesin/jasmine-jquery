@@ -812,6 +812,19 @@ describe("jQuery matchers", function() {
       expect($('#clickme').get(0)).not.toHandle("click");
     });
 
+    it('should pass if the a namespaced event is bound', function(){
+      var handler = function(){ }; // noop
+      $('#clickme').bind("click", handler); //another event for the click array
+      $('#clickme').bind("click.NameSpace", handler);
+      expect($('#clickme')).toHandle("click.NameSpace");
+      expect($('#clickme').get(0)).toHandle("click.NameSpace");
+    });
+
+    it('should pass if a namespaced event is not bound', function() {
+      expect($('#clickme')).not.toHandle("click.NameSpace");
+      expect($('#clickme').get(0)).not.toHandle("click.NameSpace");
+    });
+
   });
   
   describe('toHandleWith', function() {
