@@ -812,6 +812,11 @@ describe("jQuery matchers", function() {
       expect($('#clickme').get(0)).not.toHandle("click");
     });
 
+    it('should handle event on any object', function(){
+      var object = new function(){ }; // noop
+      $(object).bind('click', function(){});
+      expect($(object)).toHandle('click');
+    })
   });
   
   describe('toHandleWith', function() {
@@ -840,6 +845,18 @@ describe("jQuery matchers", function() {
       expect($('#clickme').get(0)).not.toHandle("click");
     });
 
+    it("should pass if the event on window is bound with the given handler", function(){
+      var handler = function(){ };
+      $(window).bind("resize", handler)
+      expect($(window)).toHandleWith("resize", handler)
+    })
+
+    it("should pass if the event on any object is bound with the given handler", function(){
+      var object = new function(){ }; // noop
+      var handler = function(){ };
+      $(object).bind('click', handler);
+      expect($(object)).toHandleWith('click', handler);
+    })
   });
 });
 
