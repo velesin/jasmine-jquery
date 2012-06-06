@@ -337,7 +337,14 @@ describe("jQuery matchers", function() {
       setFixtures(sandbox());
       expect($('#sandbox')).not.toHaveClass(className);
       expect($('#sandbox').get(0)).not.toHaveClass(className);
-    });    
+    });
+
+	it("should not crash when documentElement provided", function(){
+	  var doc = $(document.documentElement).addClass(className);
+	  expect(doc).toHaveClass(className);
+	  doc.removeClass(className);
+	  expect(doc).not.toHaveClass(className);
+	});
   });
 
   describe("toHaveAttr", function() {
