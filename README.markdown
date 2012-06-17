@@ -30,6 +30,9 @@ jasmine-jquery provides following custom matchers (in alphabetical order):
     - They are form elements with `type` equal to `hidden`.
     - Their `width` and `height` are explicitly set to `0`.
     - An ancestor element is hidden, so the element is not shown on the page.
+- `toHaveCss(css)`
+  - e.g. `expect($('<div style="display: none; margin: 10px;"></div>')).toHaveCss({display: "none", margin: "10px"})`
+  - e.g. `expect($('<div style="display: none; margin: 10px;"></div>')).toHaveCss({margin: "10px"})`
 - `toBeSelected()`
   - only for tags that have selected attribute
   - e.g. `expect($('<option selected="selected"></option>')).toBeSelected()`

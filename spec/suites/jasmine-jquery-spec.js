@@ -426,6 +426,30 @@ describe("jQuery matchers", function() {
       });
   });
 
+  describe("toHaveCss", function(){
+    beforeEach(function(){
+      setFixtures(sandbox())
+    })
+
+    it("should pass if the element has matching css", function(){
+      $("#sandbox").css("display", "none")
+      $("#sandbox").css("margin", "10px")
+      expect($("#sandbox")).toHaveCss({display: "none", margin: "10px"})
+    })
+
+    it("should be able to check a subset of element's css", function(){
+      $("#sandbox").css("display", "none")
+      $("#sandbox").css("margin", "10px")
+      expect($("#sandbox")).toHaveCss({margin: "10px"})
+    })
+
+    it("should fail if the element doesn't have matching css", function(){
+      $("#sandbox").css("display", "none")
+      $("#sandbox").css("margin", "20px")
+      expect($("#sandbox")).not.toHaveCss({display: "none", margin: "10px"})
+    })
+  })
+
   describe("toHaveId", function() {
     beforeEach(function() {
       setFixtures(sandbox());
