@@ -55,6 +55,8 @@ jasmine-jquery provides following custom matchers (in alphabetical order):
   - value is optional, if omitted it will check only if an entry for that key exists
 - `toHaveHtml(string)`
   - e.g. `expect($('<div><span></span></div>')).toHaveHtml('<span></span>')`
+- `toContainHtml(string)`
+  - e.g. `expect($('<div><ul></ul><h1>header</h1></div>')).toContainHtml('<ul></ul>')`
 - `toHaveId(id)`
   - e.g. `expect($('<div id="some-id"></div>')).toHaveId("some-id")`
 - `toHaveText(string)`

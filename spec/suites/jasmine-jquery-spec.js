@@ -491,6 +491,22 @@ describe("jQuery matchers", function() {
     });
   });
 
+  describe("toContainHtml", function(){
+    beforeEach(function(){
+      setFixtures(sandbox())
+    })
+
+    it("should pass when the element contains given html", function(){
+      $("#sandbox").html("<div><ul></ul><h1>foo</h1></div>")
+      expect($("#sandbox")).toContainHtml("<ul></ul>")
+    })
+
+    it("should fail when the element doesn't contain given html", function(){
+      $("#sandbox").html("<div><h1>foo</h1></div>")
+      expect($("#sandbox")).not.toContainHtml("<ul></ul>")
+    })
+  })
+
   describe("toHaveText", function() {
     var text = 'some text';
     var wrongText = 'some other text';
