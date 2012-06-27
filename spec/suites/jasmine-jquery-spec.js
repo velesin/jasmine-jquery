@@ -933,17 +933,18 @@ describe("jQuery matchers", function() {
   });
 
   describe('toHandle', function() {
+    var handler;
     beforeEach(function() {
       setFixtures(sandbox().html('<a id="clickme">Click Me</a> <a id="otherlink">Other Link</a>'));
+      handler = function(){ }; // noop
     });
 
     it("should handle events on the window object", function(){
-      $(window).bind("resize", function(){})
+      $(window).bind("resize", handler)
       expect($(window)).toHandle("resize")
     })
 
     it('should pass if the event is bound', function() {
-      var handler = function(){ }; // noop
       $('#clickme').bind("click", handler);
       expect($('#clickme')).toHandle("click");
       expect($('#clickme').get(0)).toHandle("click");
@@ -955,16 +956,27 @@ describe("jQuery matchers", function() {
     });
     
     it('should pass if the a namespaced event is bound', function(){
-      var handler = function(){ }; // noop
       $('#clickme').bind("click", handler); //another event for the click array
       $('#clickme').bind("click.NameSpace", handler);
       expect($('#clickme')).toHandle("click.NameSpace");
-      expect($('#clickme').get(0)).toHandle("click.NameSpace");
+    });
+
+    it('should work with all valid namespaces', function(){
+      $('#clickme').bind("click.Name-1!@#$%^&*?,[]{}_()Space", handler);
+      expect($('#clickme')).toHandle("click.Name-1!@#$%^&*?,[]{}_()Space");
+    });
+  
+    it('should recognize an event with multiple namespaces', function(){
+      $('#clickme').bind("click.NSone.NStwo.NSthree", handler);
+      expect($('#clickme')).toHandle("click.NSone");
+      expect($('#clickme')).toHandle("click.NStwo");
+      expect($('#clickme')).toHandle("click.NSthree");
     });
 
     it('should pass if a namespaced event is not bound', function() {
+      $('#clickme').bind("click", handler); //non namespaced event
+      $('#clickme').bind("click.OtherNameSpace", handler); //different namespaced event
       expect($('#clickme')).not.toHandle("click.NameSpace");
-      expect($('#clickme').get(0)).not.toHandle("click.NameSpace");
     });
 
     it('should handle event on any object', function(){
