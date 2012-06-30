@@ -222,7 +222,7 @@ jasmine-jquery is maintained by [Travis Jeffery](http://github.com/travisjeffery
 - Get the code right.
 - Include tests that fail without your code, and pass with it.
 - Update the (surrounding) documentation, examples elsewhere, and the guides: whatever is affected by your contribution.
-- Follow the conventions in the source you see used already.
+- Follow the conventions in the source you see used already, basically [npm coding style](http://npmjs.org/doc/coding-style.html)
 
 If you can, have another developer sanity check your change.
 
