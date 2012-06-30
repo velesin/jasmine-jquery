@@ -961,9 +961,9 @@ describe("jQuery matchers", function() {
       expect($('#clickme')).toHandle("click.NameSpace");
     });
 
-    it('should work with all valid namespaces', function(){
-      $('#clickme').bind("click.Name-1!@#$%^&*?,[]{}_()Space", handler);
-      expect($('#clickme')).toHandle("click.Name-1!@#$%^&*?,[]{}_()Space");
+    it('should not fail when events is empty', function() {
+      $('#clickme').change(function() { });
+      expect($('#clickme')).not.toHandle('click');
     });
   
     it('should recognize an event with multiple namespaces', function(){
@@ -971,6 +971,9 @@ describe("jQuery matchers", function() {
       expect($('#clickme')).toHandle("click.NSone");
       expect($('#clickme')).toHandle("click.NStwo");
       expect($('#clickme')).toHandle("click.NSthree");
+      expect($('#clickme')).toHandle("click.NSthree.NStwo");
+      expect($('#clickme')).toHandle("click.NStwo.NSone");
+      expect($('#clickme')).toHandle("click");
     });
 
     it('should pass if a namespaced event is not bound', function() {
