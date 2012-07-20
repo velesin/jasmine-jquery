@@ -884,30 +884,66 @@ describe("jQuery matchers", function() {
     beforeEach(function() {
       setFixtures(sandbox().html('<a id="clickme">Click Me</a> <a id="otherlink">Other Link</a>'))
       spyOnEvent($('#clickme'), 'click')
+      spyOnEvent($('#otherlink'), 'click')
     })
 
     it('should pass if the event was triggered on the object', function() {
       $('#clickme').click()
       expect('click').toHaveBeenTriggeredOn($('#clickme'))
-      expect('click').toHaveBeenTriggeredOn($('#clickme').get(0))
+      expect('click').toHaveBeenTriggeredOn('#clickme')
     })
 
     it('should pass negated if the event was never triggered', function() {
       expect('click').not.toHaveBeenTriggeredOn($('#clickme'))
-      expect('click').not.toHaveBeenTriggeredOn($('#clickme').get(0))
+      expect('click').not.toHaveBeenTriggeredOn('#clickme')
     })
 
     it('should pass negated if the event was triggered on another non-descendant object', function() {
       $('#otherlink').click()
       expect('click').not.toHaveBeenTriggeredOn($('#clickme'))
-      expect('click').not.toHaveBeenTriggeredOn($('#clickme').get(0))
+      expect('click').not.toHaveBeenTriggeredOn('#clickme')
     })
   })
-  
+
+  describe('toHaveBeenTriggered', function() {
+    var spyEvents = {}
+    beforeEach(function() {
+      setFixtures(sandbox().html('<a id="clickme">Click Me</a> <a id="otherlink">Other Link</a>'))
+      spyEvents['#clickme'] = spyOnEvent($('#clickme'), 'click')
+      spyEvents['#otherlink'] = spyOnEvent($('#otherlink'), 'click')
+    })
+
+    it('should pass if the event was triggered on the object', function() {
+      $('#clickme').click()
+      expect(spyEvents['#clickme']).toHaveBeenTriggered()
+    })
+
+    it('should pass negated if the event was never triggered', function() {
+      expect(spyEvents['#clickme']).not.toHaveBeenTriggered()
+    })
+
+    it('should pass negated if the event was triggered on another non-descendant object', function() {
+      $('#otherlink').click()
+      expect(spyEvents['#clickme']).not.toHaveBeenTriggered()
+    })
+
+    it('should pass negated if the spy event was reset', function(){
+      $('#clickme').click()
+      expect('click').toHaveBeenTriggeredOn($('#clickme'))
+      expect('click').toHaveBeenTriggeredOn('#clickme')
+      expect(spyEvents['#clickme']).toHaveBeenTriggered()
+      spyEvents['#clickme'].reset()
+      expect('click').not.toHaveBeenTriggeredOn($('#clickme'))
+      expect('click').not.toHaveBeenTriggeredOn('#clickme')
+      expect(spyEvents['#clickme']).not.toHaveBeenTriggered()
+    })
+  })
+
   describe('toHaveBeenPreventedOn', function() {
     beforeEach(function() {
       setFixtures(sandbox().html('<a id="clickme">Click Me</a> <a id="otherlink">Other Link</a>'))
       spyOnEvent($('#clickme'), 'click')
+      spyOnEvent($('#otherlink'), 'click')
     })
 
     it('should pass if the event was prevented on the object', function() {
@@ -916,11 +952,13 @@ describe("jQuery matchers", function() {
       })
       $('#clickme').click()
       expect('click').toHaveBeenPreventedOn($('#clickme'))
+      expect('click').toHaveBeenPreventedOn('#clickme')
     })
 
     it('should pass negated if the event was never prevented', function() {
       $('#clickme').click()
       expect('click').not.toHaveBeenPreventedOn($('#clickme'))
+      expect('click').not.toHaveBeenPreventedOn('#clickme')
     })
 
     it('should pass negated if the event was prevented on another non-descendant object', function() {
@@ -930,6 +968,37 @@ describe("jQuery matchers", function() {
       $('#clickme').click()
       expect('click').not.toHaveBeenPreventedOn($('#clickme'))
     })
+  })
+
+  describe('toHaveBeenPrevented', function() {
+    var spyEvents = {}
+    beforeEach(function() {
+      setFixtures(sandbox().html('<a id="clickme">Click Me</a> <a id="otherlink">Other Link</a>'))
+      spyEvents['#clickme'] = spyOnEvent($('#clickme'), 'click')
+      spyEvents['#otherlink'] = spyOnEvent($('#otherlink'), 'click')
+    })
+
+    it('should pass if the event was prevented on the object', function() {
+      $('#clickme').bind('click', function(event) {
+        event.preventDefault()
+      })
+      $('#clickme').click()
+      expect(spyEvents['#clickme']).toHaveBeenPrevented()
+    })
+
+    it('should pass negated if the event was never prevented', function() {
+      $('#clickme').click()
+      expect(spyEvents['#clickme']).not.toHaveBeenPrevented()
+    })
+
+    it('should pass negated if the event was prevented on another non-descendant object', function() {
+      $('#otherlink').bind('click', function(event) {
+        event.preventDefault()
+      })
+      $('#clickme').click()
+      expect(spyEvents['#clickme']).not.toHaveBeenPrevented()
+    })
+
   })
 
   describe('toHandle', function() {
