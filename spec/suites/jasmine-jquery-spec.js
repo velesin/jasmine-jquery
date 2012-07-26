@@ -884,6 +884,7 @@ describe("jQuery matchers", function() {
     beforeEach(function() {
       setFixtures(sandbox().html('<a id="clickme">Click Me</a> <a id="otherlink">Other Link</a>'))
       spyOnEvent($('#clickme'), 'click')
+      spyOnEvent(document, 'click')
       spyOnEvent($('#otherlink'), 'click')
     })
 
@@ -891,6 +892,18 @@ describe("jQuery matchers", function() {
       $('#clickme').click()
       expect('click').toHaveBeenTriggeredOn($('#clickme'))
       expect('click').toHaveBeenTriggeredOn('#clickme')
+    })
+
+    it('should pass if the event was triggered on document', function() {
+      $(document).click()
+      expect('click').toHaveBeenTriggeredOn($(document))
+      expect('click').toHaveBeenTriggeredOn(document)
+    })
+
+    it('should pass if the event was triggered on a descendant of document', function() {
+      $('#clickme').click()
+      expect('click').toHaveBeenTriggeredOn($(document))
+      expect('click').toHaveBeenTriggeredOn(document)
     })
 
     it('should pass negated if the event was never triggered', function() {
