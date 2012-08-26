@@ -90,17 +90,17 @@ describe("jasmine.StyleFixtures", function() {
   })
 
   describe("preload", function() {
-    describe("read after preload", function() {
+    describe("load after preload", function() {
       it("should go from cache", function() {
         jasmine.getStyleFixtures().preload(fixtureUrl, anotherFixtureUrl)
-        jasmine.getStyleFixtures().read(fixtureUrl, anotherFixtureUrl)
+        jasmine.getStyleFixtures().load(fixtureUrl, anotherFixtureUrl)
         expect(jasmine.StyleFixtures.prototype.loadFixtureIntoCache_.callCount).toEqual(2)
       })
 
       it("should return correct CSSs", function() {
         jasmine.getStyleFixtures().preload(fixtureUrl, anotherFixtureUrl)
-        var css = jasmine.getStyleFixtures().read(fixtureUrl, anotherFixtureUrl)
-        expect(css).toEqual(ajaxData + ajaxData)
+        jasmine.getStyleFixtures().load(fixtureUrl, anotherFixtureUrl)
+        expect(fixturesContainer().html()).toEqual(ajaxData + ajaxData)
       })
     })
 
@@ -111,7 +111,6 @@ describe("jasmine.StyleFixtures", function() {
 
     it("should have shortcut global method preloadStyleFixtures", function() {
       preloadStyleFixtures(fixtureUrl, anotherFixtureUrl)
-      jasmine.getStyleFixtures().read(fixtureUrl, anotherFixtureUrl)
       expect(jasmine.StyleFixtures.prototype.loadFixtureIntoCache_.callCount).toEqual(2)
     })
   })
@@ -209,8 +208,8 @@ describe("jasmine.StyleFixtures using real AJAX call", function() {
     var fixtureUrl = "real_non_mocked_fixture_style.css"
 
     it("should load content of fixture file", function() {
-      var fixtureContent = jasmine.getStyleFixtures().read(fixtureUrl)
-      expect(fixtureContent).toEqual('body { background: red; }')
+      jasmine.getStyleFixtures().load(fixtureUrl)
+      expect($('head style').last().html()).toEqual('body { background: red; }')
     })
   })
 })
