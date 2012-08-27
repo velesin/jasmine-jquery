@@ -174,6 +174,63 @@ Additionally, two clean up methods are provided:
   
 These two methods do not have global short cut functions.
 
+## Style Fixtures
+
+StyleFixtures module is pretty much like Fixtures module, but it allows you to load CSS content on the page while testing. It may be useful if your tests expect that certain css rules are applied to elements that you are testing. The overall workflow is typically the same:
+
+In _mycssfixture.css_ file:
+
+    .elem { position: absolute }
+    
+Inside your test:
+
+	loadStyleFixtures('mycssfixture.css');
+    $('#my-fixture').myTestedPlugin();
+    expect($('#my-fixture .elem')).toHaveCss({left: "300px"});
+
+Notice that if you haven't applied the `position: absolute` rule to the `.elem` and try to test its left position in some browsers (e.g. GoogleChrome) you will allways get the value `auto` even if your plugin did everything correct and applied positioning. So that's why you might need to load style fixtures. In Firefox though you will get the correct value even without the `position: absolute`.
+        
+By default, style fixtures are loaded from `spec/javascripts/fixtures`. You can configure this path: `jasmine.getStyleFixtures().fixturesPath = 'my/new/path';`.
+
+Like in Fixtures module, StyleFixtures are also automatically cleaned-up between tests and are internally cached, so you can load the same fixture file in several tests without penalty to your test suite's speed.
+
+To invoke fixture related methods, obtain StyleFixtures singleton through a factory and invoke a method on it:
+
+    jasmine.getStyleFixtures().load(...);
+    
+There are also global short cut functions available for the most used methods, so the above example can be rewritten to just:
+
+    loadStyleFixtures(...);
+    
+Several methods for loading fixtures are provided:
+
+- `load(fixtureUrl[, fixtureUrl, ...])`
+  - Loads fixture(s) from one or more files and automatically appends them to the DOM into the HEAD element. This method will remove all existing fixtures loaded previously, if any.
+- `appendLoad(fixtureUrl[, fixtureUrl, ...])`
+  - Same as load, but it won't remove fixtures you added earlier.
+- `set(css)`
+  - Doesn't load fixture from file, but instead gets it directly as a parameter (e.g. `set('body {background: red}')`). Automatically appends style to the DOM. It is useful if your css fixture is too simple to keep it in an external file. This method will remove all existing fixtures loaded previously, if any.
+- `appendSet(css)`
+  - Same as set, but it won't remove fixtures you added earlier.
+- `preload(fixtureUrl[, fixtureUrl, ...])`
+  - Pre-loads fixture(s) from one or more files and stores them into cache, without returning them or appending them to the DOM. All subsequent calls to `load` methods will then get fixtures content from cache, without making any AJAX calls (unless cache is manually purged by using `clearCache` method).
+    
+All of above methods have matching global short cuts:
+
+- `loadStyleFixtures(fixtureUrl[, fixtureUrl, ...])`
+- `appendLoadStyleFixtures(fixtureUrl[, fixtureUrl, ...])`
+- `setStyleFixtures(css)`
+- `appendSetStyleFixtures(css)`    
+
+Additionally, two clean up methods are provided:
+
+- `clearCache()`
+  - purges StyleFixture module internal cache (you should need it only in very special cases; typically, if you need to use it, it may indicate a smell in your test code)
+- `cleanUp()`
+  - cleans-up all existing style fixtures (this is done automatically between tests, so there is no need to ever invoke this manually, unless you're testing a really fancy special case and need to clean-up fixtures in the middle of your test)
+  
+These two methods do not have global short cut functions.
+
 ## Event Spies
 
 Spying on jQuery events can be done with `spyOnEvent` and
