@@ -266,7 +266,7 @@ Much thanks to Luiz Fernando Ribeiro for his
 
 ## Dependencies
 
-jasmine-jquery was tested with Jasmine 1.1 and jQuery 1.6 on IE, FF and Chrome. There is a high chance it will work with older versions and other browsers as well, but I don't typically run test suite against them when adding new features.
+jasmine-jquery was tested with Jasmine 1.2 and jQuery 1.8 on IE, FF, Chrome, and Safari. There is a high chance it will work with older versions and other browsers as well, but I don't typically run test suite against them when adding new features.
 
 ## Cross domain policy problems under Chrome
 
