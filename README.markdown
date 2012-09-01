@@ -231,6 +231,50 @@ Additionally, two clean up methods are provided:
   
 These two methods do not have global short cut functions.
 
+## JSONFixtures
+
+The JSONFixtures modules allows you to load JSON data from file (instead of putting huge blocks of data in the spec files).  
+
+In _my_data_fixture.json_ file:
+
+    {"property1":"value1", "array1":[1,2,3]}
+    
+Inside your test:
+
+    fixture_data = loadJsonFixtures('my_data_fixture.json');
+    test_data = fixture_data['my_data_fixture.json');
+    // or use the helper
+    test_data = getJsonFixture('my_data_fixture.json');
+    
+    expect(myDataManipulator.processData(test_data)).to...)
+    
+By default, fixtures are loaded from `spec/javascripts/fixtures/json`. You can configure this path: `jasmine.getJsonFixtures().fixturesPath = 'my/new/path';`.
+
+Your fixture data is loaded into an object stashed by the JSONFixtures structure.  You fetch the data using the filename as the key.  This allows you to load multiple chunks of test data in a spec.  
+
+Because a deep copy of Javascript objects can be a little tricky, this module will refetch data each time you call `load`.  If you modify the data within a spec, you must call `load` or `loadJsonFixtures` again to repopulate the data.
+
+To invoke fixture related methods, obtain Fixtures singleton through a factory and invoke a method on it:
+
+    jasmine.getJSONFixtures().load(...);
+    
+There are also global short cut functions available for the most used methods, so the above example can be rewritten to just:
+
+    loadJsonFixtures(...);
+    
+Several methods for loading fixtures are provided:
+
+- `load(fixtureUrl[, fixtureUrl, ...])`
+  - Loads fixture(s) from one or more files and automatically adds them to the fixture list.  This method returns the entire set of fixtures keyed by their filename.
+  
+All of above methods have matching global short cuts:
+
+- `loadJsonFixtures(fixtureUrl[, fixtureUrl, ...])`
+
+- `getJsonFixture(fixtureUrl)`
+  - After you've loaded fixture files, this global helper will retrieve the fixture data given the fixtureUrl
+
+
 ## Event Spies
 
 Spying on jQuery events can be done with `spyOnEvent` and
