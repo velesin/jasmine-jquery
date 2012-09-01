@@ -1328,3 +1328,114 @@ describe("jasmine.StyleFixtures using real AJAX call", function() {
   })
 })
 
+
+describe("jasmine.JSONFixtures", function() {
+  var ajaxData = {a:1, b:2, arr: [1,2,'stuff'], hsh: { blurp: 8, blop: 'blip' }};
+  var moreAjaxData = [1,2,'stuff'];
+  var fixtureUrl = 'some_json'
+  var anotherFixtureUrl = 'another_json'
+
+  beforeEach(function() {
+    jasmine.getJsonFixtures().clearCache()
+    spyOn(jasmine.JSONFixtures.prototype, 'loadFixtureIntoCache_').andCallFake(function(relativeUrl){
+      fakeData = {};
+      // we put the data directly here, instead of using the variables to simulate rereading the file 
+      fakeData[fixtureUrl] = {a:1, b:2, arr: [1,2,'stuff'], hsh: { blurp: 8, blop: 'blip' }};
+      fakeData[anotherFixtureUrl] = [1,2,'stuff'];
+      this.fixturesCache_[relativeUrl] = fakeData[relativeUrl];
+    });
+  });
+
+  describe("default initial config values", function() {
+    it("should set 'spec/javascripts/fixtures/json' as the default style fixtures path", function() {
+      expect(jasmine.getJsonFixtures().fixturesPath).toEqual('spec/javascripts/fixtures/json');
+    });
+  });
+
+  describe("load", function() {
+    it("should load the JSON data under the key 'fixture_url'", function() {
+      data = jasmine.getJsonFixtures().load(fixtureUrl);
+      expect(_sortedKeys(data)).toEqual([fixtureUrl]);
+      expect(data[fixtureUrl]).toEqual(ajaxData);
+    });
+
+    it("should load the JSON data under the key 'fixture_url', even if it's loaded twice in one call", function() {
+      data = jasmine.getJsonFixtures().load(fixtureUrl, fixtureUrl);
+      expect(_sortedKeys(data)).toEqual([fixtureUrl]);
+    });
+
+    it("should load the JSON data under 2 keys given two files in a single call", function() {
+      data = jasmine.getJsonFixtures().load(anotherFixtureUrl, fixtureUrl);
+      expect(_sortedKeys(data)).toEqual([anotherFixtureUrl, fixtureUrl]);
+      expect(data[anotherFixtureUrl]).toEqual(moreAjaxData);
+      expect(data[fixtureUrl]).toEqual(ajaxData);
+    });
+
+    it("should have shortcut global method loadJsonFixtures", function() {
+      data = loadJsonFixtures(fixtureUrl, anotherFixtureUrl);
+      expect(_sortedKeys(data)).toEqual([anotherFixtureUrl, fixtureUrl]);
+      expect(data[anotherFixtureUrl]).toEqual(moreAjaxData);
+      expect(data[fixtureUrl]).toEqual(ajaxData);
+    });
+  });
+
+  describe('getJsonFixture', function() {
+    it("fetches the fixture you ask for", function() {
+      data = loadJsonFixtures(fixtureUrl);
+      data = loadJsonFixtures(anotherFixtureUrl);
+
+      expect(getJsonFixture(fixtureUrl)).toEqual(ajaxData);
+      expect(getJsonFixture(anotherFixtureUrl)).toEqual(moreAjaxData);
+    });
+  });
+
+  describe("reloading data will restore the fixture data", function() {
+    var data;
+    beforeEach(function() {
+      data = jasmine.getJsonFixtures().load(anotherFixtureUrl)[anotherFixtureUrl]
+    });
+    // WARNING: this test must be invoked first (before 'SECOND TEST')!
+    it("FIRST TEST: should pollute the fixture data", function() {
+      data.push('moredata')
+      expect(data.length).toEqual(4);
+    })
+
+    // WARNING: this test must be invoked second (after 'FIRST TEST')!
+    it("SECOND TEST: should see cleansed JSON fixture data", function() {
+      expect(data.length).toEqual(3);
+    })
+  })
+})
+
+describe("jasmine.JSONFixtures using real AJAX call", function() {
+  var defaultFixturesPath
+
+  beforeEach(function() {
+    defaultFixturesPath = jasmine.getJsonFixtures().fixturesPath
+    jasmine.getJsonFixtures().fixturesPath = 'spec/fixtures/json'
+  })
+
+  afterEach(function() {
+    jasmine.getJsonFixtures().fixturesPath = defaultFixturesPath
+  })
+
+  describe("when fixture file exists", function() {
+    var fixtureUrl = "jasmine_json_test.json";
+
+    it("should load content of fixture file", function() {
+      data = jasmine.getJsonFixtures().load(fixtureUrl);
+      expect(data[fixtureUrl]).toEqual([1,2,3]);
+    })
+  })
+})
+
+
+/** helper methods */
+var _sortedKeys = function(obj) {
+  arr = [];
+  for( var k in obj) {
+    arr.push(k);
+  }
+  return arr.sort();
+};
+
