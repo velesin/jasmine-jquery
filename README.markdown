@@ -241,18 +241,18 @@ In _myjsonfixture.json_ file:
     
 Inside your test:
 
-    fixture_data = loadJsonFixtures('myjsonfixture.json');
-    test_data = fixture_data['myjsonfixture.json');
+    data = loadJSONFixtures('myjsonfixture.json');
+    test_data = data['myjsonfixture.json'];
     // or use the helper
-    test_data = getJsonFixture('myjsonfixture.json');
+    test_data = getJSONFixture('myjsonfixture.json');
     
     expect(myDataManipulator.processData(test_data)).to...)
     
-By default, fixtures are loaded from `spec/javascripts/fixtures/json`. You can configure this path: `jasmine.getJsonFixtures().fixturesPath = 'my/new/path';`.
+By default, fixtures are loaded from `spec/javascripts/fixtures/json`. You can configure this path: `jasmine.getJSONFixtures().fixturesPath = 'my/new/path';`.
 
 Your fixture data is loaded into an object stashed by the JSONFixtures structure.  You fetch the data using the filename as the key.  This allows you to load multiple chunks of test data in a spec.  
 
-Because a deep copy of Javascript objects can be a little tricky, this module will refetch data each time you call `load`.  If you modify the data within a spec, you must call `load` or `loadJsonFixtures` again to repopulate the data.
+Because a deep copy of Javascript objects can be a little tricky, this module will refetch data each time you call `load`.  If you modify the data within a spec, you must call `load` or `loadJSONFixtures` again to repopulate the data.
 
 To invoke fixture related methods, obtain Fixtures singleton through a factory and invoke a method on it:
 
@@ -260,7 +260,7 @@ To invoke fixture related methods, obtain Fixtures singleton through a factory a
     
 There are also global short cut functions available for the most used methods, so the above example can be rewritten to just:
 
-    loadJsonFixtures(...);
+    loadJSONFixtures(...);
     
 Several methods for loading fixtures are provided:
 
@@ -269,9 +269,9 @@ Several methods for loading fixtures are provided:
   
 All of above methods have matching global short cuts:
 
-- `loadJsonFixtures(fixtureUrl[, fixtureUrl, ...])`
+- `loadJSONFixtures(fixtureUrl[, fixtureUrl, ...])`
 
-- `getJsonFixture(fixtureUrl)`
+- `getJSONFixture(fixtureUrl)`
   - After you've loaded fixture files, this global helper will retrieve the fixture data given the fixtureUrl
 
 
