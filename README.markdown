@@ -82,9 +82,9 @@ The same as with standard Jasmine matchers, all of above custom matchers may be 
 
     expect($('<div>some text</div>')).not.toHaveText(/other/)
 
-## Fixtures
+## HTML Fixtures
 
-Fixture module of jasmine-jquery allows you to load HTML content to be used by your tests. The overall workflow is like follows:
+The Fixture module of jasmine-jquery allows you to load HTML content to be used by your tests. The overall workflow is like follows:
 
 In _myfixture.html_ file:
 
@@ -176,7 +176,7 @@ These two methods do not have global short cut functions.
 
 ## Style Fixtures
 
-StyleFixtures module is pretty much like Fixtures module, but it allows you to load CSS content on the page while testing. It may be useful if your tests expect that certain css rules are applied to elements that you are testing. The overall workflow is typically the same:
+The StyleFixtures module is pretty much like the Fixtures module, but it allows you to load CSS content on the page while testing. It may be useful if your tests expect that certain css rules are applied to elements that you are testing. The overall workflow is typically the same:
 
 In _mycssfixture.css_ file:
 
@@ -231,20 +231,20 @@ Additionally, two clean up methods are provided:
   
 These two methods do not have global short cut functions.
 
-## JSONFixtures
+## JSON Fixtures
 
 The JSONFixtures modules allows you to load JSON data from file (instead of putting huge blocks of data in the spec files).  
 
-In _my_data_fixture.json_ file:
+In _myjsonfixture.json_ file:
 
     {"property1":"value1", "array1":[1,2,3]}
     
 Inside your test:
 
-    fixture_data = loadJsonFixtures('my_data_fixture.json');
-    test_data = fixture_data['my_data_fixture.json');
+    fixture_data = loadJsonFixtures('myjsonfixture.json');
+    test_data = fixture_data['myjsonfixture.json');
     // or use the helper
-    test_data = getJsonFixture('my_data_fixture.json');
+    test_data = getJsonFixture('myjsonfixture.json');
     
     expect(myDataManipulator.processData(test_data)).to...)
     
