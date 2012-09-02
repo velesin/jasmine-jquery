@@ -184,7 +184,7 @@ In _mycssfixture.css_ file:
     
 Inside your test:
 
-	loadStyleFixtures('mycssfixture.css');
+    loadStyleFixtures('mycssfixture.css');
     $('#my-fixture').myTestedPlugin();
     expect($('#my-fixture .elem')).toHaveCss({left: "300px"});
 
@@ -241,10 +241,10 @@ In _myjsonfixture.json_ file:
     
 Inside your test:
 
-    data = loadJSONFixtures('myjsonfixture.json');
-    test_data = data['myjsonfixture.json'];
-    // or use the helper
-    test_data = getJSONFixture('myjsonfixture.json');
+    var data = getJSONFixture('myjsonfixture.json');
+    // or load and get the JSON two-step
+    var fixtures = loadJSONFixtures('myjsonfixture.json');
+    var data = fixtures['myjsonfixture.json'];
     
     expect(myDataManipulator.processData(test_data)).to...)
     

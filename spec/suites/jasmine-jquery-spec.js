@@ -1138,8 +1138,8 @@ describe("jasmine.StyleFixtures", function() {
       var stylesNumOld = $('head style').length
 
       jasmine.getStyleFixtures().load(fixtureUrl)
-      expect($('head style').length - stylesNumOld).toEqual(1);
-      expect(fixturesContainer().html()).toEqual(ajaxData);
+      expect($('head style').length - stylesNumOld).toEqual(1)
+      expect(fixturesContainer().html()).toEqual(ajaxData)
     })
 
     it("should insert duplicated CSS fixture into one style tag when the same url is provided twice in a single call", function() {
@@ -1167,8 +1167,8 @@ describe("jasmine.StyleFixtures", function() {
       var stylesNumOld = $('head style').length
 
       jasmine.getStyleFixtures().appendLoad(fixtureUrl)
-      expect($('head style').length - stylesNumOld).toEqual(1);
-      expect(fixturesContainer().html()).toEqual(ajaxData);
+      expect($('head style').length - stylesNumOld).toEqual(1)
+      expect(fixturesContainer().html()).toEqual(ajaxData)
     })
 
     it("should insert duplicated CSS fixture into one style tag when the same url is provided twice in a single call", function() {
@@ -1284,9 +1284,9 @@ describe("jasmine.StyleFixtures", function() {
       var stylesNumOld = $('head style').length
 
       jasmine.getStyleFixtures().load(fixtureUrl, anotherFixtureUrl)
-      jasmine.getStyleFixtures().cleanUp();
+      jasmine.getStyleFixtures().cleanUp()
 
-      expect($('head style').length).toEqual(stylesNumOld);
+      expect($('head style').length).toEqual(stylesNumOld)
     })
   })
 
@@ -1330,79 +1330,81 @@ describe("jasmine.StyleFixtures using real AJAX call", function() {
 
 
 describe("jasmine.JSONFixtures", function() {
-  var ajaxData = {a:1, b:2, arr: [1,2,'stuff'], hsh: { blurp: 8, blop: 'blip' }};
-  var moreAjaxData = [1,2,'stuff'];
+  var ajaxData = {a:1, b:2, arr: [1,2,'stuff'], hsh: { blurp: 8, blop: 'blip' }}
+  var moreAjaxData = [1,2,'stuff']
   var fixtureUrl = 'some_json'
   var anotherFixtureUrl = 'another_json'
+  var _sortedKeys = function(obj) {
+    var arr = []
+    for(var k in obj) arr.push(k)
+    return arr.sort()
+  }
 
   beforeEach(function() {
     jasmine.getJSONFixtures().clearCache()
     spyOn(jasmine.JSONFixtures.prototype, 'loadFixtureIntoCache_').andCallFake(function(relativeUrl){
-      fakeData = {};
+      fakeData = {}
       // we put the data directly here, instead of using the variables to simulate rereading the file 
-      fakeData[fixtureUrl] = {a:1, b:2, arr: [1,2,'stuff'], hsh: { blurp: 8, blop: 'blip' }};
-      fakeData[anotherFixtureUrl] = [1,2,'stuff'];
-      this.fixturesCache_[relativeUrl] = fakeData[relativeUrl];
-    });
-  });
+      fakeData[fixtureUrl] = {a:1, b:2, arr: [1,2,'stuff'], hsh: { blurp: 8, blop: 'blip' }}
+      fakeData[anotherFixtureUrl] = [1,2,'stuff']
+      this.fixturesCache_[relativeUrl] = fakeData[relativeUrl]
+    })
+  })
 
   describe("default initial config values", function() {
     it("should set 'spec/javascripts/fixtures/json' as the default style fixtures path", function() {
-      expect(jasmine.getJSONFixtures().fixturesPath).toEqual('spec/javascripts/fixtures/json');
-    });
-  });
+      expect(jasmine.getJSONFixtures().fixturesPath).toEqual('spec/javascripts/fixtures/json')
+    })
+  })
 
   describe("load", function() {
     it("should load the JSON data under the key 'fixture_url'", function() {
-      data = jasmine.getJSONFixtures().load(fixtureUrl);
-      expect(_sortedKeys(data)).toEqual([fixtureUrl]);
-      expect(data[fixtureUrl]).toEqual(ajaxData);
-    });
+      data = jasmine.getJSONFixtures().load(fixtureUrl)
+      expect(_sortedKeys(data)).toEqual([fixtureUrl])
+      expect(data[fixtureUrl]).toEqual(ajaxData)
+    })
 
     it("should load the JSON data under the key 'fixture_url', even if it's loaded twice in one call", function() {
-      data = jasmine.getJSONFixtures().load(fixtureUrl, fixtureUrl);
-      expect(_sortedKeys(data)).toEqual([fixtureUrl]);
-    });
+      data = jasmine.getJSONFixtures().load(fixtureUrl, fixtureUrl)
+      expect(_sortedKeys(data)).toEqual([fixtureUrl])
+    })
 
     it("should load the JSON data under 2 keys given two files in a single call", function() {
-      data = jasmine.getJSONFixtures().load(anotherFixtureUrl, fixtureUrl);
-      expect(_sortedKeys(data)).toEqual([anotherFixtureUrl, fixtureUrl]);
-      expect(data[anotherFixtureUrl]).toEqual(moreAjaxData);
-      expect(data[fixtureUrl]).toEqual(ajaxData);
-    });
+      data = jasmine.getJSONFixtures().load(anotherFixtureUrl, fixtureUrl)
+      expect(_sortedKeys(data)).toEqual([anotherFixtureUrl, fixtureUrl])
+      expect(data[anotherFixtureUrl]).toEqual(moreAjaxData)
+      expect(data[fixtureUrl]).toEqual(ajaxData)
+    })
 
     it("should have shortcut global method loadJSONFixtures", function() {
-      data = loadJSONFixtures(fixtureUrl, anotherFixtureUrl);
-      expect(_sortedKeys(data)).toEqual([anotherFixtureUrl, fixtureUrl]);
-      expect(data[anotherFixtureUrl]).toEqual(moreAjaxData);
-      expect(data[fixtureUrl]).toEqual(ajaxData);
-    });
-  });
+      data = loadJSONFixtures(fixtureUrl, anotherFixtureUrl)
+      expect(_sortedKeys(data)).toEqual([anotherFixtureUrl, fixtureUrl])
+      expect(data[anotherFixtureUrl]).toEqual(moreAjaxData)
+      expect(data[fixtureUrl]).toEqual(ajaxData)
+    })
+  })
 
   describe('getJSONFixture', function() {
     it("fetches the fixture you ask for", function() {
-      data = loadJSONFixtures(fixtureUrl);
-      data = loadJSONFixtures(anotherFixtureUrl);
-
-      expect(getJSONFixture(fixtureUrl)).toEqual(ajaxData);
-      expect(getJSONFixture(anotherFixtureUrl)).toEqual(moreAjaxData);
-    });
-  });
+      expect(getJSONFixture(fixtureUrl)).toEqual(ajaxData)
+      expect(getJSONFixture(anotherFixtureUrl)).toEqual(moreAjaxData)
+    })
+  })
 
   describe("reloading data will restore the fixture data", function() {
-    var data;
+    var data
     beforeEach(function() {
       data = jasmine.getJSONFixtures().load(anotherFixtureUrl)[anotherFixtureUrl]
-    });
+    })
     // WARNING: this test must be invoked first (before 'SECOND TEST')!
     it("FIRST TEST: should pollute the fixture data", function() {
       data.push('moredata')
-      expect(data.length).toEqual(4);
+      expect(data.length).toEqual(4)
     })
 
     // WARNING: this test must be invoked second (after 'FIRST TEST')!
     it("SECOND TEST: should see cleansed JSON fixture data", function() {
-      expect(data.length).toEqual(3);
+      expect(data.length).toEqual(3)
     })
   })
 })
@@ -1420,22 +1422,13 @@ describe("jasmine.JSONFixtures using real AJAX call", function() {
   })
 
   describe("when fixture file exists", function() {
-    var fixtureUrl = "jasmine_json_test.json";
+    var fixtureUrl = "jasmine_json_test.json"
 
     it("should load content of fixture file", function() {
-      data = jasmine.getJSONFixtures().load(fixtureUrl);
-      expect(data[fixtureUrl]).toEqual([1,2,3]);
+      data = jasmine.getJSONFixtures().load(fixtureUrl)
+      expect(data[fixtureUrl]).toEqual([1,2,3])
     })
   })
 })
 
-
-/** helper methods */
-var _sortedKeys = function(obj) {
-  arr = [];
-  for( var k in obj) {
-    arr.push(k);
-  }
-  return arr.sort();
-};
 
