@@ -282,7 +282,7 @@ When using [jstd](http://code.google.com/p/js-test-driver/) and the jasmine adap
 
 ## Contributing
 
-jasmine-jquery is maintained by [Travis Jeffery](http://github.com/travisjeffery) and [Wojciech Zawistowski](http://github.com/velesin).
+jasmine-jquery is maintained by [Travis Jeffery](http://github.com/travisjeffery).
 
 ### Setup
 
