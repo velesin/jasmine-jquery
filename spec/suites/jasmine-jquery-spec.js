@@ -865,19 +865,19 @@ describe("jQuery matchers", function() {
   })
 
   describe("toBeFocused", function() {
-
     beforeEach(function() {
       setFixtures('<input type="text" id="focused"/>')
     })
 
     it("should pass on focused element", function() {
-      expect($('#focused').focus()).toBeFocused()
+      var el = $("#focused").focus()
+      expect(el).toBeFocused()
     })
 
     it("should pass negated on not focused element", function() {
-      expect($('#focused')).not.toBeFocused()
+      var el = $("#focused")
+      expect(el).not.toBeFocused()
     })
-
   })
 
   describe('toHaveBeenTriggeredOn', function() {
