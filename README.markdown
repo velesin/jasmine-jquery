@@ -322,7 +322,7 @@ Newer versions of Chrome don't allow file:// URIs read other file:// URIs. In ef
 
 ## Testing with Javascript Test Driver
 
-When using [jstd](http://code.google.com/p/js-test-driver/) and the jasmine adapter you will need to include jasmine-jquery.js after your jasmine-jstd-adapter files, otherwise jasmine-jquery matchers will not be available when tests are executed. 
+When using [jstd](http://code.google.com/p/js-test-driver/) and the jasmine adapter you will need to include jasmine-jquery.js after your jasmine-jstd-adapter files, otherwise jasmine-jquery matchers will not be available when tests are executed. Check out [this issue](https://github.com/velesin/jasmine-jquery/issues/95#issuecomment-9293180) for a thorough configuration example too.
 
 ## Contributing
 
