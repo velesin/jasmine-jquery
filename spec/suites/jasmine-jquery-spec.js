@@ -325,6 +325,15 @@ describe("jasmine.Fixtures", function() {
   })
 
   describe("cleanUp", function() {
+    afterEach(function() {
+      window.$ = window.jQuery;
+    })
+
+    it("should work even if $ (zepto, jQuery, etc) isn't defined", function() {
+      window.$ = undefined
+      jasmine.getFixtures().cleanUp()
+    })
+    
     it("should remove fixtures container from DOM", function() {
       appendFixturesContainerToDom()
       jasmine.getFixtures().cleanUp()
