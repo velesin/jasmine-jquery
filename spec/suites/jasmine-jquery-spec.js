@@ -1012,6 +1012,10 @@ describe("jQuery matchers", function() {
       expect(spyEvents['#clickme']).not.toHaveBeenPrevented()
     })
 
+    it('should pass negated if nothing was triggered', function() {
+      expect(spyEvents['#clickme']).not.toHaveBeenPrevented()
+    })
+
   })
 
   describe('toHandle', function() {
