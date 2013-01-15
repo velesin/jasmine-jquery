@@ -814,6 +814,31 @@ describe("jQuery matchers", function() {
     })
   })
 
+  describe("toHaveLength", function() {
+    it("should pass on an object with more than zero items", function() {
+    	var $three = $('<div>').add('<span>').add("<pre>")
+    	expect($three.length).toBe(3)
+    	expect($three).toHaveLength(3)
+    })
+    it("should pass negated on an object with more than zero items", function() {
+    	var $three = $('<div>').add('<span>').add("<pre>")
+    	expect($three.length).toBe(3)
+    	expect($three).not.toHaveLength(2)
+    })
+
+    it("should pass on an object with zero items", function() {
+    	var $zero = $()
+    	expect($zero.length).toBe(0)
+    	expect($zero).toHaveLength(0)
+    })
+
+    it("should pass negated on an object with zero items", function() {
+    	var $zero = $()
+    	expect($zero.length).toBe(0)
+    	expect($zero).not.toHaveLength(0)
+    })
+  })
+
   describe("toBe", function() {
     beforeEach(function() {
       setFixtures(sandbox())
