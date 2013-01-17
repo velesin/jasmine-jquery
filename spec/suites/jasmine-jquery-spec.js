@@ -15,12 +15,12 @@ describe("jasmine.Fixtures", function() {
       this.fixturesCache_[relativeUrl] = ajaxData
     })
   })
-  
+
   describe("default initial config values", function() {
     it("should set 'jasmine-fixtures' as the default container id", function() {
       expect(jasmine.getFixtures().containerId).toEqual('jasmine-fixtures')
     })
-    
+
     it("should set 'spec/javascripts/fixtures' as the default fixtures path", function() {
       expect(jasmine.getFixtures().fixturesPath).toEqual('spec/javascripts/fixtures')
     })
@@ -44,7 +44,7 @@ describe("jasmine.Fixtures", function() {
     it("subsequent read from the same URL should go from cache", function() {
       jasmine.getFixtures().read(fixtureUrl, fixtureUrl)
       expect(jasmine.Fixtures.prototype.loadFixtureIntoCache_.callCount).toEqual(1)
-    });    
+    });
   })
 
   describe("read", function() {
@@ -67,12 +67,12 @@ describe("jasmine.Fixtures", function() {
       var html = readFixtures(fixtureUrl, anotherFixtureUrl)
       expect(html).toEqual(ajaxData + ajaxData)
     })
-    
+
     it("should use the configured fixtures path concatenating it to the requested url (without concatenating a slash if it already has an ending one)", function() {
       jasmine.getFixtures().fixturesPath = 'a path ending with slash/'
       expect(jasmine.getFixtures().makeFixtureUrl_(fixtureUrl)).toEqual('a path ending with slash/'+fixtureUrl)
     })
-    
+
     it("should use the configured fixtures path concatenating it to the requested url (concatenating a slash if it doesn't have an ending one)", function() {
       jasmine.getFixtures().fixturesPath = 'a path without an ending slash'
       expect(jasmine.getFixtures().makeFixtureUrl_(fixtureUrl)).toEqual('a path without an ending slash/'+fixtureUrl)
@@ -104,7 +104,7 @@ describe("jasmine.Fixtures", function() {
       it("should automatically create fixtures container and append it to DOM", function() {
         jasmine.getFixtures().load(fixtureUrl)
         expect(fixturesContainer().size()).toEqual(1)
-      });      
+      });
     })
 
     describe("when fixture container exists", function() {
@@ -218,7 +218,7 @@ describe("jasmine.Fixtures", function() {
 
   describe("set", function() {
     var html = '<div>some HTML</div>'
-    
+
     it("should insert HTML into container", function() {
       jasmine.getFixtures().set(html)
       expect(fixturesContainer().html()).toEqual(jasmine.JQuery.browserTagCaseIndependentHtml(html))
@@ -253,7 +253,7 @@ describe("jasmine.Fixtures", function() {
     })
   })
 
-  describe("appendSet",function(){ 
+  describe("appendSet",function(){
     var html = '<div>some HTML</div>'
     it("should insert HTML into container", function() {
       jasmine.getFixtures().appendSet(html)
@@ -368,7 +368,7 @@ describe("jasmine.Fixtures using real AJAX call", function() {
     })
   })
 
-  /* TODO : start throwing again 
+  /* TODO : start throwing again
   describe("when fixture file does not exist", function() {
     var fixtureUrl = "not_existing_fixture"
 
@@ -395,7 +395,7 @@ describe("jQuery matchers", function() {
         expect(true).toBe(true)
       })
     })
-    
+
     describe("and tested item is a dom object", function() {
       it("should invoke jquery version of matcher", function() {
         expect($('<div />').get(0)).toBe('div')
@@ -834,8 +834,8 @@ describe("jQuery matchers", function() {
 
     it("should pass negated on an object with zero items", function() {
     	var $zero = $()
-    	expect($zero.length).toBe(0)
-    	expect($zero).not.toHaveLength(0)
+    	expect($zero.length).not.toBe(1)
+    	expect($zero).not.toHaveLength(1)
     })
   })
 
@@ -1060,12 +1060,12 @@ describe("jQuery matchers", function() {
       expect($('#clickme')).toHandle("click")
       expect($('#clickme').get(0)).toHandle("click")
     })
-    
+
     it('should pass if the event is not bound', function() {
       expect($('#clickme')).not.toHandle("click")
       expect($('#clickme').get(0)).not.toHandle("click")
     })
-    
+
     it('should pass if the namespaced event is bound', function(){
       $('#clickme').bind("click", handler); //another event for the click array
       $('#clickme').bind("click.NameSpace", handler)
@@ -1076,7 +1076,7 @@ describe("jQuery matchers", function() {
       $('#clickme').change(function() { })
       expect($('#clickme')).not.toHandle('click')
     })
-  
+
     it('should recognize an event with multiple namespaces', function(){
       $('#clickme').bind("click.NSone.NStwo.NSthree", handler)
       expect($('#clickme')).toHandle("click.NSone")
@@ -1099,7 +1099,7 @@ describe("jQuery matchers", function() {
       expect($(object)).toHandle('click')
     })
   })
-  
+
   describe('toHandleWith', function() {
     beforeEach(function() {
       setFixtures(sandbox().html('<a id="clickme">Click Me</a> <a id="otherlink">Other Link</a>'))
@@ -1111,16 +1111,16 @@ describe("jQuery matchers", function() {
       expect($('#clickme')).toHandleWith("click", handler)
       expect($('#clickme').get(0)).toHandleWith("click", handler)
     })
-    
+
     it('should pass if the event is not bound with the given handler', function() {
       var handler = function(){ }
       $('#clickme').bind("click", handler)
-      
+
       var aDifferentHandler = function(){ }
       expect($('#clickme')).not.toHandleWith("click", aDifferentHandler)
       expect($('#clickme').get(0)).not.toHandleWith("click", aDifferentHandler)
     })
-    
+
     it('should pass if the event is not bound at all', function() {
       expect($('#clickme')).not.toHandle("click")
       expect($('#clickme').get(0)).not.toHandle("click")
@@ -1373,7 +1373,7 @@ describe("jasmine.JSONFixtures", function() {
     jasmine.getJSONFixtures().clearCache()
     spyOn(jasmine.JSONFixtures.prototype, 'loadFixtureIntoCache_').andCallFake(function(relativeUrl){
       fakeData = {}
-      // we put the data directly here, instead of using the variables to simulate rereading the file 
+      // we put the data directly here, instead of using the variables to simulate rereading the file
       fakeData[fixtureUrl] = {a:1, b:2, arr: [1,2,'stuff'], hsh: { blurp: 8, blop: 'blip' }}
       fakeData[anotherFixtureUrl] = [1,2,'stuff']
       this.fixturesCache_[relativeUrl] = fakeData[relativeUrl]
