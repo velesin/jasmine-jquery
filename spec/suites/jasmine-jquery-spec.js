@@ -660,6 +660,11 @@ describe("jQuery matchers", function() {
       expect(sandbox()).not.toHaveValue(value)
       expect(sandbox().get(0)).not.toHaveValue(value)
     })
+
+    it("should not coerce types", function(){
+      setFixtures($('<input id="sandbox" type="text" />').val(""))
+      expect($('#sandbox')).not.toHaveValue(0)
+    })
   })
 
   describe("toHaveData", function() {
