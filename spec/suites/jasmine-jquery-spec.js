@@ -1,3 +1,7 @@
+function context(description, spec) {
+  describe(description, spec);
+};
+
 describe("jasmine.Fixtures", function() {
   var ajaxData = 'some ajax data'
   var fixtureUrl = 'some_url'
@@ -639,27 +643,43 @@ describe("jQuery matchers", function() {
   })
 
   describe("toHaveValue", function() {
-    var value = 'some value'
-    var differentValue = 'different value'
+    context('with value', function() {
+      var value = 'some value'
+      var differentValue = 'different value'
 
-    beforeEach(function() {
-      setFixtures($('<input id="sandbox" type="text" />').val(value))
-    })
+      beforeEach(function() {
+        setFixtures($('<input id="sandbox" type="text" />').val(value))
+      })
 
-    it("should pass if value matches expectation", function() {
-      expect($('#sandbox')).toHaveValue(value)
-      expect($('#sandbox').get(0)).toHaveValue(value)
-    })
+      it("should pass if value matches expectation", function() {
+        expect($('#sandbox')).toHaveValue(value)
+        expect($('#sandbox').get(0)).toHaveValue(value)
+      })
 
-    it("should pass negated if value does not match expectation", function() {
-      expect($('#sandbox')).not.toHaveValue(differentValue)
-      expect($('#sandbox').get(0)).not.toHaveValue(differentValue)
-    })
+      it("should pass negated if value does not match expectation", function() {
+        expect($('#sandbox')).not.toHaveValue(differentValue)
+        expect($('#sandbox').get(0)).not.toHaveValue(differentValue)
+      })
 
-    it("should pass negated if value attribute is not present", function() {
-      expect(sandbox()).not.toHaveValue(value)
-      expect(sandbox().get(0)).not.toHaveValue(value)
-    })
+      it("should pass negated if value attribute is not present", function() {
+        expect(sandbox()).not.toHaveValue(value)
+        expect(sandbox().get(0)).not.toHaveValue(value)
+      })
+    });
+
+    context('without value', function() {
+      beforeEach(function() {
+        setFixtures($('<input id="sandbox" type="text" />'));
+      });
+
+      it ('does not match with zero', function() {
+        expect($('#sandbox')).not.toHaveValue(0);
+      });
+
+      it ('matchs with empty', function() {
+        expect($('#sandbox')).toHaveValue('');
+      });
+    });
   })
 
   describe("toHaveData", function() {
