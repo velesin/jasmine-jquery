@@ -1048,6 +1048,17 @@ describe("jQuery matchers", function() {
 
   })
 
+  it('should make event arguments available', function() {
+    var spyEvent = spyOnEvent('body', 'test');
+    $('body').trigger('test', ['arg1', 'arg2']);
+    $('body').trigger('test', 'arg3');
+    expect(spyEvent.argsForEvent[0][1]).toEqual('arg1');
+    expect(spyEvent.argsForEvent[0][2]).toEqual('arg2');
+    expect(spyEvent.argsForEvent[1][1]).toEqual('arg3');
+    spyEvent.reset();
+    expect(spyEvent.argsForEvent).toEqual([]);
+  });
+
   describe('toHandle', function() {
     var handler
     beforeEach(function() {
