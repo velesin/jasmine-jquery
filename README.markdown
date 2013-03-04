@@ -3,7 +3,7 @@
 jasmine-jquery provides two extensions for [Jasmine](http://pivotal.github.com/jasmine/) JavaScript Testing Framework:
   
 - a set of custom matchers for jQuery framework
-- an API for handling HTML fixtures in your specs
+- an API for handling HTML, CSS, and JSON fixtures in your specs
 
 ## Installation
 
