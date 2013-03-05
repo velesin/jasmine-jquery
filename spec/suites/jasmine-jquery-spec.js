@@ -677,6 +677,8 @@ describe("jQuery matchers", function() {
       setFixtures(sandbox().data(key, value))
     })
 
+    var failing_spec = it("a mock spec just to test expectation failure messages", function() { });
+
     describe("when only key is provided", function() {
       it("should pass if element has matching data key", function() {
         expect($('#sandbox')).toHaveData(key)
@@ -686,6 +688,14 @@ describe("jQuery matchers", function() {
       it("should pass negated if element has no matching data key", function() {
         expect($('#sandbox')).not.toHaveData(wrongKey)
         expect($('#sandbox').get(0)).not.toHaveData(wrongKey)
+      })
+
+      it("should give a message that helps understanding how the expectation was not met", function() {
+        var node = $("#sandbox");
+        var matcher = failing_spec.expect(node);
+        matcher.toHaveData(wrongKey);
+        var result = failing_spec.results().getItems()[0];
+        expect(result.message).toEqual("Expected '"+node.get(0).outerHTML+"' to have data 'wrong key'.");
       })
     })
 
@@ -703,6 +713,15 @@ describe("jQuery matchers", function() {
       it("should pass negated if element has no matching key", function() {
         expect($('#sandbox')).not.toHaveData(wrongKey, value)
         expect($('#sandbox').get(0)).not.toHaveData(wrongKey, value)
+      })
+
+      it("should give a message that helps understanding how the expectation was not met", function() {
+        var node = $("#sandbox");
+        var matcher = failing_spec.expect(node.get(0));
+        matcher.toHaveData(key, wrongValue);
+        var result = failing_spec.results().getItems()[0];
+
+        expect(result.message).toEqual("Expected '"+node.get(0).outerHTML+"' to have data 'wrong key'.");
       })
     })
   })
