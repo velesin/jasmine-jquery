@@ -1048,6 +1048,71 @@ describe("jQuery matchers", function() {
 
   })
 
+  describe('toHaveBeenStoppedOn', function() {
+    beforeEach(function() {
+      setFixtures(sandbox().html('<a id="clickme">Click Me</a> <a id="otherlink">Other Link</a>'))
+      spyOnEvent($('#clickme'), 'click')
+      spyOnEvent($('#otherlink'), 'click')
+    })
+
+    it('should pass if the event was stopped on the object', function() {
+      $('#clickme').bind('click', function(event) {
+        event.stopPropagation()
+      })
+      $('#clickme').click()
+      expect('click').toHaveBeenStoppedOn($('#clickme'))
+      expect('click').toHaveBeenStoppedOn('#clickme')
+    })
+
+    it('should pass negated if the event was never stopped', function() {
+      $('#clickme').click()
+      expect('click').not.toHaveBeenStoppedOn($('#clickme'))
+      expect('click').not.toHaveBeenStoppedOn('#clickme')
+    })
+
+    it('should pass negated if the event was stopped on another non-descendant object', function() {
+      $('#otherlink').bind('click', function(event) {
+        event.stopPropagation()
+      })
+      $('#clickme').click()
+      expect('click').not.toHaveBeenStoppedOn($('#clickme'))
+    })
+  })
+
+  describe('toHaveBeenStopped', function() {
+    var spyEvents = {}
+    beforeEach(function() {
+      setFixtures(sandbox().html('<a id="clickme">Click Me</a> <a id="otherlink">Other Link</a>'))
+      spyEvents['#clickme'] = spyOnEvent($('#clickme'), 'click')
+      spyEvents['#otherlink'] = spyOnEvent($('#otherlink'), 'click')
+    })
+
+    it('should pass if the event was stopped on the object', function() {
+      $('#clickme').bind('click', function(event) {
+        event.stopPropagation()
+      })
+      $('#clickme').click()
+      expect(spyEvents['#clickme']).toHaveBeenStopped()
+    })
+
+    it('should pass negated if the event was never stopped', function() {
+      $('#clickme').click()
+      expect(spyEvents['#clickme']).not.toHaveBeenStopped()
+    })
+
+    it('should pass negated if the event was stopped on another non-descendant object', function() {
+      $('#otherlink').bind('click', function(event) {
+        event.stopPropagation()
+      })
+      $('#clickme').click()
+      expect(spyEvents['#clickme']).not.toHaveBeenStopped()
+    })
+
+    it('should pass negated if nothing was triggered', function() {
+      expect(spyEvents['#clickme']).not.toHaveBeenStopped()
+    })
+  })
+
   describe('toHandle', function() {
     var handler
     beforeEach(function() {
