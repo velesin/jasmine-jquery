@@ -49,6 +49,8 @@ jasmine-jquery provides following custom matchers (in alphabetical order):
   - if event has been triggered on `selector` (see "Event Spies", below)
 - `toHaveBeenTriggered()`
   - if event has been triggered on `selector` (see "Event Spies", below)
+- `toHaveBeenTriggeredOnAndWith(selector, extraParameters)`
+  - if event has been triggered on `selector` and with `extraParameters`
 - `toHaveBeenPreventedOn(selector)`
   - if event has been prevented on `selector` (see "Event Spies", below)
 - `toHaveBeenPrevented()`
