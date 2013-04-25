@@ -40,6 +40,8 @@ jasmine-jquery provides following custom matchers (in alphabetical order):
   - Elements are considered visible if they consume space in the document. Visible elements have a width or height that is greater than zero.
 - `toContain(jQuerySelector)`
   - e.g. `expect($('<div><span class="some-class"></span></div>')).toContain('span.some-class')`
+- `toContainText(string)`
+  - e.g. `expect($('<div>some text</div>')).toContainText('some')`
 - `toExist()`
 - `toHaveAttr(attributeName, attributeValue)`
   - attribute value is optional, if omitted it will check only if attribute exists
