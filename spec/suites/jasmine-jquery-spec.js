@@ -638,6 +638,27 @@ describe("jQuery matchers", function() {
     })
   })
 
+  describe("toContainText", function() {
+    var text = 'some text'
+    var wrongText = 'some other text'
+    var partOfText = 'some'
+    var element
+
+    beforeEach(function() {
+      element = $('<div/>').append(text)
+    })
+
+    it("should pass when part of text matches", function() {
+      expect(element).toContainText(partOfText)
+      expect(element.get(0)).toContainText(partOfText)
+    })
+
+    it("should pass negated when text does not match", function() {
+      expect(element).not.toContainText(wrongText)
+      expect(element.get(0)).not.toContainText(wrongText)
+    })
+  })
+
   describe("toHaveValue", function() {
     var value = 'some value'
     var differentValue = 'different value'
