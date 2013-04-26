@@ -305,6 +305,14 @@ You can similarly check if triggered event was prevented:
     expect('click').toHaveBeenPreventedOn('#some_element');
     expect(spyEvent).toHaveBeenPrevented();
 
+You can also check if the triggered event was stopped:
+
+    var spyEvent = spyOnEvent('#some_element', 'click');
+    $('#some_element').click(function(event){event.stopPropagation();});
+    $('#some_element').click();
+    expect('click').toHaveBeenStoppedOn('#some_element');
+    expect(spyEvent).toHaveBeenStopped();
+
 Much thanks to Luiz Fernando Ribeiro for his
 [article on Jasmine event spies](http://luizfar.wordpress.com/2011/01/10/testing-events-on-jquery-objects-with-jasmine/).
 
