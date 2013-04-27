@@ -63,6 +63,8 @@ jasmine-jquery provides following custom matchers (in alphabetical order):
   - e.g. `expect($('<div><span></span></div>')).toHaveHtml('<span></span>')`
 - `toContainHtml(string)`
   - e.g. `expect($('<div><ul></ul><h1>header</h1></div>')).toContainHtml('<ul></ul>')`
+- `toContainText(string)`
+  - e.g. `expect($('<div><ul></ul><h1>header</h1></div>')).toContainText('header')`
 - `toHaveId(id)`
   - e.g. `expect($('<div id="some-id"></div>')).toHaveId("some-id")`
 - `toHaveText(string)`
@@ -71,6 +73,8 @@ jasmine-jquery provides following custom matchers (in alphabetical order):
 - `toHaveValue(value)`
   - only for tags that have value attribute
   - e.g. `expect($('<input type="text" value="some text"/>')).toHaveValue('some text')`
+- `toHaveLength(value)`
+  - e.g. `expect($('ul > li')).toHaveLength(3)`
 - `toBeDisabled()`
   - e.g. `expect('<input type='submit' disabled='disabled'/>').toBeDisabled()`
 - `toBeFocused()`
