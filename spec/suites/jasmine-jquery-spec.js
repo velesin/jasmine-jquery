@@ -638,6 +638,37 @@ describe("jQuery matchers", function() {
     })
   })
 
+  describe("toContainText", function() {
+    var text = 'some pretty long bits of text'
+    var textPart = 'pret';
+    var wrongText = 'some other text'
+    var element
+
+    beforeEach(function() {
+      element = $('<div/>').append(text)
+    })
+
+    it("should pass when text contains text part", function() {
+      expect(element).toContainText(textPart)
+      expect(element.get(0)).toContainText(textPart)
+    })
+
+    it("should pass negated when text does not match", function() {
+      expect(element).not.toContainText(wrongText)
+      expect(element.get(0)).not.toContainText(wrongText)
+    })
+
+    it('should pass when text matches a regex', function() {
+      expect(element).toContainText(/some/)
+      expect(element.get(0)).toContainText(/some/)
+    })
+
+    it('should pass negated when text does not match a regex', function() {
+      expect(element).not.toContainText(/other/)
+      expect(element.get(0)).not.toContainText(/other/)
+    })
+  })
+
   describe("toHaveValue", function() {
     var value = 'some value'
     var differentValue = 'different value'
