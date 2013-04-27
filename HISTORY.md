@@ -2,7 +2,7 @@
 
 This is an overview and may be incomplete. https://github.com/velesin/jasmine-jquery/commits/master is where to see everything.
 
-## v1.5.1
+## v1.5.1 (April 26, 2013)
   - adds matcher for jQuery's event.stopPropagation()
   - adds toHaveLength matcher
   - adds toContainText matcher
