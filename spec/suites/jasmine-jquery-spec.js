@@ -979,6 +979,64 @@ describe("jQuery matchers", function() {
     })
   })
 
+  describe('toHaveBeenTriggeredOnAndWith', function() {
+    beforeEach(function() {
+      spyOnEvent(document, 'event')
+    })
+
+    describe("when extra parameter is an object", function() {
+      it('should pass if the event was triggered on the object with expected arguments', function() {
+        $(document).trigger('event', { key1: "value1", key2: "value2" })
+        expect('event').toHaveBeenTriggeredOnAndWith(document, { key1: "value1", key2: "value2" })
+      })
+
+      it('should pass negated if the event was never triggered', function() {
+        expect('event').not.toHaveBeenTriggeredOnAndWith(document, { key1: "value1", key2: "value2" })
+      })
+
+      it('should pass negated if the event was triggered on another non-descendant object', function() {
+        $(window).trigger('event', { key1: "value1", key2: "value2" })
+        expect('event').not.toHaveBeenTriggeredOnAndWith(document, { key1: "value1", key2: "value2" })
+      })
+
+      it('should pass negated if the event was triggered but the arguments do not match with the expected arguments', function() {
+        $(document).trigger('event', { key1: "value1" })
+        expect('event').not.toHaveBeenTriggeredOnAndWith(document, { key1: "value1", key2: "value2" })
+        $(document).trigger('event', { key1: "value1", key2: "value2" })
+        expect('event').not.toHaveBeenTriggeredOnAndWith(document, { key1: "value1" })
+        $(document).trigger('event', { key1: "different value" })
+        expect('event').not.toHaveBeenTriggeredOnAndWith(document, { key1: "value1" })
+        $(document).trigger('event', { different_key: "value1" })
+        expect('event').not.toHaveBeenTriggeredOnAndWith(document, { key1: "value1" })
+      })
+    })
+
+    describe("when extra parameter is an array", function() {
+      it('should pass if the event was triggered on the object with expected arguments', function() {
+        $(document).trigger('event', [1, 2])
+        expect('event').toHaveBeenTriggeredOnAndWith(document, [1, 2])
+      })
+
+      it('should pass negated if the event was never triggered', function() {
+        expect('event').not.toHaveBeenTriggeredOnAndWith(document, [1, 2])
+      })
+
+      it('should pass negated if the event was triggered on another non-descendant object', function() {
+        $(window).trigger('event', [1, 2])
+        expect('event').not.toHaveBeenTriggeredOnAndWith(document, [1, 2])
+      })
+
+      it('should pass negated if the event was triggered but the arguments do not match with the expected arguments', function() {
+        $(document).trigger('event', [1])
+        expect('event').not.toHaveBeenTriggeredOnAndWith(document, [1, 2])
+        $(document).trigger('event', [1, 2])
+        expect('event').not.toHaveBeenTriggeredOnAndWith(document, [1])
+        $(document).trigger('event', [1, 3])
+        expect('event').not.toHaveBeenTriggeredOnAndWith(document, [1, 2])
+      })
+    })
+  })
+
   describe('toHaveBeenTriggered', function() {
     var spyEvents = {}
     beforeEach(function() {
