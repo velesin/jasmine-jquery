@@ -907,6 +907,24 @@ describe("jQuery matchers", function() {
     })
   })
 
+  describe("toContainNumberOfElements", function() {
+    beforeEach(function() {
+      setFixtures(sandbox().html('<div class=outer><div class="inner"><select><option>option 1</option><option>option 2</option><option>option 3</option></select></div></div>'))
+    })
+
+    it("should pass if object contains correct number of selector", function() {
+      expect($('#sandbox')).toContainNumberOfElements(2, 'div')
+      expect($('#sandbox').find('select')).toContainNumberOfElements(3, 'option')
+      expect($('#sandbox')).toContainNumberOfElements(0, 'span')
+    })
+
+    it("should pass negated if object does not contain correct number of  selector", function() {
+      expect($('#sandbox')).not.toContainNumberOfElements(3, 'div')
+      expect($('#sandbox').find('select')).not.toContainNumberOfElements(4, 'option')
+      expect($('#sandbox')).not.toContainNumberOfElements(1, 'span')
+    })
+  })
+
   describe("toBeDisabled", function() {
     beforeEach(function() {
       setFixtures('\
