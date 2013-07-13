@@ -1,3 +1,152 @@
+describe("customizing the fixtures' properties", function() {
+  describe("jasmine.setFixturesProperties", function() {
+    var oldFixtures
+    var newFixtures
+    
+    beforeEach(function() {
+      jasmine.getFixtures().clearCache()
+      spyOn(jasmine.Fixtures.prototype, 'loadFixtureIntoCache_').andCallFake(function(relativeUrl){
+        this.fixturesCache_[relativeUrl] = ajaxData
+      })
+      
+      var currentFixtures = jasmine.getFixtures()
+      
+      // Create a shallow clone of the current fixtures' properties
+      oldFixtures = {
+        containerId    : currentFixtures.containerId,
+        fixturesCache_ : currentFixtures.fixturesCache_,
+        fixturesPath   : currentFixtures.fixturesPath
+      }
+
+      jasmine.setFixturesProperties({
+        containerId    : "new-jasmine-fixtures",
+        fixturesCache_ : {},
+        fixturesPath   : 'new/path/to/jasmine/fixtures'
+      })
+      
+      newFixtures = jasmine.getFixtures()
+
+    })
+    
+    afterEach(function() {
+      jasmine.setFixturesProperties({
+        containerId    : oldFixtures.containerId,
+        fixturesCache_ : oldFixtures.fixturesCache_,
+        fixturesPath   : oldFixtures.fixturesPath
+      })
+    })
+
+    it("should set the fixtures' containerId", function() {
+      expect(oldFixtures.containerId).not.toEqual(newFixtures.containerId)
+    })
+
+    it("should set the fixtures' fixturesCache", function() {
+      expect(oldFixtures.fixturesCache_).not.toEqual(newFixtures.fixturesCache)
+    })
+
+    it("should set the fixtures' fixturesPath", function() {
+      expect(oldFixtures.fixturesPath).not.toEqual(newFixtures.fixturesPath)
+    })
+  })
+  
+  describe("jasmine.setStyleFixturesProperties", function() {
+    var oldStyleFixtures
+    var newStyleFixtures
+    
+    beforeEach(function() {
+      jasmine.getStyleFixtures().clearCache()
+      spyOn(jasmine.StyleFixtures.prototype, 'loadFixtureIntoCache_').andCallFake(function(relativeUrl){
+        this.fixturesCache_[relativeUrl] = ajaxData
+      })
+      
+      var currentStyleFixtures = jasmine.getStyleFixtures()
+      
+      // Create a shallow clone of the current style fixtures' properties
+      oldStyleFixtures = {
+        containerId    : currentStyleFixtures.containerId,
+        fixturesCache_ : currentStyleFixtures.fixturesCache_,
+        fixturesPath   : currentStyleFixtures.fixturesPath
+      }
+
+      jasmine.setStyleFixturesProperties({
+        containerId    : "new-jasmine-fixtures",
+        fixturesCache_ : {},
+        fixturesPath   : 'new/path/to/jasmine/fixtures'
+      })
+
+      newStyleFixtures = jasmine.getStyleFixtures()
+
+    })
+    
+    afterEach(function() {
+      jasmine.setStyleFixturesProperties({
+        containerId    : oldStyleFixtures.containerId,
+        fixturesCache_ : oldStyleFixtures.fixturesCache_,
+        fixturesPath   : oldStyleFixtures.fixturesPath
+      })
+    })
+
+    it("should set the style fixtures' containerId", function() {
+      expect(oldStyleFixtures.containerId).not.toEqual(newStyleFixtures.containerId)
+    })
+
+    it("should set the style fixtures' fixturesCache", function() {
+      expect(oldStyleFixtures.fixturesCache_).not.toEqual(newStyleFixtures.fixturesCache)
+    })
+
+    it("should set the style fixtures' fixturesPath", function() {
+      expect(oldStyleFixtures.fixturesPath).not.toEqual(newStyleFixtures.fixturesPath)
+    })
+  })
+
+  describe("jasmine.setJSONFixturesProperties", function() {
+    var oldJSONFixtures
+    var newJSONFixtures
+
+    beforeEach(function() {
+      jasmine.getJSONFixtures().clearCache()
+      spyOn(jasmine.JSONFixtures.prototype, 'loadFixtureIntoCache_').andCallFake(function(relativeUrl){
+        fakeData = {}
+        // we put the data directly here, instead of using the variables to simulate rereading the file
+        fakeData[fixtureUrl] = {a:1, b:2, arr: [1,2,'stuff'], hsh: { blurp: 8, blop: 'blip' }}
+        fakeData[anotherFixtureUrl] = [1,2,'stuff']
+        this.fixturesCache_[relativeUrl] = fakeData[relativeUrl]
+      })
+
+      var currentJSONFixtures = jasmine.getJSONFixtures()
+
+      // Create a shallow clone of the current fixtures' properties
+      oldJSONFixtures = {
+        fixturesCache_ : currentJSONFixtures.fixturesCache_,
+        fixturesPath   : currentJSONFixtures.fixturesPath
+      }
+
+      jasmine.setJSONFixturesProperties({
+        fixturesCache_ : {},
+        fixturesPath   : 'new/path/to/jasmine/fixtures'
+      })
+
+      newJSONFixtures = jasmine.getJSONFixtures()
+
+    })
+    
+    afterEach(function() {
+      jasmine.setJSONFixturesProperties({
+        fixturesCache_ : oldJSONFixtures.fixturesCache_,
+        fixturesPath   : oldJSONFixtures.fixturesPath
+      })
+    })
+
+    it("should set the JSON fixtures' fixturesCache", function() {
+      expect(oldJSONFixtures.fixturesCache_).not.toEqual(newJSONFixtures.fixturesCache)
+    })
+
+    it("should set the JSON fixtures' fixturesPath", function() {
+      expect(oldJSONFixtures.fixturesPath).not.toEqual(newJSONFixtures.fixturesPath)
+    })
+  })
+})
+
 describe("jasmine.Fixtures", function() {
   var ajaxData = 'some ajax data'
   var fixtureUrl = 'some_url'
