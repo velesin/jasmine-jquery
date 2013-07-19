@@ -907,6 +907,32 @@ describe("jQuery matchers", function() {
     })
   })
 
+  describe("toHaveSelected", function() {
+    beforeEach(function() {
+      setFixtures(sandbox().html('<span id="span-a"></span><span id="span-b"></span>'))
+    })
+
+    it("should pass if selector contains given selector", function() {
+      expect($('#sandbox').find('#span-a')).toHaveSelected($('#span-a'));
+      expect($('#sandbox').find('#span-a')).toHaveSelected('#span-a');
+      expect($('#sandbox').find('span')).toHaveSelected('span');
+
+      expect($('#sandbox').find('span')).toHaveSelected($('#span-a'));
+      expect($('#sandbox').find('span')).toHaveSelected('#span-a');
+      expect($('#sandbox').find('span')).toHaveSelected('span');
+    })
+
+    it("should pass negated if selector does not contain given selector", function() {
+      expect($('#sandbox').find('#span-b')).not.toHaveSelected($('#span-a'));
+      expect($('#sandbox').find('#span-b')).not.toHaveSelected('#span-a');
+      expect($('#sandbox').find('div')).not.toHaveSelected('span');
+
+      expect($('#sandbox').find('span').not('#span-a')).not.toHaveSelected($('#span-a'));
+      expect($('#sandbox').find('span').not('#span-a')).not.toHaveSelected('#span-a');
+      expect($('#sandbox')).not.toHaveSelected('span');
+    })
+  })
+
   describe("toBeDisabled", function() {
     beforeEach(function() {
       setFixtures('\
