@@ -41,10 +41,8 @@ jasmine-jquery provides following custom matchers (in alphabetical order):
 - `toContain(jQuerySelector)`
   - e.g. `expect($('<div><span class="some-class"></span></div>')).toContain('span.some-class')`
 - `toSelect(jQuerySelector)`
-  - Check to see if a selector selects a given selector or element. Useful when a selector selects many elements and you need to verify if given ones are selected.
-  - e.g. `expect($('<span></span>').add('<p></p>')).toSelect('span')`
+  - Check to see if a selector selects a given selector or element. 
   - e.g. `expect($('<span></span>').add('<p></p>')).toSelect('p')`
-  - e.g. `expect($('<span></span>').add('<p></p>').not('span').not.toSelect('span')`
 - `toExist()`
 - `toHaveAttr(attributeName, attributeValue)`
   - attribute value is optional, if omitted it will check only if attribute exists
