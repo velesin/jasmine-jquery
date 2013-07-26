@@ -434,12 +434,12 @@ describe("jQuery matchers", function() {
       expect($('#sandbox').get(0)).not.toHaveClass(className)
     })
 
-	it("should not crash when documentElement provided", function(){
-	  var doc = $(document.documentElement).addClass(className)
-	  expect(doc).toHaveClass(className)
-	  doc.removeClass(className)
-	  expect(doc).not.toHaveClass(className)
-	})
+    it("should not crash when documentElement provided", function(){
+      var doc = $(document.documentElement).addClass(className)
+      expect(doc).toHaveClass(className)
+      doc.removeClass(className)
+      expect(doc).not.toHaveClass(className)
+    })
   })
 
   describe("toHaveAttr", function() {
@@ -907,47 +907,18 @@ describe("jQuery matchers", function() {
     })
   })
 
-  describe("toSelect", function() {
+  describe("toBeMatchedBy", function() {
     beforeEach(function() {
-      setFixtures(sandbox().html('<span id="span-a"></span><span id="span-b"></span>'))
+      setFixtures(sandbox().html('<span id="js-match"></span>'))
     })
 
     it("should pass if selector contains given selector", function() {
-      expect($('#sandbox').find('#span-a')).toSelect('#span-a');
-      expect($('#sandbox').find('span')).toSelect('span');
-
-      expect($('#sandbox').find('span')).toSelect('#span-a');
-      expect($('#sandbox').find('span')).toSelect('span');
+      expect($('#sandbox span')).toBeMatchedBy('#js-match');
     })
 
     it("should pass negated if selector does not contain given selector", function() {
-      expect($('#sandbox').find('#span-b')).not.toSelect('#span-a');
-      expect($('#sandbox').find('div')).not.toSelect('span');
-
-      expect($('#sandbox').find('span').not('#span-a')).not.toSelect('#span-a');
-      expect($('#sandbox')).not.toSelect('span');
+      expect($('#sandbox span')).not.toBeMatchedBy('#js-match-not');
     })
-
-    it("should pass if selector contains given element", function() {
-      expect($('#sandbox').find('#span-a')).toSelect($('#span-a')[0]);
-      expect($('#sandbox').find('span')).toSelect($('#span-a')[0]);
-    })
-
-    it("should pass negated if selector contains given element", function() {
-      expect($('#sandbox').find('#span-b')).not.toSelect($('#span-a')[0]);
-      expect($('#sandbox').find('span').not('#span-a')).not.toSelect($('#span-a')[0]);
-    })
-
-    it("should pass if selector contains given selector object", function() {
-      expect($('#sandbox').find('#span-a')).toSelect($('#span-a'));
-      expect($('#sandbox').find('span')).toSelect($('#span-a'));
-    })
-
-    it("should pass negated if selector contains given selector object", function() {
-      expect($('#sandbox').find('#span-b')).not.toSelect($('#span-a'));
-      expect($('#sandbox').find('span').not('#span-a')).not.toSelect($('#span-a'));
-    })
-
   })
 
   describe("toBeDisabled", function() {
