@@ -434,12 +434,12 @@ describe("jQuery matchers", function() {
       expect($('#sandbox').get(0)).not.toHaveClass(className)
     })
 
-	it("should not crash when documentElement provided", function(){
-	  var doc = $(document.documentElement).addClass(className)
-	  expect(doc).toHaveClass(className)
-	  doc.removeClass(className)
-	  expect(doc).not.toHaveClass(className)
-	})
+    it("should not crash when documentElement provided", function(){
+      var doc = $(document.documentElement).addClass(className)
+      expect(doc).toHaveClass(className)
+      doc.removeClass(className)
+      expect(doc).not.toHaveClass(className)
+    })
   })
 
   describe("toHaveAttr", function() {
@@ -904,6 +904,20 @@ describe("jQuery matchers", function() {
     it("should pass negated if object does not contain selector", function() {
       expect($('#sandbox')).not.toContain('div')
       expect($('#sandbox').get(0)).not.toContain('div')
+    })
+  })
+
+  describe("toBeMatchedBy", function() {
+    beforeEach(function() {
+      setFixtures(sandbox().html('<span id="js-match"></span>'))
+    })
+
+    it("should pass if selector contains given selector", function() {
+      expect($('#sandbox span')).toBeMatchedBy('#js-match');
+    })
+
+    it("should pass negated if selector does not contain given selector", function() {
+      expect($('#sandbox span')).not.toBeMatchedBy('#js-match-not');
     })
   })
 
