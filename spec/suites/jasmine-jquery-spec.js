@@ -1311,6 +1311,40 @@ describe("jQuery matchers", function() {
       $(object).bind('click', handler)
       expect($(object)).toHandleWith('click', handler)
     })
+
+    it("should pass if the namespaced event is bound with the given handler", function() {
+      var handler = function(){ }; // noop
+      $('#clickme').bind("click.namespaced", handler)
+      expect($('#clickme')).toHandleWith("click.namespaced", handler)
+      expect($('#clickme').get(0)).toHandleWith("click.namespaced", handler)
+    })
+
+    it('should pass if the namespaced event is not bound with the given handler', function() {
+      var handler = function(){ }
+      $('#clickme').bind("click", handler)
+
+      var aDifferentHandler = function(){ }
+      expect($('#clickme')).not.toHandleWith("click.namespaced", aDifferentHandler)
+      expect($('#clickme').get(0)).not.toHandleWith("click.namespaced", aDifferentHandler)
+    })
+
+    it('should pass if the namespaced event is not bound at all', function() {
+      expect($('#clickme')).not.toHandle("click.namespaced")
+      expect($('#clickme').get(0)).not.toHandle("click.namespaced")
+    })
+
+    it("should pass if the namespaced event on window is bound with the given handler", function(){
+      var handler = function(){ }
+      $(window).bind("resize.namespaced", handler)
+      expect($(window)).toHandleWith("resize.namespaced", handler)
+    })
+
+    it("should pass if the namespaced event on any object is bound with the given handler", function(){
+      var object = new function(){ }; // noop
+      var handler = function(){ }
+      $(object).bind('click.namespaced', handler)
+      expect($(object)).toHandleWith('click.namespaced', handler)
+    })
   })
 })
 
