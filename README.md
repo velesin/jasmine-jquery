@@ -140,6 +140,11 @@ All of above methods have matching global short cuts:
 - `setFixtures(html)`
 - `appendSetFixtures(html)`
 
+``` javascript 
+var fixture = setFixture('<div class="post">foo</div>')
+var post = fixture.find('.post')
+```
+
 Also, a helper method for creating HTML elements for your tests is provided:
 
 - `sandbox([{attributeName: value[, attributeName: value, ...]}])`
