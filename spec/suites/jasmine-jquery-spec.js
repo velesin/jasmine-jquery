@@ -1667,4 +1667,41 @@ describe("jasmine.JSONFixtures using real AJAX call", function() {
   })
 })
 
+describe("jasmine.Env.equalityTesters_", function() {
+  describe("jQuery object tester", function() {
+    beforeEach(function() {
+      setFixtures(sandbox())
+    })
 
+    it("should equate the same element with different selectors", function() {
+      expect($('#sandbox')).toEqual($('div#sandbox'))
+    })
+
+    it("should equate jquery objects that match a set of elements", function() {
+      $('#sandbox').append($('<div></div>'))
+      $('#sandbox').append($('<div></div>'))
+      expect($('#sandbox div')).toEqual($('div#sandbox div'))
+    })
+
+    it("should not equate jquery objects that match a set of elements where one has an extra", function() {
+      $('#sandbox').append($('<div></div>'))
+      $('#sandbox').append($('<div></div>'))
+      $('#sandbox').append($('<span></span>'))
+      expect($('#sandbox div')).not.toEqual($('div#sandbox div, div#sandbox span'))
+    })
+
+    it("should not equate jquery objects that match a set of elements of the same type where the tag types are the same, but they are not the same DOM elements", function() {
+      $('#sandbox').append($('<div class="one"></div>'))
+      $('#sandbox').append($('<span class="one"></span>'))
+      $('#sandbox').append($('<div class="two"></div>'))
+      $('#sandbox').append($('<span class="two"></span>'))
+      expect($('.one')).not.toEqual($('.two').first())
+    })
+
+    it("should not equate jquery objects that match a set of elements of the same type where one is missing a single element", function() {
+      $('#sandbox').append($('<div></div>'))
+      $('#sandbox').append($('<div></div>'))
+      expect($('#sandbox div')).not.toEqual($('div#sandbox div').first())
+    })
+  })
+})
