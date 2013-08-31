@@ -1,0 +1,17 @@
+{
+    "name": "jasmine-jquery"
+  , "description": "jQuery matchers and fixture loader for Jasmine framework"
+  , "version": "1.5.8"
+  , "keywords": ["jasmine", "jquery"]
+  , "homepage": "http://github.com/velesin/jasmine-jquery"
+  , "author": "Travis Jeffery"
+  , "scripts": { "test": "grunt test" }
+  , "repository": {
+      "type": "git"
+    , "url": "https://github.com/velesin/jasmine-jquery.git"
+  }
+  , "bugs": {
+     "http://github.com/velesin/jasmine-jquery/issues"
+  }
+  , "license": "MIT"
+}
