@@ -1,7 +1,7 @@
 # jasmine-jquery
 
 jasmine-jquery provides two extensions for [Jasmine](http://pivotal.github.com/jasmine/) JavaScript Testing Framework:
-  
+
 - a set of custom matchers for jQuery framework
 - an API for handling HTML, CSS, and JSON fixtures in your specs
 
@@ -20,11 +20,11 @@ jasmine-jquery provides following custom matchers (in alphabetical order):
   - e.g. `expect($('<div id="some-id"></div>')).toBe('div#some-id')`
 - `toBeChecked()`
   - only for tags that have checked attribute
-  - e.g. `expect($('<input type="checkbox" checked="checked"/>')).toBeChecked()` 
+  - e.g. `expect($('<input type="checkbox" checked="checked"/>')).toBeChecked()`
 - `toBeEmpty()`
   - Checks for child DOM elements or text.
 - `toBeHidden()`
-  
+
   Elements can be considered hidden for several reasons:
     - They have a CSS `display` value of `none`.
     - They are form elements with `type` equal to `hidden`.
@@ -59,7 +59,7 @@ jasmine-jquery provides following custom matchers (in alphabetical order):
 - `toHaveBeenPrevented()`
   - if event has been prevented on `selector` (see "Event Spies", below)
 - `toHaveClass(className)`
-  - e.g. `expect($('<div class="some-class"></div>')).toHaveClass("some-class")`  
+  - e.g. `expect($('<div class="some-class"></div>')).toHaveClass("some-class")`
 - `toHaveData(key, value)`
   - value is optional, if omitted it will check only if an entry for that key exists
 - `toHaveHtml(string)`
@@ -86,7 +86,7 @@ jasmine-jquery provides following custom matchers (in alphabetical order):
   - e.g. `expect($form).toHandle("submit")`
 - `toHandleWith(eventName, eventHandler)`
   - e.g. `expect($form).toHandleWith("submit", yourSubmitCallback)`
-  
+
 The same as with standard Jasmine matchers, all of above custom matchers may be inverted by using `.not` prefix, e.g.:
 
     expect($('<div>some text</div>')).not.toHaveText(/other/)
@@ -98,13 +98,13 @@ The Fixture module of jasmine-jquery allows you to load HTML content to be used 
 In _myfixture.html_ file:
 
     <div id="my-fixture">some complex content here</div>
-    
+
 Inside your test:
 
     loadFixtures('myfixture.html');
     $('#my-fixture').myTestedPlugin();
     expect($('#my-fixture')).to...;
-    
+
 By default, fixtures are loaded from `spec/javascripts/fixtures`. You can configure this path: `jasmine.getFixtures().fixturesPath = 'my/new/path';`.
 
 Your fixture is being loaded into `<div id="jasmine-fixtures"></div>` container that is automatically added to the DOM by the Fixture module (If you _REALLY_ must change id of this container, try: `jasmine.getFixtures().containerId = 'my-new-id';` in your test runner). To make tests fully independent, fixtures container is automatically cleaned-up between tests, so you don't have to worry about left-overs from fixtures loaded in preceeding test. Also, fixtures are internally cached by the Fixture module, so you can load the same fixture file in several tests without penalty to your test suite's speed.
@@ -112,11 +112,11 @@ Your fixture is being loaded into `<div id="jasmine-fixtures"></div>` container 
 To invoke fixture related methods, obtain Fixtures singleton through a factory and invoke a method on it:
 
     jasmine.getFixtures().load(...);
-    
+
 There are also global short cut functions available for the most used methods, so the above example can be rewritten to just:
 
     loadFixtures(...);
-    
+
 Several methods for loading fixtures are provided:
 
 - `load(fixtureUrl[, fixtureUrl, ...])`
@@ -131,7 +131,7 @@ Several methods for loading fixtures are provided:
   - Same as set, but adds the fixtures to the pre-existing fixture container.
 - `preload(fixtureUrl[, fixtureUrl, ...])`
   - Pre-loads fixture(s) from one or more files and stores them into cache, without returning them or appending them to the DOM. All subsequent calls to `load` or `read` methods will then get fixtures content from cache, without making any AJAX calls (unless cache is manually purged by using `clearCache` method). Pre-loading all fixtures before a test suite is run may be useful when working with libraries like jasmine-ajax that block or otherwise modify the inner workings of JS or jQuery AJAX calls.
-  
+
 All of above methods have matching global short cuts:
 
 - `loadFixtures(fixtureUrl[, fixtureUrl, ...])`
@@ -140,7 +140,7 @@ All of above methods have matching global short cuts:
 - `setFixtures(html)`
 - `appendSetFixtures(html)`
 
-``` javascript 
+``` javascript
 var fixture = setFixture('<div class="post">foo</div>')
 var post = fixture.find('.post')
 ```
@@ -152,11 +152,11 @@ Also, a helper method for creating HTML elements for your tests is provided:
 It creates an empty DIV element with a default id="sandbox". If a hash of attributes is provided, they will be set for this DIV tag. If a hash of attributes contains id attribute it will override the default value. Custom attributes can also be set. So e.g.:
 
     sandbox();
-    
+
 Will return:
 
-    <div id="sandbox"></div>    
-    
+    <div id="sandbox"></div>
+
 And:
 
     sandbox({
@@ -164,7 +164,7 @@ And:
       class: 'my-class',
       myattr: 'my-attr'
     });
-    
+
 Will return:
 
     <div id="my-id" class="my-class" myattr="my-attr"></div>
@@ -185,7 +185,7 @@ Additionally, two clean up methods are provided:
   - purges Fixture module internal cache (you should need it only in very special cases; typically, if you need to use it, it may indicate a smell in your test code)
 - `cleanUp()`
   - cleans-up fixtures container (this is done automatically between tests by Fixtures module, so there is no need to ever invoke this manually, unless you're testing a really fancy special case and need to clean-up fixtures in the middle of your test)
-  
+
 These two methods do not have global short cut functions.
 
 ## Style Fixtures
@@ -195,7 +195,7 @@ The StyleFixtures module is pretty much like the Fixtures module, but it allows 
 In _mycssfixture.css_ file:
 
     .elem { position: absolute }
-    
+
 Inside your test:
 
     loadStyleFixtures('mycssfixture.css');
@@ -203,7 +203,7 @@ Inside your test:
     expect($('#my-fixture .elem')).toHaveCss({left: "300px"});
 
 Notice that if you haven't applied the `position: absolute` rule to the `.elem` and try to test its left position in some browsers (e.g. GoogleChrome) you will allways get the value `auto` even if your plugin did everything correct and applied positioning. So that's why you might need to load style fixtures. In Firefox though you will get the correct value even without the `position: absolute`.
-        
+
 By default, style fixtures are loaded from `spec/javascripts/fixtures`. You can configure this path: `jasmine.getStyleFixtures().fixturesPath = 'my/new/path';`.
 
 Like in Fixtures module, StyleFixtures are also automatically cleaned-up between tests and are internally cached, so you can load the same fixture file in several tests without penalty to your test suite's speed.
@@ -211,11 +211,11 @@ Like in Fixtures module, StyleFixtures are also automatically cleaned-up between
 To invoke fixture related methods, obtain StyleFixtures singleton through a factory and invoke a method on it:
 
     jasmine.getStyleFixtures().load(...);
-    
+
 There are also global short cut functions available for the most used methods, so the above example can be rewritten to just:
 
     loadStyleFixtures(...);
-    
+
 Several methods for loading fixtures are provided:
 
 - `load(fixtureUrl[, fixtureUrl, ...])`
@@ -228,13 +228,13 @@ Several methods for loading fixtures are provided:
   - Same as set, but it won't remove fixtures you added earlier.
 - `preload(fixtureUrl[, fixtureUrl, ...])`
   - Pre-loads fixture(s) from one or more files and stores them into cache, without returning them or appending them to the DOM. All subsequent calls to `load` methods will then get fixtures content from cache, without making any AJAX calls (unless cache is manually purged by using `clearCache` method).
-    
+
 All of above methods have matching global short cuts:
 
 - `loadStyleFixtures(fixtureUrl[, fixtureUrl, ...])`
 - `appendLoadStyleFixtures(fixtureUrl[, fixtureUrl, ...])`
 - `setStyleFixtures(css)`
-- `appendSetStyleFixtures(css)`    
+- `appendSetStyleFixtures(css)`
 
 Additionally, two clean up methods are provided:
 
@@ -242,45 +242,45 @@ Additionally, two clean up methods are provided:
   - purges StyleFixture module internal cache (you should need it only in very special cases; typically, if you need to use it, it may indicate a smell in your test code)
 - `cleanUp()`
   - cleans-up all existing style fixtures (this is done automatically between tests, so there is no need to ever invoke this manually, unless you're testing a really fancy special case and need to clean-up fixtures in the middle of your test)
-  
+
 These two methods do not have global short cut functions.
 
 ## JSON Fixtures
 
-The JSONFixtures modules allows you to load JSON data from file (instead of putting huge blocks of data in the spec files).  
+The JSONFixtures modules allows you to load JSON data from file (instead of putting huge blocks of data in the spec files).
 
 In _myjsonfixture.json_ file:
 
     {"property1":"value1", "array1":[1,2,3]}
-    
+
 Inside your test:
 
     var data = getJSONFixture('myjsonfixture.json');
     // or load and get the JSON two-step
     var fixtures = loadJSONFixtures('myjsonfixture.json');
     var data = fixtures['myjsonfixture.json'];
-    
+
     expect(myDataManipulator.processData(test_data)).to...)
-    
+
 By default, fixtures are loaded from `spec/javascripts/fixtures/json`. You can configure this path: `jasmine.getJSONFixtures().fixturesPath = 'my/new/path';`.
 
-Your fixture data is loaded into an object stashed by the JSONFixtures structure.  You fetch the data using the filename as the key.  This allows you to load multiple chunks of test data in a spec.  
+Your fixture data is loaded into an object stashed by the JSONFixtures structure.  You fetch the data using the filename as the key.  This allows you to load multiple chunks of test data in a spec.
 
 Because a deep copy of Javascript objects can be a little tricky, this module will refetch data each time you call `load`.  If you modify the data within a spec, you must call `load` or `loadJSONFixtures` again to repopulate the data.
 
 To invoke fixture related methods, obtain Fixtures singleton through a factory and invoke a method on it:
 
     jasmine.getJSONFixtures().load(...);
-    
+
 There are also global short cut functions available for the most used methods, so the above example can be rewritten to just:
 
     loadJSONFixtures(...);
-    
+
 Several methods for loading fixtures are provided:
 
 - `load(fixtureUrl[, fixtureUrl, ...])`
   - Loads fixture(s) from one or more files and automatically adds them to the fixture list.  This method returns the entire set of fixtures keyed by their filename.
-  
+
 All of above methods have matching global short cuts:
 
 - `loadJSONFixtures(fixtureUrl[, fixtureUrl, ...])`
@@ -348,45 +348,8 @@ Under Windows 7, you have to launch `C:\Users\[UserName]\AppData\Local\Google\Ch
 
 When using [jstd](http://code.google.com/p/js-test-driver/) and the jasmine adapter you will need to include jasmine-jquery.js after your jasmine-jstd-adapter files, otherwise jasmine-jquery matchers will not be available when tests are executed. Check out [this issue](https://github.com/velesin/jasmine-jquery/issues/95#issuecomment-9293180) for a thorough configuration example too.
 
-## Contributing
+## Maintainer
 
-jasmine-jquery is maintained by [Travis Jeffery](http://github.com/travisjeffery).
+[Travis Jeffery](http://travisjeffery.com/): [Twitter](http://twitter.com/travisjeffery), [GitHub](http://github.com/travisjeffery).
 
-### Setup
-
-- Fork the project and clone the repository.
-
-    [Here's how.](http://help.github.com/fork-a-repo/)
-- Create a dedicated branch.
-
-    `git checkout -b your_feature`
-
-### Writing the Code
-
-- Get the code right.
-- Include tests that fail without your code, and pass with it.
-- Update the (surrounding) documentation, examples elsewhere, and the guides: whatever is affected by your contribution.
-- Follow the conventions in the source you see used already, basically [npm coding style](http://npmjs.org/doc/coding-style.html)
-
-If you can, have another developer sanity check your change.
-
-### Committing
-
-- Commit your change with a message on what you changed in the commit.
-
-    `git commit -am "A commit message on what you changed"`
-- Please squash your commits when appropriate. This simplifies future cherry picks, and also keeps the git log clean.
-
-    [Here's how.](http://gitready.com/advanced/2009/02/10/squashing-commits-with-rebase.html)
-- Push to your remote
-
-    `git push origin your_feature`
-
-### Issue a Pull Request
-
-- Navigate to the jasmine-jquery GitHub page, press "Pull Request".
-- Write your branch name in the branch field, press "Update Commit Range".
-- Fill in some details about your potential patch including a meaningful
-  title. When finished, press "Send pull request".
-
-(These guidelines are heavily inspired and similar to [Rails's](http://edgeguides.rubyonrails.org/contributing_to_ruby_on_rails.html#contributing-to-the-rails-code)).
+## [Contributing](./blob/master/CONTRIBUTING.md)
