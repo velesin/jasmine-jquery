@@ -2,7 +2,7 @@
     "name": "jasmine-jquery"
   , "description": "jQuery matchers and fixture loader for Jasmine framework"
   , "version": "1.5.8"
-  , "keywords": ["jasmine", "jquery"]
+  , "keywords": ["jasmine", "jquery", "zepto"]
   , "homepage": "http://github.com/velesin/jasmine-jquery"
   , "author": {
       "name": "Travis Jeffery"

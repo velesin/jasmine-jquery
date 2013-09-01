@@ -5,6 +5,7 @@ module.exports = function (grunt) {
 
   grunt.initConfig({
       pkg: grunt.file.readJSON('package.json')
+
     , jshint: {
         all: [
             "Gruntfile.js"
@@ -16,10 +17,19 @@ module.exports = function (grunt) {
         },
       }
     , jasmine: {
-        src: "lib/**/*.js"
-      , options: {
-          specs: "spec/**/*.js"
-        , vendor: "vendor/**/*.js"
+        jquery: {
+            src: "lib/**/*.js"
+          , options: {
+              specs: "spec/**/*.js"
+            , vendor: "vendor/jquery/*.js"
+          }
+        }
+      , zepto: {
+          src: "lib/**/*.js"
+        , options: {
+            specs: "spec/**/*.js"
+          , vendor: "vendor/zepto/*.js"
+        }
       }
     }
   })
@@ -27,6 +37,6 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint')
   grunt.loadNpmTasks('grunt-contrib-jasmine')
 
-  grunt.registerTask('test', ['jshint', 'jasmine'])
+  grunt.registerTask('test', ['jshint', 'jasmine:jquery'])
   grunt.registerTask('default', ['test'])
 };
