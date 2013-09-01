@@ -20,7 +20,6 @@ module.exports = function(grunt) {
       , options: {
           specs: "spec/**/*.js"
         , vendor: "vendor/**/*.js"
-        , keepRunner: true
       }
     }
   })
