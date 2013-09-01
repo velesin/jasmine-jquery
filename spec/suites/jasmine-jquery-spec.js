@@ -874,26 +874,26 @@ describe("jQuery matchers", function() {
 
   describe("toHaveLength", function() {
     it("should pass on an object with more than zero items", function() {
-    	var $three = $('<div>').add('<span>').add("<pre>")
-    	expect($three.length).toBe(3)
-    	expect($three).toHaveLength(3)
+      var $three = $('<div>').add('<span>').add("<pre>")
+      expect($three.length).toBe(3)
+      expect($three).toHaveLength(3)
     })
     it("should pass negated on an object with more than zero items", function() {
-    	var $three = $('<div>').add('<span>').add("<pre>")
-    	expect($three.length).toBe(3)
-    	expect($three).not.toHaveLength(2)
+      var $three = $('<div>').add('<span>').add("<pre>")
+      expect($three.length).toBe(3)
+      expect($three).not.toHaveLength(2)
     })
 
     it("should pass on an object with zero items", function() {
-    	var $zero = $()
-    	expect($zero.length).toBe(0)
-    	expect($zero).toHaveLength(0)
+      var $zero = $()
+      expect($zero.length).toBe(0)
+      expect($zero).toHaveLength(0)
     })
 
     it("should pass negated on an object with zero items", function() {
-    	var $zero = $()
-    	expect($zero.length).not.toBe(1)
-    	expect($zero).not.toHaveLength(1)
+      var $zero = $()
+      expect($zero.length).not.toBe(1)
+      expect($zero).not.toHaveLength(1)
     })
   })
 
@@ -1242,7 +1242,7 @@ describe("jQuery matchers", function() {
     var handler
     beforeEach(function() {
       setFixtures(sandbox().html('<a id="clickme">Click Me</a> <a id="otherlink">Other Link</a>'))
-      handler = function(){ }; // noop
+      handler = function(){}
     })
 
     it("should handle events on the window object", function(){
@@ -1289,7 +1289,7 @@ describe("jQuery matchers", function() {
     })
 
     it('should handle event on any object', function(){
-      var object = new function(){ }; // noop
+      var object = new function(){}
       $(object).bind('click', function(){})
       expect($(object)).toHandle('click')
     })
@@ -1301,17 +1301,17 @@ describe("jQuery matchers", function() {
     })
 
     it('should pass if the event is bound with the given handler', function() {
-      var handler = function(){ }; // noop
+      var handler = function(){}
       $('#clickme').bind("click", handler)
       expect($('#clickme')).toHandleWith("click", handler)
       expect($('#clickme').get(0)).toHandleWith("click", handler)
     })
 
     it('should pass if the event is not bound with the given handler', function() {
-      var handler = function(){ }
+      var handler = function(){}
       $('#clickme').bind("click", handler)
 
-      var aDifferentHandler = function(){ }
+      var aDifferentHandler = function(){}
       expect($('#clickme')).not.toHandleWith("click", aDifferentHandler)
       expect($('#clickme').get(0)).not.toHandleWith("click", aDifferentHandler)
     })
@@ -1322,30 +1322,30 @@ describe("jQuery matchers", function() {
     })
 
     it("should pass if the event on window is bound with the given handler", function(){
-      var handler = function(){ }
+      var handler = function(){}
       $(window).bind("resize", handler)
       expect($(window)).toHandleWith("resize", handler)
     })
 
     it("should pass if the event on any object is bound with the given handler", function(){
-      var object = new function(){ }; // noop
-      var handler = function(){ }
+      var object = new function(){}
+      var handler = function(){}
       $(object).bind('click', handler)
       expect($(object)).toHandleWith('click', handler)
     })
 
     it("should pass if the namespaced event is bound with the given handler", function() {
-      var handler = function(){ }; // noop
+      var handler = function(){}
       $('#clickme').bind("click.namespaced", handler)
       expect($('#clickme')).toHandleWith("click.namespaced", handler)
       expect($('#clickme').get(0)).toHandleWith("click.namespaced", handler)
     })
 
     it('should pass if the namespaced event is not bound with the given handler', function() {
-      var handler = function(){ }
+      var handler = function(){}
       $('#clickme').bind("click", handler)
 
-      var aDifferentHandler = function(){ }
+      var aDifferentHandler = function(){}
       expect($('#clickme')).not.toHandleWith("click.namespaced", aDifferentHandler)
       expect($('#clickme').get(0)).not.toHandleWith("click.namespaced", aDifferentHandler)
     })
@@ -1356,14 +1356,14 @@ describe("jQuery matchers", function() {
     })
 
     it("should pass if the namespaced event on window is bound with the given handler", function(){
-      var handler = function(){ }
+      var handler = function(){}
       $(window).bind("resize.namespaced", handler)
       expect($(window)).toHandleWith("resize.namespaced", handler)
     })
 
     it("should pass if the namespaced event on any object is bound with the given handler", function(){
-      var object = new function(){ }; // noop
-      var handler = function(){ }
+      var object = new function(){}
+      var handler = function(){}
       $(object).bind('click.namespaced', handler)
       expect($(object)).toHandleWith('click.namespaced', handler)
     })
