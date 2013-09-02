@@ -20,14 +20,14 @@ module.exports = function (grunt) {
         jquery: {
             src: "lib/**/*.js"
           , options: {
-              specs: "spec/**/*.js"
+              specs: ["spec/suites/all.js", "spec/fixtures/**/*.js", "spec/jquery/**/*.js"]
             , vendor: "vendor/jquery/*.js"
           }
         }
       , zepto: {
           src: "lib/**/*.js"
         , options: {
-            specs: "spec/**/*.js"
+            specs: ["spec/suites/all.js", "spec/fixtures/**/*.js", "spec/zepto/**/*.js"]
           , vendor: "vendor/zepto/*.js"
         }
       }
