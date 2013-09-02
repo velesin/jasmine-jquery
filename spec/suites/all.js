@@ -184,7 +184,6 @@ describe("jasmine.Fixtures", function () {
 
       it("should execute the inline javascript after the fixture has been inserted into the body", function (){
         jasmine.getFixtures().appendLoad(fixtureUrl)
-        window.debug = true
         expect($("#anchor_01")).toHaveClass('foo')
       })
     })
