@@ -3,11 +3,6 @@ var assert = require('assert');
 module.exports = {
 
     'pull-requests': {
-
-        'should always be made against -wip branches': function (pull) {
-            assert.ok(/\-wip$/.test(pull.base.ref))
-        },
-
         'should always be made from feature branches': function (pull) {
             assert.notEqual(pull.head.ref, 'master')
         },
@@ -26,6 +21,7 @@ module.exports = {
 
         'after': function (pull) {
             if (pull.reporter.stats.failures) {
+                console.log(pull.reporter)
                 pull.reportFailures(pull.close.bind(pull))
             }
         }
