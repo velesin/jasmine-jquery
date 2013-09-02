@@ -21,7 +21,6 @@ module.exports = {
 
         'after': function (pull) {
             if (pull.reporter.stats.failures) {
-                console.log(pull.reporter)
                 pull.reportFailures(pull.close.bind(pull))
             }
         }
