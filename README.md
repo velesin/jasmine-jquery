@@ -1,4 +1,5 @@
-# jasmine-jquery
+# jasmine-jquery [![Build Status](https://travis-ci.org/velesin/jasmine-jquery.png)](https://travis-ci.org/velesin/jasmine-jquery)
+
 
 jasmine-jquery provides two extensions for [Jasmine](http://pivotal.github.com/jasmine/) JavaScript Testing Framework:
 
@@ -353,5 +354,3 @@ When using [jstd](http://code.google.com/p/js-test-driver/) and the jasmine adap
 [Travis Jeffery](http://travisjeffery.com/): [Twitter](http://twitter.com/travisjeffery), [GitHub](http://github.com/travisjeffery).
 
 ## [Contributing](./CONTRIBUTING.md)
-
-[![Build Status](https://travis-ci.org/velesin/jasmine-jquery.png)](https://travis-ci.org/velesin/jasmine-jquery)
