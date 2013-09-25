@@ -565,6 +565,13 @@ describe("jQuery matchers", function () {
       $("#sandbox").css("margin-left", "20px")
       expect($("#sandbox")).not.toHaveCss({display: "none", "margin-left": "10px"})
     })
+
+    it("should pass if the css property is auto and you check that property for auto", function (){
+      $("#sandbox").css("height", "auto");
+      $("#sandbox").css("margin-left", "auto");
+      $("#sandbox").css("display", "none");
+      expect($("#sandbox")).toHaveCss({height: 'auto', 'margin-left': "0px", display: "none"});
+    })
   })
 
   describe("toHaveId", function () {
