@@ -390,7 +390,6 @@ describe("jasmine.Fixtures using real AJAX call", function () {
     })
   })
 
-  /* TODO : start throwing again
   describe("when fixture file does not exist", function () {
     var fixtureUrl = "not_existing_fixture"
 
@@ -400,7 +399,6 @@ describe("jasmine.Fixtures using real AJAX call", function () {
       }).toThrow()
     })
   })
-  */
 })
 
 

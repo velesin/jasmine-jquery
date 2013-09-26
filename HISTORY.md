@@ -3,6 +3,7 @@
 This is an overview and may be incomplete. https://github.com/velesin/jasmine-jquery/commits/master is where to see everything.
 
 ## v1.5.8 (Sept 14, 2013)
+  - fix throw error when loading a fixture that doesn't exist (#146)
   - fix toHaveCss() to support expecting a css property be auto (#147)
   - fix toExist() for objects outside of the DOM (#64, #148)
 
