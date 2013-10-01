@@ -1647,6 +1647,7 @@ describe("jasmine.JSONFixtures", function () {
       expect(getJSONFixture(anotherFixtureUrl)).toEqual(moreAjaxData)
       expect(jasmine.JSONFixtures.prototype.loadFixtureIntoCache_.calls.length).toEqual(2)
     })
+
     it("retrieves from cache on subsequent requests for the same fixture", function () {
       expect(getJSONFixture(fixtureUrl)).toEqual(ajaxData)
       expect(jasmine.JSONFixtures.prototype.loadFixtureIntoCache_.calls.length).toEqual(1)
