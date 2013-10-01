@@ -1,6 +1,6 @@
 {
   "name": "jasmine-jquery",
-  "version": "1.5.9",
+  "version": "1.5.91",
   "main": "lib/jasmine-jquery.js",
   "ignore": [
     "test",
