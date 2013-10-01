@@ -1643,7 +1643,15 @@ describe("jasmine.JSONFixtures", function () {
   describe('getJSONFixture', function () {
     it("fetches the fixture you ask for", function () {
       expect(getJSONFixture(fixtureUrl)).toEqual(ajaxData)
+      expect(jasmine.JSONFixtures.prototype.loadFixtureIntoCache_).toHaveBeenCalled()
       expect(getJSONFixture(anotherFixtureUrl)).toEqual(moreAjaxData)
+      expect(jasmine.JSONFixtures.prototype.loadFixtureIntoCache_.calls.length).toEqual(2)
+    })
+    it("retrieves from cache on subsequent requests for the same fixture", function () {
+      expect(getJSONFixture(fixtureUrl)).toEqual(ajaxData)
+      expect(jasmine.JSONFixtures.prototype.loadFixtureIntoCache_.calls.length).toEqual(1)
+      expect(getJSONFixture(fixtureUrl)).toEqual(ajaxData)
+      expect(jasmine.JSONFixtures.prototype.loadFixtureIntoCache_.calls.length).toEqual(1)
     })
   })
 
