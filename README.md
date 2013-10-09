@@ -142,7 +142,7 @@ All of above methods have matching global short cuts:
 - `appendSetFixtures(html)`
 
 ``` javascript
-var fixture = setFixture('<div class="post">foo</div>')
+var fixture = setFixtures('<div class="post">foo</div>')
 var post = fixture.find('.post')
 ```
 
