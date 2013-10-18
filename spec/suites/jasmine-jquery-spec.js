@@ -817,7 +817,8 @@ describe("jQuery matchers", function () {
     beforeEach(function () {
       setFixtures('\
         <input type="checkbox" id="checked" checked="checked" />\n\
-        <input type="checkbox" id="not-checked" />')
+        <input type="checkbox" id="not-checked" />\n\
+        <input type="radio" name="radio-name" id="radio-checked" checked="checked" />')
     })
 
     it("should pass on checked element", function () {
@@ -828,6 +829,11 @@ describe("jQuery matchers", function () {
     it("should pass negated on not checked element", function () {
       expect($('#not-checked')).not.toBeChecked()
       expect($('#not-checked').get(0)).not.toBeChecked()
+    })
+
+    it("shoud not change the checked status of a radio button", function () {
+      expect($('#radio-checked')).toBeChecked()
+      expect($('#radio-checked')).toBeChecked()
     })
   })
 
