@@ -2,6 +2,9 @@
 
 This is an overview and may be incomplete. https://github.com/velesin/jasmine-jquery/commits/master is where to see everything.
 
+## v1.5.92 (Oct 22, 2013)
+  - fix: cloning radio buttons maintains their checked value
+
 ## v1.5.91 (Oct 1, 2013)
   - fix: caching json data fixtures (#149)
 
