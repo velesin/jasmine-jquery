@@ -21,6 +21,6 @@
   , "devDependencies": {
       "grunt": "~0.4.1"
     , "grunt-contrib-jshint": "~0.6.0"
-    , "grunt-contrib-jasmine": "~0.4.0"
+    , "grunt-contrib-jasmine": "git://github.com/travisjeffery/grunt-contrib-jasmine#a78d1cd558fd72a8deffb8f9e4224cfa40f97cc9"
   }
 }
