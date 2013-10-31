@@ -75,7 +75,7 @@ jasmine-jquery provides following custom matchers (in alphabetical order):
   - accepts a String or regular expression
   - e.g. `expect($('<div>some text</div>')).toHaveText('some text')`
 - `toHaveValue(value)`
-  - only for tags that have value attribute
+  - only for elements on which `val` can be called (`input`, `textarea`, etc)
   - e.g. `expect($('<input type="text" value="some text"/>')).toHaveValue('some text')`
 - `toHaveLength(value)`
   - e.g. `expect($('ul > li')).toHaveLength(3)`
