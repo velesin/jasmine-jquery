@@ -11,7 +11,7 @@ describe("jasmine.Fixtures", function () {
 
   beforeEach(function () {
     jasmine.getFixtures().clearCache()
-    spyOn(jasmine.Fixtures.prototype, 'loadFixtureIntoCache_').andCallFake(function (relativeUrl){
+    spyOn(jasmine.Fixtures.prototype, 'loadFixtureIntoCache_').and.callFake(function (relativeUrl){
       this.fixturesCache_[relativeUrl] = ajaxData
     })
   })
@@ -32,18 +32,18 @@ describe("jasmine.Fixtures", function () {
         jasmine.getFixtures().read(fixtureUrl)
         jasmine.getFixtures().clearCache()
         jasmine.getFixtures().read(fixtureUrl)
-        expect(jasmine.Fixtures.prototype.loadFixtureIntoCache_.callCount).toEqual(2)
+        expect(jasmine.Fixtures.prototype.loadFixtureIntoCache_.calls.count()).toEqual(2)
       })
     })
 
     it("first-time read should go through AJAX", function () {
       jasmine.getFixtures().read(fixtureUrl)
-      expect(jasmine.Fixtures.prototype.loadFixtureIntoCache_.callCount).toEqual(1)
+      expect(jasmine.Fixtures.prototype.loadFixtureIntoCache_.calls.count()).toEqual(1)
     })
 
     it("subsequent read from the same URL should go from cache", function () {
       jasmine.getFixtures().read(fixtureUrl, fixtureUrl)
-      expect(jasmine.Fixtures.prototype.loadFixtureIntoCache_.callCount).toEqual(1)
+      expect(jasmine.Fixtures.prototype.loadFixtureIntoCache_.calls.count()).toEqual(1)
     })
   })
 
@@ -194,7 +194,7 @@ describe("jasmine.Fixtures", function () {
       it("should go from cache", function () {
         jasmine.getFixtures().preload(fixtureUrl, anotherFixtureUrl)
         jasmine.getFixtures().read(fixtureUrl, anotherFixtureUrl)
-        expect(jasmine.Fixtures.prototype.loadFixtureIntoCache_.callCount).toEqual(2)
+        expect(jasmine.Fixtures.prototype.loadFixtureIntoCache_.calls.count()).toEqual(2)
       })
 
       it("should return correct HTMLs", function () {
@@ -206,13 +206,13 @@ describe("jasmine.Fixtures", function () {
 
     it("should not preload the same fixture twice", function () {
       jasmine.getFixtures().preload(fixtureUrl, fixtureUrl)
-      expect(jasmine.Fixtures.prototype.loadFixtureIntoCache_.callCount).toEqual(1)
+      expect(jasmine.Fixtures.prototype.loadFixtureIntoCache_.calls.count()).toEqual(1)
     })
 
     it("should have shortcut global method preloadFixtures", function () {
       preloadFixtures(fixtureUrl, anotherFixtureUrl)
       jasmine.getFixtures().read(fixtureUrl, anotherFixtureUrl)
-      expect(jasmine.Fixtures.prototype.loadFixtureIntoCache_.callCount).toEqual(2)
+      expect(jasmine.Fixtures.prototype.loadFixtureIntoCache_.calls.count()).toEqual(2)
     })
   })
 
@@ -403,22 +403,16 @@ describe("jasmine.Fixtures using real AJAX call", function () {
 
 
 describe("jQuery matchers", function () {
-  describe("when jQuery matcher hides original Jasmine matcher", function () {
+  describe("custom jquery object equality tester", function () {
     describe("and tested item is jQuery object", function () {
-      it("should invoke jQuery version of matcher", function () {
-        expect($('<div />')).toBe('div')
-      })
-    })
-
-    describe("and tested item is not jQuery object", function () {
-      it("should invoke original version of matcher", function () {
-        expect(true).toBe(true)
+      it("should do jquery equality", function () {
+        expect($('<div />')).toEqual('div')
       })
     })
 
     describe("and tested item is a dom object", function () {
-      it("should invoke jquery version of matcher", function () {
-        expect($('<div />').get(0)).toBe('div')
+      it("should do jquery equality", function () {
+        expect($('<div />').get(0)).toEqual('div')
       })
     })
   })
@@ -568,7 +562,7 @@ describe("jQuery matchers", function () {
       $("#sandbox").css("height", "auto");
       $("#sandbox").css("margin-left", "auto");
       $("#sandbox").css("display", "none");
-      expect($("#sandbox")).toHaveCss({height: 'auto', 'margin-left': "0px", display: "none"});
+      expect($("#sandbox")).toHaveCss({height: 'auto', 'margin-left': "auto", display: "none"});
     })
   })
 
@@ -901,35 +895,19 @@ describe("jQuery matchers", function () {
     })
   })
 
-  describe("toBe", function () {
-    beforeEach(function () {
-      setFixtures(sandbox())
-    })
-
-    it("should pass if object matches selector", function () {
-      expect($('#sandbox')).toBe('#sandbox')
-      expect($('#sandbox').get(0)).toBe('#sandbox')
-    })
-
-    it("should pass negated if object does not match selector", function () {
-      expect($('#sandbox')).not.toBe('#wrong-id')
-      expect($('#sandbox').get(0)).not.toBe('#wrong-id')
-    })
-  })
-
-  describe("toContain", function () {
+  describe("toContainElement", function () {
     beforeEach(function () {
       setFixtures(sandbox().html('<span />'))
     })
 
     it("should pass if object contains selector", function () {
-      expect($('#sandbox')).toContain('span')
-      expect($('#sandbox').get(0)).toContain('span')
+      expect($('#sandbox')).toContainElement('span')
+      expect($('#sandbox').get(0)).toContainElement('span')
     })
 
     it("should pass negated if object does not contain selector", function () {
-      expect($('#sandbox')).not.toContain('div')
-      expect($('#sandbox').get(0)).not.toContain('div')
+      expect($('#sandbox')).not.toContainElement('div')
+      expect($('#sandbox').get(0)).not.toContainElement('div')
     })
   })
 
@@ -1384,7 +1362,7 @@ describe("jasmine.StyleFixtures", function () {
 
   beforeEach(function () {
     jasmine.getStyleFixtures().clearCache()
-    spyOn(jasmine.StyleFixtures.prototype, 'loadFixtureIntoCache_').andCallFake(function (relativeUrl){
+    spyOn(jasmine.StyleFixtures.prototype, 'loadFixtureIntoCache_').and.callFake(function (relativeUrl){
       this.fixturesCache_[relativeUrl] = ajaxData
     })
   })
@@ -1470,7 +1448,7 @@ describe("jasmine.StyleFixtures", function () {
       it("should go from cache", function () {
         jasmine.getStyleFixtures().preload(fixtureUrl, anotherFixtureUrl)
         jasmine.getStyleFixtures().load(fixtureUrl, anotherFixtureUrl)
-        expect(jasmine.StyleFixtures.prototype.loadFixtureIntoCache_.callCount).toEqual(2)
+        expect(jasmine.StyleFixtures.prototype.loadFixtureIntoCache_.calls.count()).toEqual(2)
       })
 
       it("should return correct CSSs", function () {
@@ -1482,12 +1460,12 @@ describe("jasmine.StyleFixtures", function () {
 
     it("should not preload the same fixture twice", function () {
       jasmine.getStyleFixtures().preload(fixtureUrl, fixtureUrl)
-      expect(jasmine.StyleFixtures.prototype.loadFixtureIntoCache_.callCount).toEqual(1)
+      expect(jasmine.StyleFixtures.prototype.loadFixtureIntoCache_.calls.count()).toEqual(1)
     })
 
     it("should have shortcut global method preloadStyleFixtures", function () {
       preloadStyleFixtures(fixtureUrl, anotherFixtureUrl)
-      expect(jasmine.StyleFixtures.prototype.loadFixtureIntoCache_.callCount).toEqual(2)
+      expect(jasmine.StyleFixtures.prototype.loadFixtureIntoCache_.calls.count()).toEqual(2)
     })
   })
 
@@ -1604,7 +1582,7 @@ describe("jasmine.JSONFixtures", function () {
 
   beforeEach(function () {
     jasmine.getJSONFixtures().clearCache()
-    spyOn(jasmine.JSONFixtures.prototype, 'loadFixtureIntoCache_').andCallFake(function (relativeUrl){
+    spyOn(jasmine.JSONFixtures.prototype, 'loadFixtureIntoCache_').and.callFake(function (relativeUrl){
       fakeData = {}
       // we put the data directly here, instead of using the variables to simulate rereading the file
       fakeData[fixtureUrl] = {a:1, b:2, arr: [1,2,'stuff'], hsh: { blurp: 8, blop: 'blip' }}
@@ -1651,14 +1629,14 @@ describe("jasmine.JSONFixtures", function () {
       expect(getJSONFixture(fixtureUrl)).toEqual(ajaxData)
       expect(jasmine.JSONFixtures.prototype.loadFixtureIntoCache_).toHaveBeenCalled()
       expect(getJSONFixture(anotherFixtureUrl)).toEqual(moreAjaxData)
-      expect(jasmine.JSONFixtures.prototype.loadFixtureIntoCache_.calls.length).toEqual(2)
+      expect(jasmine.JSONFixtures.prototype.loadFixtureIntoCache_.calls.count()).toEqual(2)
     })
 
     it("retrieves from cache on subsequent requests for the same fixture", function () {
       expect(getJSONFixture(fixtureUrl)).toEqual(ajaxData)
-      expect(jasmine.JSONFixtures.prototype.loadFixtureIntoCache_.calls.length).toEqual(1)
+      expect(jasmine.JSONFixtures.prototype.loadFixtureIntoCache_.calls.count()).toEqual(1)
       expect(getJSONFixture(fixtureUrl)).toEqual(ajaxData)
-      expect(jasmine.JSONFixtures.prototype.loadFixtureIntoCache_.calls.length).toEqual(1)
+      expect(jasmine.JSONFixtures.prototype.loadFixtureIntoCache_.calls.count()).toEqual(1)
     })
   })
 
