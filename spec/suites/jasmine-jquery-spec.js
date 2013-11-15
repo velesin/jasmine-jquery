@@ -782,6 +782,12 @@ describe("jQuery matchers", function () {
         expect($('#sandbox')).not.toHaveData(objectKey, objectString)
         expect($('#sandbox').get(0)).not.toHaveData(objectKey, objectString)
       })
+
+      it("should not pass if element has matching key but the value is just a string representation of the value", function () {
+         setFixtures(sandbox().data(objectKey, objectString))
+        expect($('#sandbox')).not.toHaveData(objectKey, objectValue)
+        expect($('#sandbox').get(0)).not.toHaveData(objectKey, objectValue)
+      })
     })
   })
 
