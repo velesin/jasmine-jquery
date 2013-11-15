@@ -2,6 +2,9 @@
 
 This is an overview and may be incomplete. https://github.com/velesin/jasmine-jquery/commits/master is where to see everything.
 
+## v1.5.93 (Nov 15, 2013)
+  - fix: check strict equality in `hasProperty`
+
 ## v1.5.92 (Oct 22, 2013)
   - fix: cloning radio buttons maintains their checked value
 
