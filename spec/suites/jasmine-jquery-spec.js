@@ -763,6 +763,26 @@ describe("jQuery matchers", function () {
         expect($('#sandbox').get(0)).not.toHaveData(wrongKey, value)
       })
     })
+
+    describe("when the value is a JSON object", function() {
+      var objectKey = 'object-key'
+      var objectValue = {'foo': 'bar'}
+      var objectString = '[object Object]'
+
+      beforeEach(function() {
+        setFixtures(sandbox().data(objectKey, objectValue))
+      })
+
+      it("should pass if element has matching key with matching value", function () {
+        expect($('#sandbox')).toHaveData(objectKey, objectValue)
+        expect($('#sandbox').get(0)).toHaveData(objectKey, objectValue)
+      })
+
+      it("should not pass if element has matching key but the value is just a string representation of the value", function () {
+        expect($('#sandbox')).not.toHaveData(objectKey, objectString)
+        expect($('#sandbox').get(0)).not.toHaveData(objectKey, objectString)
+      })
+    })
   })
 
   describe("toBeVisible", function () {
