@@ -784,9 +784,9 @@ describe("jQuery matchers", function () {
       })
 
       it("should not pass if element has matching key but the value is just a string representation of the value", function () {
-         setFixtures(sandbox().data(objectKey, objectString))
-        expect($('#sandbox')).not.toHaveData(objectKey, objectValue)
-        expect($('#sandbox').get(0)).not.toHaveData(objectKey, objectValue)
+        setFixtures('<div id="foo" div data-bar="[object Object]"></div>')
+        expect($('#foo')).not.toHaveData('bar', { 'answer': 42 })
+        expect($('#foo').get(0)).not.toHaveData('bar', { 'answer': 42 })
       })
     })
   })
