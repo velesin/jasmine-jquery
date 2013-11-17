@@ -128,7 +128,6 @@ describe("jasmine.Fixtures", function () {
         expect($("#anchor_01")).toHaveClass('foo')
       })
     })
-
   })
 
   describe("appendLoad", function () {
@@ -399,6 +398,22 @@ describe("jasmine.Fixtures using real AJAX call", function () {
       }).toThrow()
     })
   })
+
+  describe("when fixture contains an <script src='to/your/source'> tag", function () {
+    var fixtureUrl = "fixture_with_javascript.html"
+
+    it("should load content of fixture file and javascripts", function () {
+      var fixtureContent = jasmine.getFixtures().read(fixtureUrl)
+      expect(fixtureContent).toContain('$(function (){ $(\'#anchor_01\').click(function(){ $(this).addClass(\'foo\'); }) });')
+    })
+ 
+    it("should load content of fixture file and javascripts and bind events", function () {
+      jasmine.getFixtures().load(fixtureUrl)
+      $('#anchor_01').click()
+      expect($("#anchor_01")).toHaveClass('foo')
+    })
+  })
+
 })
 
 
@@ -1589,7 +1604,6 @@ describe("jasmine.StyleFixtures using real AJAX call", function () {
     })
   })
 })
-
 
 describe("jasmine.JSONFixtures", function () {
   var ajaxData = {a:1, b:2, arr: [1,2,'stuff'], hsh: { blurp: 8, blop: 'blip' }}
