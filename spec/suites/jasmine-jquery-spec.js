@@ -402,15 +402,23 @@ describe("jasmine.Fixtures using real AJAX call", function () {
   describe("when fixture contains an <script src='to/your/source'> tag", function () {
     var fixtureUrl = "fixture_with_javascript.html"
 
-    it("should load content of fixture file and javascripts", function () {
+    it("should load javascript in fixture", function () {
       var fixtureContent = jasmine.getFixtures().read(fixtureUrl)
       expect(fixtureContent).toContain('$(function (){ $(\'#anchor_01\').click(function(){ $(this).addClass(\'foo\'); }) });')
     })
  
-    it("should load content of fixture file and javascripts and bind events", function () {
+    it("should load content of fixture file and javascript and bind events", function () {
       jasmine.getFixtures().load(fixtureUrl)
       $('#anchor_01').click()
       expect($("#anchor_01")).toHaveClass('foo')
+    })
+
+    it("should load multiple javascripts and bind events in fixture", function () {
+      jasmine.getFixtures().load(fixtureUrl)
+      $('#anchor_01').click()
+      $('#anchor_01').trigger('hover')
+      expect($("#anchor_01")).toHaveClass('foo')
+      expect($("#anchor_01")).toHaveClass('bar')
     })
   })
 
