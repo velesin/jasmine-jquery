@@ -221,12 +221,12 @@ describe("jasmine.Fixtures", function () {
 
     it("should insert HTML into container", function () {
       jasmine.getFixtures().set(html)
-      expect(fixturesContainer().html()).toEqual(jasmine.JQuery.browserTagCaseIndependentHtml(html))
+      expect(fixturesContainer().html()).toEqual(jasmine.jQuery.browserTagCaseIndependentHtml(html))
     })
 
     it("should insert jQuery element into container", function () {
       jasmine.getFixtures().set($(html))
-      expect(fixturesContainer().html()).toEqual(jasmine.JQuery.browserTagCaseIndependentHtml(html))
+      expect(fixturesContainer().html()).toEqual(jasmine.jQuery.browserTagCaseIndependentHtml(html))
     })
 
     describe("when fixture container does not exist", function () {
@@ -249,7 +249,7 @@ describe("jasmine.Fixtures", function () {
 
       it("should replace it with new content", function () {
         jasmine.getFixtures().set(html)
-        expect(fixturesContainer().html()).toEqual(jasmine.JQuery.browserTagCaseIndependentHtml(html))
+        expect(fixturesContainer().html()).toEqual(jasmine.jQuery.browserTagCaseIndependentHtml(html))
       })
 
       it("should return the fixture container", function (){
@@ -265,7 +265,7 @@ describe("jasmine.Fixtures", function () {
 
     it("should be a shortcut global method", function () {
       setFixtures(html)
-      expect(fixturesContainer().html()).toEqual(jasmine.JQuery.browserTagCaseIndependentHtml(html))
+      expect(fixturesContainer().html()).toEqual(jasmine.jQuery.browserTagCaseIndependentHtml(html))
     })
 
     it("should return the fixture container", function () {
@@ -279,17 +279,17 @@ describe("jasmine.Fixtures", function () {
     var html = '<div>some HTML</div>'
     it("should insert HTML into container", function () {
       jasmine.getFixtures().appendSet(html)
-      expect(fixturesContainer().html()).toEqual(jasmine.JQuery.browserTagCaseIndependentHtml(html))
+      expect(fixturesContainer().html()).toEqual(jasmine.jQuery.browserTagCaseIndependentHtml(html))
     })
 
     it("should insert jQuery element into container", function () {
       jasmine.getFixtures().appendSet($(html))
-      expect(fixturesContainer().html()).toEqual(jasmine.JQuery.browserTagCaseIndependentHtml(html))
+      expect(fixturesContainer().html()).toEqual(jasmine.jQuery.browserTagCaseIndependentHtml(html))
     })
 
     it("should have shortcut global method setFixtures", function () {
       appendSetFixtures(html)
-      expect(fixturesContainer().html()).toEqual(jasmine.JQuery.browserTagCaseIndependentHtml(html))
+      expect(fixturesContainer().html()).toEqual(jasmine.jQuery.browserTagCaseIndependentHtml(html))
     })
 
     describe("when fixture container does not exist", function () {
@@ -306,7 +306,7 @@ describe("jasmine.Fixtures", function () {
 
       it("should add new content", function () {
         jasmine.getFixtures().appendSet(html)
-        expect(fixturesContainer().html()).toEqual(jasmine.JQuery.browserTagCaseIndependentHtml(html)+jasmine.JQuery.browserTagCaseIndependentHtml(html))
+        expect(fixturesContainer().html()).toEqual(jasmine.jQuery.browserTagCaseIndependentHtml(html)+jasmine.jQuery.browserTagCaseIndependentHtml(html))
       })
     })
   })
