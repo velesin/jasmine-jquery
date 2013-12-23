@@ -80,9 +80,9 @@ jasmine-jquery provides following custom matchers (in alphabetical order):
 - `toHaveLength(value)`
   - e.g. `expect($('ul > li')).toHaveLength(3)`
 - `toBeDisabled()`
-  - e.g. `expect('<input type='submit' disabled='disabled'/>').toBeDisabled()`
+  - e.g. `expect('<input type="submit" disabled="disabled"/>').toBeDisabled()`
 - `toBeFocused()`
-  - e.g. `expect($('<input type='text' />').focus()).toBeFocused()`
+  - e.g. `expect($('<input type="text" />').focus()).toBeFocused()`
 - `toHandle(eventName)`
   - e.g. `expect($form).toHandle("submit")`
 - `toHandleWith(eventName, eventHandler)`
