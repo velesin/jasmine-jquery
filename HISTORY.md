@@ -2,7 +2,10 @@
 
 This is an overview and may be incomplete. https://github.com/velesin/jasmine-jquery/commits/master is where to see everything.
 
-## v.1.60 (Dec 22, 2013)
+## v.1.7.0 (Dec 27, 2013)
+  - add: toBeInDOM() matcher
+
+## v1.60 (Dec 22, 2013)
   - fix: usages of jQuery to use $ (#159)
   - change namespace to be jasmine.jQuery
 
