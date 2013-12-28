@@ -883,6 +883,17 @@ describe("jQuery matchers", function () {
     })
   })
 
+  describe("toBeInDOM", function () {
+    it("should pass on elements in the DOM", function () {
+      setFixtures(sandbox())
+      expect($('#sandbox')).toBeInDOM()
+    })
+
+    it("should pass negated on elements not in the DOM", function () {
+      expect($('<div>')).not.toBeInDOM()
+    })
+  })
+
   describe("toExist", function () {
     it("should pass on visible element", function () {
       setFixtures(sandbox())
