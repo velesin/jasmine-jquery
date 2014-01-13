@@ -2,7 +2,16 @@
 
 This is an overview and may be incomplete. https://github.com/velesin/jasmine-jquery/commits/master is where to see everything.
 
-## v.1.7.0 (Dec 27, 2013)
+## v2.0.0 (Jan 13, 2014)
+
+  Due to limitations with jasmine 2, e.g. not being able to add behavior to built-in matchers, there are some api changes in jasmine-jquery. Bug the jasmine maintainers to make modifying matchers possible again.
+
+  - change: `toContain($el)` is now `toContainElement($el)`
+  - change: `toBe($el/selector)` is now `toEqual($el/selector)`
+  - add: support for jasmine v2
+
+
+## v1.7.0 (Dec 27, 2013)
   - add: toBeInDOM() matcher
 
 ## v1.60 (Dec 22, 2013)
