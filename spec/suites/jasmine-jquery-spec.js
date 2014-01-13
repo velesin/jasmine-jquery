@@ -643,9 +643,15 @@ describe("jQuery matchers", function () {
       expect(element.get(0)).toHaveText(text)
     })
 
-    it("should ignore surrounding whitespace", function () {
+    it("should ignore surrounding whitespace in the element", function () {
       element = $('<div>\n' + text + '\n</div>')
       expect(element).toHaveText(text)
+      expect(element.get(0)).toHaveText(text)
+    })
+
+    it("should match with surrounding whitespace in the input", function () {
+      element = $('<div>\n' + text + '\n</div>')
+      expect(element).toHaveText('\n' + text + '\n')
       expect(element.get(0)).toHaveText(text)
     })
 
