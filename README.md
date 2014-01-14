@@ -16,7 +16,7 @@ For Ruby on Rails, use this [gem](https://github.com/travisjeffery/jasmine-jquer
 
 jasmine-jquery provides following custom matchers (in alphabetical order):
 
-- `toBe(jQuerySelector)`
+- `toEqual(jQuerySelector)`
   - e.g. `expect($('<div id="some-id"></div>')).toBe('div')`
   - e.g. `expect($('<div id="some-id"></div>')).toBe('div#some-id')`
 - `toBeChecked()`
@@ -39,7 +39,7 @@ jasmine-jquery provides following custom matchers (in alphabetical order):
   - e.g. `expect($('<option selected="selected"></option>')).toBeSelected()`
 - `toBeVisible()`
   - Elements are considered visible if they consume space in the document. Visible elements have a width or height that is greater than zero.
-- `toContain(jQuerySelector)`
+- `toContainElement(jQuerySelector)`
   - e.g. `expect($('<div><span class="some-class"></span></div>')).toContain('span.some-class')`
 - `toBeMatchedBy(jQuerySelector)`
   - Check to see if the set of matched elements matches the given selector
