@@ -337,7 +337,7 @@ Much thanks to Luiz Fernando Ribeiro for his
 
 jasmine-jquery v2.0.0+ is to be used with jasmine v2.0.0+. jasmine-jquery v1.7.0 is to be used with jasmine < v2.0.0.
 
-jasmine-jquery is tested with jQuery 1.8 on IE, FF, Chrome, and Safari. There is a high chance it will work with older versions and other browsers as well, but I don't typically run test suite against them when adding new features.
+jasmine-jquery is tested with jQuery 2.0 on IE, FF, Chrome, and Safari. There is a high chance it will work with older versions and other browsers as well, but I don't typically run test suite against them when adding new features.
 
 ## Cross domain policy problems under Chrome
 
