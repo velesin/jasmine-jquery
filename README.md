@@ -31,7 +31,7 @@ jasmine-jquery provides following custom matchers (in alphabetical order):
     - They are form elements with `type` equal to `hidden`.
     - Their `width` and `height` are explicitly set to `0`.
     - An ancestor element is hidden, so the element is not shown on the page.
-- `toBeInDom()`
+- `toBeInDOM()`
 - `toBeMatchedBy(jQuerySelector)`
   - Check to see if the set of matched elements matches the given selector
   - e.g.  `expect($('<span></span>').addClass('js-something')).toBeMatchedBy('.js-something')`
