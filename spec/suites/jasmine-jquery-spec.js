@@ -416,6 +416,15 @@ describe("jasmine.Fixtures using real AJAX call", function () {
       expect($("#anchor_01")).toHaveClass('bar')
     })
   })
+
+  describe("when fixture contains a <script> tag without a src attribute", function () {
+    var fixtureUrl = "fixture_with_javascript_block.html"
+
+    it("should load the fixture and ignore the script tag", function () {
+      jasmine.getFixtures().load(fixtureUrl)
+      expect($("#anchor_01").length).toBe(1)
+    })
+  })
 })
 
 describe("jQuery matcher", function () {
