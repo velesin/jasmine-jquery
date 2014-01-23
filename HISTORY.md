@@ -2,8 +2,12 @@
 
 This is an overview and may be incomplete. https://github.com/velesin/jasmine-jquery/commits/master is where to see everything.
 
+## v2.0.2 (2014-01-23)
+
+  - fix: don't load inline js in fixtures (for templates, etc.)
+
 ## v2.0.1 (Jan 14, 2014)
-  
+
   - fix: ajax call to work with jquery 2
 
 ## v2.0.0 (Jan 13, 2014)
