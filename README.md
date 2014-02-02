@@ -47,7 +47,7 @@ jasmine-jquery provides following custom matchers (in alphabetical order):
   - e.g. `expect($('<div><ul></ul><h1>header</h1></div>')).toContainHtml('<ul></ul>')`
 - `toContainText(string)`
   - e.g. `expect($('<div><ul></ul><h1>header</h1></div>')).toContainText('header')`
-- `toEqual(jQuerySelector)`
+- `toBe(jQuerySelector)`
   - e.g. `expect($('<div id="some-id"></div>')).toBe('div')`
   - e.g. `expect($('<div id="some-id"></div>')).toBe('div#some-id')`
 - `toExist()`
