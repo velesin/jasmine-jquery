@@ -2,6 +2,10 @@
 
 This is an overview and may be incomplete. https://github.com/velesin/jasmine-jquery/commits/master is where to see everything.
 
+## v2.0.3 (2014-02-49)
+
+  - fix: xhr failure requests (#174)
+
 ## v2.0.2 (2014-01-23)
 
   - fix: don't load inline js in fixtures (for templates, etc.)
