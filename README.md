@@ -341,7 +341,7 @@ jasmine-jquery is tested with jQuery 2.0 on IE, FF, Chrome, and Safari. There is
 
 ## Cross domain policy problems under Chrome
 
-Newer versions of Chrome don't allow file:// URIs read other file:// URIs. In effect, jasmine-jquery cannot properly load fixtures under some versions of Chrome. An override for this is to run Chrome with a switch `--allow-file-access-from-files`. The full discussion on this topic can be found in [this GitHub ticket](https://github.com/velesin/jasmine-jquery/issues/4).
+Newer versions of Chrome don't allow file:// URIs read other file:// URIs. In effect, jasmine-jquery cannot properly load fixtures under some versions of Chrome. An override for this is to run Chrome with a switch `--allow-file-access-from-files`. (https://github.com/velesin/jasmine-jquery/issues/4). Quit open Chromes before running Chrome with that switch. (https://github.com/velesin/jasmine-jquery/issues/179).
 
 Under Windows 7, you have to launch `C:\Users\[UserName]\AppData\Local\Google\Chrome[ SxS]\Application\chrome.exe --allow-file-access-from-files`
 
