@@ -1774,3 +1774,28 @@ describe("jasmine.Env.equalityTesters_", function () {
     })
   })
 });
+
+
+xdescribe("failing matchers", function () {
+  beforeEach(function () {
+    setFixtures(sandbox())
+  })
+  describe("toHaveAttr failure messages", function () {
+    it("should have error message for toHaveAttr when element not found", function () {
+      $('#sandbox').append($('<div></div>'))
+      expect($('#sandbox span')).toHaveAttr('class', 'notexisting')
+      //Error: Expected to find attribute "class" on selector "#sandbox span", but no element found
+    });
+    it("should have error message for toHaveAttr if value does not exist", function () {
+      $('#sandbox').append($('<div id></div>'))
+      expect($('#sandbox div')).toHaveAttr('readonly', 'notexisting')
+      //Error: Expected to find attribute "readonly" on "#sandbox div"
+    });
+    it("should have error message for toHaveAttr if value is incorrect", function () {
+      $('#sandbox').append($('<div id="actual"></div>'))
+      expect($('#sandbox div')).toHaveAttr('id', 'notexisting')
+      //Error: Expected attribute value "notexisting" but got "actual"
+    });
+  });
+
+});
