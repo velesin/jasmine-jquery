@@ -1,4 +1,16 @@
 /*!
+jasmine-jquery
+version: 2.0.3
+build date: 2014-04-01
+
+description: jQuery matchers and fixture loader for Jasmine framework
+git: https://github.com/velesin/jasmine-jquery.git
+home: http://github.com/velesin/jasmine-jquery
+author: Travis Jeffery, Wojciech Zawistowski
+  email: tj@travisjeffery.com
+
+
+/*!
   Copyright (c) 2010-2014
 
   Permission is hereby granted, free of charge, to any person obtaining
