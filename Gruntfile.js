@@ -20,11 +20,11 @@ module.exports = function(grunt) {
           "author: <%= pkg.author.name %>\n" +
           "  email: <%= pkg.author.email %>\n" +
           "\n\n",
-        separator: "; \n",
+        separator: "; \n"
       },
       dist: {
         src: ["lib/*.js"],
-        dest: "dist/<%= pkg.name %>.js",
+        dest: "dist/<%= pkg.name %>.js"
       }
     },
     jshint: {
@@ -33,7 +33,7 @@ module.exports = function(grunt) {
       ],
       options: {
         jshintrc: '.jshintrc'
-      },
+      }
     },
     jasmine: {
       src: "lib/**/*.js",
