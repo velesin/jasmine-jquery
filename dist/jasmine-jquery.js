@@ -36,10 +36,9 @@ author: Travis Jeffery, Wojciech Zawistowski
 //allowing jasmineJQuery to be re-initialized later, helps deal with JQuery version problems
 window.jasmineJQuery = function(window, jasmine, $) {
   "use strict";
-  var j$ = $;
 
   jasmine.spiedEventsKey = function(selector, eventName) {
-    return [j$(selector).selector, eventName].toString()
+    return [$(selector).selector, eventName].toString()
   };
 
   jasmine.getFixtures = function() {
@@ -94,25 +93,25 @@ window.jasmineJQuery = function(window, jasmine, $) {
   };
 
   jasmine.Fixtures.prototype.cleanUp = function() {
-    j$('#' + this.containerId).remove()
+    $('#' + this.containerId).remove()
   };
 
   jasmine.Fixtures.prototype.sandbox = function(attributes) {
     var attributesToSet = attributes || {}
-    return j$('<div id="sandbox" />').attr(attributesToSet)
+    return $('<div id="sandbox" />').attr(attributesToSet)
   };
 
   jasmine.Fixtures.prototype.createContainer_ = function(html) {
-    var container = j$('<div>')
+    var container = $('<div>')
         .attr('id', this.containerId)
         .html(html)
 
-    j$(document.body).append(container)
+    $(document.body).append(container)
     return container
   };
 
   jasmine.Fixtures.prototype.addToContainer_ = function(html) {
-    var container = j$(document.body).find('#' + this.containerId).append(html);
+    var container = $(document.body).find('#' + this.containerId).append(html);
 
     if (!container.length) {
       this.createContainer_(html)
@@ -127,10 +126,14 @@ window.jasmineJQuery = function(window, jasmine, $) {
   };
 
   jasmine.Fixtures.prototype.loadFixtureIntoCache_ = function(relativeUrl) {
+
     var self = this,
         url = this.makeFixtureUrl_(relativeUrl),
         htmlText = '',
-        request = j$.ajax({
+        request;
+
+    if($.parseHTML){
+        request = $.ajax({
           async: false, // must be synchronous to guarantee that no tests are run before fixture is loaded
           cache: false,
           url: url,
@@ -141,14 +144,14 @@ window.jasmineJQuery = function(window, jasmine, $) {
           throw new Error('Fixture could not be loaded: ' + url + ' (status: ' + status + ', message: ' + err.message + ')')
         })
 
-    var scripts = j$(j$.parseHTML(htmlText, true)).find('script[src]') || [];
+    var scripts = $($.parseHTML(htmlText, true)).find('script[src]') || [];
 
     scripts.each(function() {
-      j$.ajax({
+      $.ajax({
         async: false, // must be synchronous to guarantee that no tests are run before fixture is loaded
         cache: false,
         dataType: 'script',
-        url: j$(this).attr('src'),
+        url: $(this).attr('src'),
         success: function(data, status, $xhr) {
           htmlText += '<script>' + $xhr.responseText + '</script>'
         },
@@ -159,6 +162,19 @@ window.jasmineJQuery = function(window, jasmine, $) {
     });
 
     self.fixturesCache_[relativeUrl] = htmlText;
+    } else{ //support legacy jQuery < 1.8
+        request = $.ajax({
+            async: false, // must be synchronous to guarantee that no tests are run before fixture is loaded
+            cache: false,
+            url: url,
+            success: function (data, status, $xhr) {
+          self.fixturesCache_[relativeUrl] = $xhr.responseText
+        },
+        error: function (jqXHR, status, errorThrown) {
+          throw new Error('Fixture could not be loaded: ' + url + ' (status: ' + status + ', message: ' + errorThrown.message + ')')
+        }
+      });
+    }
   };
 
   jasmine.Fixtures.prototype.makeFixtureUrl_ = function(relativeUrl) {
@@ -205,11 +221,11 @@ window.jasmineJQuery = function(window, jasmine, $) {
   };
 
   jasmine.StyleFixtures.prototype.createStyle_ = function(html) {
-    var styleText = j$('<div></div>').html(html).text(),
-        style = j$('<style>' + styleText + '</style>');
+    var styleText = $('<div></div>').html(html).text(),
+        style = $('<style>' + styleText + '</style>');
 
     this.fixturesNodes_.push(style)
-    j$('head').append(style)
+    $('head').append(style)
   };
 
   jasmine.StyleFixtures.prototype.clearCache = jasmine.Fixtures.prototype.clearCache
@@ -256,7 +272,7 @@ window.jasmineJQuery = function(window, jasmine, $) {
     var self = this,
         url = this.fixturesPath.match('/$') ? this.fixturesPath + relativeUrl : this.fixturesPath + '/' + relativeUrl;
 
-    j$.ajax({
+    $.ajax({
       async: false, // must be synchronous to guarantee that no tests are run before fixture is loaded
       cache: false,
       dataType: 'json',
@@ -277,11 +293,11 @@ window.jasmineJQuery = function(window, jasmine, $) {
   jasmine.jQuery = function() {};
 
   jasmine.jQuery.browserTagCaseIndependentHtml = function(html) {
-    return j$('<div/>').append(html).html()
+    return $('<div/>').append(html).html()
   };
 
   jasmine.jQuery.elementToString = function(element) {
-    return j$(element).map(function() {
+    return $(element).map(function() {
       return this.outerHTML;
     }).toArray().join(', ')
   };
@@ -297,7 +313,7 @@ window.jasmineJQuery = function(window, jasmine, $) {
         data.spiedEvents[jasmine.spiedEventsKey(selector, eventName)] = jasmine.util.argsToArray(arguments)
       };
 
-      j$(selector).on(eventName, handler);
+      $(selector).on(eventName, handler);
       data.handlers.push(handler);
 
       return {
@@ -365,7 +381,7 @@ window.jasmineJQuery = function(window, jasmine, $) {
         return {
           compare: function(actual, className) {
             return {
-              pass: j$(actual).hasClass(className)
+              pass: $(actual).hasClass(className)
             }
           }
         }
@@ -378,8 +394,8 @@ window.jasmineJQuery = function(window, jasmine, $) {
               var value = css[prop]
               // see issue #147 on gh
                   ;
-              if (value === 'auto' && j$(actual).get(0).style[prop] === 'auto') continue
-              if (j$(actual).css(prop) !== value) return {
+              if (value === 'auto' && $(actual).get(0).style[prop] === 'auto') continue
+              if ($(actual).css(prop) !== value) return {
                 pass: false
               }
             }
@@ -394,7 +410,7 @@ window.jasmineJQuery = function(window, jasmine, $) {
         return {
           compare: function(actual) {
             return {
-              pass: j$(actual).is(':visible')
+              pass: $(actual).is(':visible')
             }
           }
         }
@@ -404,7 +420,7 @@ window.jasmineJQuery = function(window, jasmine, $) {
         return {
           compare: function(actual) {
             return {
-              pass: j$(actual).is(':hidden')
+              pass: $(actual).is(':hidden')
             }
           }
         }
@@ -414,7 +430,7 @@ window.jasmineJQuery = function(window, jasmine, $) {
         return {
           compare: function(actual) {
             return {
-              pass: j$(actual).is(':selected')
+              pass: $(actual).is(':selected')
             }
           }
         }
@@ -424,7 +440,7 @@ window.jasmineJQuery = function(window, jasmine, $) {
         return {
           compare: function(actual) {
             return {
-              pass: j$(actual).is(':checked')
+              pass: $(actual).is(':checked')
             }
           }
         }
@@ -434,7 +450,7 @@ window.jasmineJQuery = function(window, jasmine, $) {
         return {
           compare: function(actual) {
             return {
-              pass: j$(actual).is(':empty')
+              pass: $(actual).is(':empty')
             }
           }
         }
@@ -444,7 +460,7 @@ window.jasmineJQuery = function(window, jasmine, $) {
         return {
           compare: function(actual) {
             return {
-              pass: j$.contains(document.documentElement, j$(actual)[0])
+              pass: $.contains(document.documentElement, $(actual)[0])
             }
           }
         }
@@ -454,7 +470,7 @@ window.jasmineJQuery = function(window, jasmine, $) {
         return {
           compare: function(actual) {
             return {
-              pass: j$(actual).length
+              pass: $(actual).length
             }
           }
         }
@@ -464,7 +480,7 @@ window.jasmineJQuery = function(window, jasmine, $) {
         return {
           compare: function(actual, length) {
             return {
-              pass: j$(actual).length === length
+              pass: $(actual).length === length
             }
           }
         }
@@ -474,7 +490,7 @@ window.jasmineJQuery = function(window, jasmine, $) {
         return {
           compare: function(actual, attributeName, expectedAttributeValue) {
             return {
-              pass: hasProperty(j$(actual).attr(attributeName), expectedAttributeValue)
+              pass: hasProperty($(actual).attr(attributeName), expectedAttributeValue)
             }
           }
         }
@@ -484,7 +500,7 @@ window.jasmineJQuery = function(window, jasmine, $) {
         return {
           compare: function(actual, propertyName, expectedPropertyValue) {
             return {
-              pass: hasProperty(j$(actual).prop(propertyName), expectedPropertyValue)
+              pass: hasProperty($(actual).prop(propertyName), expectedPropertyValue)
             }
           }
         }
@@ -494,7 +510,7 @@ window.jasmineJQuery = function(window, jasmine, $) {
         return {
           compare: function(actual, id) {
             return {
-              pass: j$(actual).attr('id') == id
+              pass: $(actual).attr('id') == id
             }
           }
         }
@@ -504,7 +520,7 @@ window.jasmineJQuery = function(window, jasmine, $) {
         return {
           compare: function(actual, html) {
             return {
-              pass: j$(actual).html() == jasmine.jQuery.browserTagCaseIndependentHtml(html)
+              pass: $(actual).html() == jasmine.jQuery.browserTagCaseIndependentHtml(html)
             }
           }
         }
@@ -513,7 +529,7 @@ window.jasmineJQuery = function(window, jasmine, $) {
       toContainHtml: function() {
         return {
           compare: function(actual, html) {
-            var actualHtml = j$(actual).html(),
+            var actualHtml = $(actual).html(),
                 expectedHtml = jasmine.jQuery.browserTagCaseIndependentHtml(html)
 
             return {
@@ -526,9 +542,9 @@ window.jasmineJQuery = function(window, jasmine, $) {
       toHaveText: function() {
         return {
           compare: function(actual, text) {
-            var trimmedText = j$.trim(j$(actual).text())
+            var trimmedText = $.trim($(actual).text())
 
-            if (text && j$.isFunction(text.test)) {
+            if (text && $.isFunction(text.test)) {
               return {
                 pass: text.test(trimmedText)
               }
@@ -544,9 +560,9 @@ window.jasmineJQuery = function(window, jasmine, $) {
       toContainText: function() {
         return {
           compare: function(actual, text) {
-            var trimmedText = j$.trim(j$(actual).text())
+            var trimmedText = $.trim($(actual).text())
 
-            if (text && j$.isFunction(text.test)) {
+            if (text && $.isFunction(text.test)) {
               return {
                 pass: text.test(trimmedText)
               }
@@ -563,7 +579,7 @@ window.jasmineJQuery = function(window, jasmine, $) {
         return {
           compare: function(actual, value) {
             return {
-              pass: j$(actual).val() === value
+              pass: $(actual).val() === value
             }
           }
         }
@@ -573,7 +589,7 @@ window.jasmineJQuery = function(window, jasmine, $) {
         return {
           compare: function(actual, key, expectedValue) {
             return {
-              pass: hasProperty(j$(actual).data(key), expectedValue)
+              pass: hasProperty($(actual).data(key), expectedValue)
             }
           }
         }
@@ -584,7 +600,7 @@ window.jasmineJQuery = function(window, jasmine, $) {
           compare: function(actual, selector) {
             if (window.debug) debugger
             return {
-              pass: j$(actual).find(selector).length
+              pass: $(actual).find(selector).length
             }
           }
         }
@@ -594,7 +610,7 @@ window.jasmineJQuery = function(window, jasmine, $) {
         return {
           compare: function(actual, selector) {
             return {
-              pass: j$(actual).filter(selector).length
+              pass: $(actual).filter(selector).length
             }
           }
         }
@@ -604,7 +620,7 @@ window.jasmineJQuery = function(window, jasmine, $) {
         return {
           compare: function(actual, selector) {
             return {
-              pass: j$(actual).is(':disabled')
+              pass: $(actual).is(':disabled')
             }
           }
         }
@@ -614,7 +630,7 @@ window.jasmineJQuery = function(window, jasmine, $) {
         return {
           compare: function(actual, selector) {
             return {
-              pass: j$(actual)[0] === j$(actual)[0].ownerDocument.activeElement
+              pass: $(actual)[0] === $(actual)[0].ownerDocument.activeElement
             }
           }
         }
@@ -623,7 +639,7 @@ window.jasmineJQuery = function(window, jasmine, $) {
       toHandle: function() {
         return {
           compare: function(actual, event) {
-            var events = j$._data(j$(actual).get(0), "events");
+            var events = $._data($(actual).get(0), "events");
 
             if (!events || !event || typeof event !== "string") {
               return {
@@ -662,7 +678,7 @@ window.jasmineJQuery = function(window, jasmine, $) {
         return {
           compare: function(actual, eventName, eventHandler) {
             var normalizedEventName = eventName.split('.')[0],
-                stack = j$._data(j$(actual).get(0), "events")[normalizedEventName]
+                stack = $._data($(actual).get(0), "events")[normalizedEventName]
 
             for (var i = 0; i < stack.length; i++) {
               if (stack[i].handler == eventHandler) return {
@@ -685,8 +701,8 @@ window.jasmineJQuery = function(window, jasmine, $) {
             };
 
             result.message = result.pass ?
-                "Expected event " + j$(actual) + " not to have been triggered on " + selector :
-                "Expected event " + j$(actual) + " to have been triggered on " + selector
+                "Expected event " + $(actual) + " not to have been triggered on " + selector :
+                "Expected event " + $(actual) + " to have been triggered on " + selector
 
             return result;
           }
@@ -808,22 +824,22 @@ window.jasmineJQuery = function(window, jasmine, $) {
 
     jasmine.getEnv().addCustomEqualityTester(function(a, b) {
       if (a && b) {
-        if (a instanceof j$ || jasmine.isDomNode(a)) {
-          var $a = j$(a)
+        if (a instanceof $ || jasmine.isDomNode(a)) {
+          var $a = $(a)
 
-          if (b instanceof j$)
+          if (b instanceof $)
             return $a.length == b.length && a.is(b)
 
           return $a.is(b);
         }
 
-        if (b instanceof j$ || jasmine.isDomNode(b)) {
-          var $b = j$(b)
+        if (b instanceof $ || jasmine.isDomNode(b)) {
+          var $b = $(b)
 
           if (a instanceof jQuery)
             return a.length == $b.length && $b.is(a)
 
-          return j$(b).is(a);
+          return $(b).is(a);
         }
       }
     });
