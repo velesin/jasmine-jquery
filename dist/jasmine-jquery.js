@@ -33,7 +33,8 @@ author: Travis Jeffery, Wojciech Zawistowski
   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-+ function(window, jasmine, $) {
+//allowing jasmineJQuery to be re-initialized later, helps deal with JQuery version problems
+window.jasmineJQuery = function(window, jasmine, $) {
   "use strict";
 
   jasmine.spiedEventsKey = function(selector, eventName) {
@@ -897,4 +898,6 @@ author: Travis Jeffery, Wojciech Zawistowski
   window.getJSONFixture = function(url) {
     return jasmine.getJSONFixtures().proxyCallTo_('read', arguments)[url]
   }
-}(window, window.jasmine, window.jQuery);
+};
+
+jasmineJQuery(window, window.jasmine, window.jQuery);
