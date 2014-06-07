@@ -2,6 +2,10 @@
 
 This is an overview and may be incomplete. https://github.com/velesin/jasmine-jquery/commits/master is where to see everything.
 
+## v2.0.4 (2014-06-07)
+
+  - fix: references to `jQuery` (#190)
+
 ## v2.0.3 (2014-02-49)
 
   - fix: xhr failure requests (#174)
