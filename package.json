@@ -19,8 +19,8 @@
   }
   , "license": "MIT"
   , "devDependencies": {
-      "grunt": "~0.4.1"
-    , "grunt-contrib-jshint": "~0.6.0"
+      "grunt": "0.4.5"
+    , "grunt-contrib-jshint": "0.10.0"
     , "grunt-contrib-jasmine": "git://github.com/travisjeffery/grunt-contrib-jasmine#9d5874dd592cf41e8268918fe9baeb261afd75b2"
   }
 }
