@@ -8,5 +8,9 @@
     ".*",
     "HISTORY.md",
     "SpecRunner.html"
-  ]
+  ],
+  "dependencies": {
+    "jasmine": ">=2",
+    "jquery": ">=2"
+  }
 }
