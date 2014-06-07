@@ -2,6 +2,10 @@
 
 This is an overview and may be incomplete. https://github.com/velesin/jasmine-jquery/commits/master is where to see everything.
 
+## v2.0.5 (2014-06-07)
+
+  - fix: `toHaveText` to match text as in, as well as trimming (#163)
+
 ## v2.0.4 (2014-06-07)
 
   - fix: references to `jQuery` (#190)
