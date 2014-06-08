@@ -36,7 +36,7 @@ module.exports = function (grunt) {
     fs.readFile(file, 'utf8', function (err, data) {
       if (err) return console.log(err)
 
-        var res = data.replace(/^Version .*$/m, 'Version ' + json.version)
+      var res = data.replace(/^Version .*$/m, 'Version ' + json.version)
 
       fs.writeFile(file, res, 'utf8', function (err) {
         if (err) return console.log(err)
