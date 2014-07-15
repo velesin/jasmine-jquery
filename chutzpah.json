@@ -1,0 +1,11 @@
+{
+	"Framework": "Jasmine",
+	"References": [
+		{ "Path": "vendor/jquery/jquery.js" },
+		{ "Path": "lib", "Include": "*.js" }
+	],
+	"Tests": [
+		{ "Path": "spec/suites/jasmine-jquery-spec.js" }
+	],
+	"TestHarnessLocationMode": "SettingsFileAdjacent"
+}

@@ -425,6 +425,15 @@ describe("jasmine.Fixtures using real AJAX call", function () {
       expect($("#anchor_01").length).toBe(1)
     })
   })
+  
+  describe("When the fixture contains a HTML 5 style checked checkbox", function () {
+	var fixtureUrl = "fixture_with_checkbox_with_checked.html"
+	
+	it("Then the fixture is loaded successfully", function () {
+	  jasmine.getFixtures().load(fixtureUrl)
+	  expect('#' + jasmine.getFixtures().containerId).toContainElement('#checked-box')
+	})
+  })
 })
 
 describe("jQuery matcher", function () {
