@@ -1,20 +1,20 @@
 # jasmine-jquery [![Build Status](https://travis-ci.org/velesin/jasmine-jquery.png)](https://travis-ci.org/velesin/jasmine-jquery)
 
 
-jasmine-jquery provides two extensions for [Jasmine](http://pivotal.github.com/jasmine/) JavaScript Testing Framework:
+jasmine-jquery provides two extensions for the [Jasmine](http://pivotal.github.com/jasmine/) JavaScript Testing Framework:
 
 - a set of custom matchers for jQuery framework
 - an API for handling HTML, CSS, and JSON fixtures in your specs
 
 ## Installation
 
-Simply download _jasmine-jquery.js_ from [here](https://raw.github.com/velesin/jasmine-jquery/master/lib/jasmine-jquery.js) and include it in your Jasmine's test runner file (or add it to _jasmine.yml_ file if you're using Ruby with [jasmine-gem](http://github.com/pivotal/jasmine-gem)). Remember to include also jQuery library as jasmine-jquery relies on it.
+Simply download _jasmine-jquery.js_ from [here](https://raw.github.com/velesin/jasmine-jquery/master/lib/jasmine-jquery.js) and include it in your Jasmine's test runner file (or add it to _jasmine.yml_ file if you're using Ruby with [jasmine-gem](http://github.com/pivotal/jasmine-gem)). Remember to also include jQuery library as jasmine-jquery relies on it.
 
 For Ruby on Rails, use this [gem](https://github.com/travisjeffery/jasmine-jquery-rails) or I recommend to comply with the standard RSpec and Jasmine frameworks dir structure and keep your tests in `spec/javascripts/` dir. I put jasmine-jquery (and other libraries like jasmine-ajax) into `spec/javascripts/helpers` dir (so they are automatically loaded) and fixtures into `spec/javascripts/fixtures` dir.
 
 ## jQuery matchers
 
-jasmine-jquery provides following custom matchers (in alphabetical order):
+jasmine-jquery provides the following custom matchers (in alphabetical order):
 
 - `toBeChecked()`
   - only for tags that have checked attribute
@@ -92,13 +92,13 @@ jasmine-jquery provides following custom matchers (in alphabetical order):
   - only for elements on which `val` can be called (`input`, `textarea`, etc)
   - e.g. `expect($('<input type="text" value="some text"/>')).toHaveValue('some text')`
 
-The same as with standard Jasmine matchers, all of above custom matchers may be inverted by using `.not` prefix, e.g.:
+The same as with standard Jasmine matchers, all of the above custom matchers may be inverted by using `.not` prefix, e.g.:
 
     expect($('<div>some text</div>')).not.toHaveText(/other/)
 
 ## HTML Fixtures
 
-The Fixture module of jasmine-jquery allows you to load HTML content to be used by your tests. The overall workflow is like follows:
+The Fixture module of jasmine-jquery allows you to load HTML content to be used by your tests. The overall workflow is as follows:
 
 In _myfixture.html_ file:
 
@@ -112,7 +112,7 @@ Inside your test:
 
 By default, fixtures are loaded from `spec/javascripts/fixtures`. You can configure this path: `jasmine.getFixtures().fixturesPath = 'my/new/path';`.
 
-Your fixture is being loaded into `<div id="jasmine-fixtures"></div>` container that is automatically added to the DOM by the Fixture module (If you _REALLY_ must change id of this container, try: `jasmine.getFixtures().containerId = 'my-new-id';` in your test runner). To make tests fully independent, fixtures container is automatically cleaned-up between tests, so you don't have to worry about left-overs from fixtures loaded in preceeding test. Also, fixtures are internally cached by the Fixture module, so you can load the same fixture file in several tests without penalty to your test suite's speed.
+Your fixture is being loaded into the `<div id="jasmine-fixtures"></div>` container that is automatically added to the DOM by the Fixture module (If you _REALLY_ must change the id of this container, try: `jasmine.getFixtures().containerId = 'my-new-id';` in your test runner). To make tests fully independent, fixtures container is automatically cleaned-up between tests, so you don't have to worry about left-overs from fixtures loaded in preceeding test. Also, fixtures are internally cached by the Fixture module, so you can load the same fixture file in several tests without penalty to your test suite's speed.
 
 To invoke fixture related methods, obtain Fixtures singleton through a factory and invoke a method on it:
 
