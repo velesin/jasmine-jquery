@@ -8,7 +8,7 @@ jasmine-jquery provides two extensions for the [Jasmine](http://pivotal.github.c
 
 ## Installation
 
-Simply download _jasmine-jquery.js_ from [here](https://raw.github.com/velesin/jasmine-jquery/master/lib/jasmine-jquery.js) and include it in your Jasmine's test runner file (or add it to _jasmine.yml_ file if you're using Ruby with [jasmine-gem](http://github.com/pivotal/jasmine-gem)). Remember to also include jQuery library as jasmine-jquery relies on it.
+Simply download _jasmine-jquery.js_ from [here](https://raw.github.com/velesin/jasmine-jquery/master/lib/jasmine-jquery.js) and include it in your Jasmine's test runner file (or add it to _jasmine.yml_ file if you're using Ruby with [jasmine-gem](http://github.com/pivotal/jasmine-gem)). Remember to also include the jQuery library as jasmine-jquery relies on it.
 
 For Ruby on Rails, use this [gem](https://github.com/travisjeffery/jasmine-jquery-rails) or I recommend to comply with the standard RSpec and Jasmine frameworks dir structure and keep your tests in `spec/javascripts/` dir. I put jasmine-jquery (and other libraries like jasmine-ajax) into `spec/javascripts/helpers` dir (so they are automatically loaded) and fixtures into `spec/javascripts/fixtures` dir.
 
