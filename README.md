@@ -349,7 +349,22 @@ Under Windows 7, you have to launch `C:\Users\[UserName]\AppData\Local\Google\Ch
 
 ## Mocking with jasmine-ajax
 
-[jasmine-ajax](https://github.com/pivotal/jasmine-ajax) library doesn't let user to manually start / stop XMLHttpRequest mocking, but instead it overrides XMLHttpRequest automatically when loaded. This breaks jasmine-jquery fixtures as fixture loading mechanism uses jQuery.ajax, that stops to function the very moment jasmine-ajax is loaded. A workaround for this may be to invoke jasmine-jquery `preloadFixtures` function (specifying all required fixtures) before jasmine-ajax is loaded. This way subsequent calls to `loadFixtures` or `readFixtures` methods will get fixtures content from cache, without need to use jQuery.ajax and thus will work correctly even after jasmine-ajax is loaded.
+[jasmine-ajax](https://github.com/pivotal/jasmine-ajax) library let user to manually start / stop XMLHttpRequest mocking since v2.0.0 for sure. after ajax mock installed, it overrides XMLHttpRequest and breaks jasmine-jquery fixtures as fixture loading mechanism uses jQuery.ajax, that stops to function. So, just load fixtures first, then install the ajax mock. 
+
+    beforeEach(function(){
+      // first load your fixtures
+      loadFixtures('fixture.html');
+
+      // then install the mock
+      jasmine.Ajax.install();
+    });
+
+    afterEach(function () {
+      // finally uninstall the mock
+      jasmine.Ajax.uninstall();
+    });
+
+Older version doesn't let user to manually start / stop XMLHttpRequest mocking. A workaround for this may be to invoke jasmine-jquery `preloadFixtures` function (specifying all required fixtures) before jasmine-ajax is loaded. This way subsequent calls to `loadFixtures` or `readFixtures` methods will get fixtures content from cache, without need to use jQuery.ajax and thus will work correctly even after jasmine-ajax is loaded.
 
 ## Testing with Javascript Test Driver
 
