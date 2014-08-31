@@ -2,6 +2,7 @@
     "name": "jasmine-jquery"
   , "description": "jQuery matchers and fixture loader for Jasmine framework"
   , "version": "2.0.5"
+  , "main": "./lib/jasmine-jquery.js"
   , "keywords": ["jasmine", "jquery"]
   , "homepage": "http://github.com/velesin/jasmine-jquery"
   , "author": {
