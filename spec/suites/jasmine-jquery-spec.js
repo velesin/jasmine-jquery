@@ -1090,6 +1090,11 @@ describe("jQuery matcher", function () {
         $(document).trigger('event', { different_key: "value1" })
         expect('event').not.toHaveBeenTriggeredOnAndWith(document, { key1: "value1" })
       })
+
+      it('should pass if the arguments match using jasmine.objectContaining', function () {
+        $(document).trigger('event', { key1: "value1", key2: "value2" })
+        expect('event').toHaveBeenTriggeredOnAndWith(document, jasmine.objectContaining({ key1: "value1" }))
+      })
     })
 
     describe("when extra parameter is an array", function () {
