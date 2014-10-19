@@ -1748,6 +1748,10 @@ describe("jasmine.Env.equalityTesters_", function () {
       setFixtures(sandbox())
     })
 
+    it("should equate jquery objects to jasmine.Any(Object)", function () {
+      expect($('#sandbox')).toEqual(jasmine.any(Object))
+    })
+
     it("should equate the same element with different selectors", function () {
       expect($('#sandbox')).toEqual($('div#sandbox'))
     })
@@ -1778,5 +1782,17 @@ describe("jasmine.Env.equalityTesters_", function () {
       $('#sandbox').append($('<div></div>'))
       expect($('#sandbox div')).not.toEqual($('div#sandbox div').first())
     })
+  })
+});
+
+describe("jquery objects as expected args of spy#toHaveBeenCalledWith", function() {
+  beforeEach(function () {
+    setFixtures(sandbox())
+  })
+
+  it("should match jquery objects to jasmine.Any(Object)", function () {
+    var spy = jasmine.createSpy()
+    spy($('#sandbox'))
+    expect(spy).toHaveBeenCalledWith(jasmine.any(Object))
   })
 });
