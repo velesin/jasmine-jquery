@@ -1334,7 +1334,11 @@ describe("jQuery matcher", function () {
     })
 
     it('should not fail when actual has no matches', function (){
-      expect($('#notreal')).not.toHandle('click')
+        expect($('#notreal')).not.toHandle('click')
+    })
+
+    it('should not fail when actual is null', function (){
+        expect(null).not.toHandle('click')
     })
 
   })
@@ -1414,6 +1418,10 @@ describe("jQuery matcher", function () {
 
     it('should not fail when actual has no matches', function (){
       expect($('#notreal')).not.toHandleWith('click')
+    })
+
+    it('should not fail when actual is null', function (){
+      expect(null).not.toHandleWith('click')
     })
 
   })
