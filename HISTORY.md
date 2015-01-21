@@ -1,3 +1,9 @@
+
+2.0.6 / 2015-01-20
+==================
+
+ * Remove debugger
+
 # History
 
 This is an overview and may be incomplete. https://github.com/velesin/jasmine-jquery/commits/master is where to see everything.
