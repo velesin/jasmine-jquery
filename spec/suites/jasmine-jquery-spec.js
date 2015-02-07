@@ -1352,6 +1352,15 @@ describe("jQuery matcher", function () {
       $(object).bind('click', function (){})
       expect($(object)).toHandle('click')
     })
+
+    it('should not fail when actual has no matches', function (){
+        expect($('#notreal')).not.toHandle('click')
+    })
+
+    it('should not fail when actual is null', function (){
+        expect(null).not.toHandle('click')
+    })
+
   })
 
   describe('toHandleWith', function () {
@@ -1426,6 +1435,15 @@ describe("jQuery matcher", function () {
       $(object).bind('click.namespaced', handler)
       expect($(object)).toHandleWith('click.namespaced', handler)
     })
+
+    it('should not fail when actual has no matches', function (){
+      expect($('#notreal')).not.toHandleWith('click')
+    })
+
+    it('should not fail when actual is null', function (){
+      expect(null).not.toHandleWith('click')
+    })
+
   })
 })
 
