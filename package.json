@@ -1,7 +1,7 @@
 {
   "name": "jasmine-jquery",
   "description": "jQuery matchers and fixture loader for Jasmine framework",
-  "version": "2.0.6",
+  "version": "2.0.7",
   "keywords": [
     "jasmine",
     "jquery"

@@ -1,4 +1,16 @@
 
+2.0.7 / 2015-02-07
+==================
+
+ * Improved installation advices
+ * Adding test for nulls Correcting indentation
+ * Fix order of arguments to util.equals in wasTriggeredWith.
+ * scriptSrc undefined in loadFixtureIntoCache_
+ * Removed chutzpah.json as requested
+ * Fixed bug with HTML5 style booleans causing parsererror
+ * Added test and improved check
+ * Adding support for when actual is null
+
 2.0.6 / 2015-01-20
 ==================
 
