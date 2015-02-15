@@ -1032,9 +1032,10 @@ describe("jQuery matcher", function () {
   })
 
   describe('toHaveBeenTriggeredOn', function () {
+    var spyEvents = {}
     beforeEach(function () {
       setFixtures(sandbox().html('<a id="clickme">Click Me</a> <a id="otherlink">Other Link</a>'))
-      spyOnEvent($('#clickme'), 'click')
+      spyEvents['#clickme'] = spyOnEvent($('#clickme'), 'click')
       spyOnEvent(document, 'click')
       spyOnEvent($('#otherlink'), 'click')
     })
@@ -1066,6 +1067,20 @@ describe("jQuery matcher", function () {
       $('#otherlink').click()
       expect('click').not.toHaveBeenTriggeredOn($('#clickme'))
       expect('click').not.toHaveBeenTriggeredOn('#clickme')
+    })
+
+    it('should pass if the event call count is incremented', function () {
+      expect(spyEvents['#clickme'].calls.any()).toEqual(false);
+      expect(spyEvents['#clickme'].calls.count()).toEqual(0);
+      $('#clickme').click()
+      expect('click').toHaveBeenTriggeredOn($('#clickme'))
+      expect('click').toHaveBeenTriggeredOn('#clickme')
+      expect(spyEvents['#clickme'].calls.count()).toEqual(1);
+      expect(spyEvents['#clickme'].calls.any()).toEqual(true);
+      $('#clickme').click()
+      $('#clickme').click()
+      expect(spyEvents['#clickme'].calls.count()).toEqual(3);
+      expect(spyEvents['#clickme'].calls.any()).toEqual(true);
     })
   })
 
@@ -1163,6 +1178,19 @@ describe("jQuery matcher", function () {
       expect('click').not.toHaveBeenTriggeredOn($('#clickme'))
       expect('click').not.toHaveBeenTriggeredOn('#clickme')
       expect(spyEvents['#clickme']).not.toHaveBeenTriggered()
+    })
+
+    it('should pass if the event call count is incremented', function () {
+      expect(spyEvents['#clickme'].calls.any()).toEqual(false);
+      expect(spyEvents['#clickme'].calls.count()).toEqual(0);
+      $('#clickme').click()
+      expect(spyEvents['#clickme']).toHaveBeenTriggered()
+      expect(spyEvents['#clickme'].calls.count()).toEqual(1);
+      expect(spyEvents['#clickme'].calls.any()).toEqual(true);
+      $('#clickme').click()
+      $('#clickme').click()
+      expect(spyEvents['#clickme'].calls.count()).toEqual(3);
+      expect(spyEvents['#clickme'].calls.any()).toEqual(true);
     })
   })
 
