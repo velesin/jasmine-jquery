@@ -1,4 +1,9 @@
 
+2.1.0 / 2015-02-16
+==================
+
+ * Added the call count functions found in jasmine
+
 2.0.7 / 2015-02-07
 ==================
 
