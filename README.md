@@ -46,6 +46,8 @@ jasmine-jquery provides the following custom matchers (in alphabetical order):
   - e.g. `expect($('<option selected="selected"></option>')).toBeSelected()`
 - `toBeVisible()`
   - Elements are considered visible if they consume space in the document. Visible elements have a width or height that is greater than zero.
+- `toContain(string)`
+  - e.g. `expect($('<div><span class="some-class"></span></div>')).toContain('some-class')`
 - `toContainElement(jQuerySelector)`
   - e.g. `expect($('<div><span class="some-class"></span></div>')).toContainElement('span.some-class')`
 - `toContainHtml(string)`
