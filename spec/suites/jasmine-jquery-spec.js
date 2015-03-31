@@ -425,10 +425,10 @@ describe("jasmine.Fixtures using real AJAX call", function () {
       expect($("#anchor_01").length).toBe(1)
     })
   })
-  
+
   describe("When the fixture contains a HTML 5 style checked checkbox", function () {
 	var fixtureUrl = "fixture_with_checkbox_with_checked.html"
-	
+
 	it("Then the fixture is loaded successfully", function () {
 	  jasmine.getFixtures().load(fixtureUrl)
 	  expect('#' + jasmine.getFixtures().containerId).toContainElement('#checked-box')
@@ -465,6 +465,19 @@ describe("jQuery matcher", function () {
       expect(doc).toHaveClass(className)
       doc.removeClass(className)
       expect(doc).not.toHaveClass(className)
+    })
+
+    it("should pass negated for multiple elements", function () {
+        setFixtures($('<div class="some-class" /> <div class="some-class" /> <div class="some-another-class" />'))
+        var divs = $('#jasmine-fixtures div')
+        expect(divs).not.toHaveClass('some-class');
+    })
+
+    it("should pass only if all elements have class", function () {
+        setFixtures($('<div class="some-class" /> <div class="some-class" /> <div class="some-another-class" />'))
+        var divs = $('#jasmine-fixtures div')
+        expect(divs.slice(0, 1)).toHaveClass('some-class')
+        expect(divs.eq(2)).not.toHaveClass('some-class')
     })
   })
 
