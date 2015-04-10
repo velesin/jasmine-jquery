@@ -1,7 +1,7 @@
 # jasmine-jquery [![Build Status](https://travis-ci.org/velesin/jasmine-jquery.png)](https://travis-ci.org/velesin/jasmine-jquery)
 
 
-jasmine-jquery provides two extensions for the [Jasmine](http://pivotal.github.com/jasmine/) JavaScript Testing Framework:
+jasmine-jquery provides two extensions for the [Jasmine](http://jasmine.github.io/) JavaScript Testing Framework:
 
 - a set of custom matchers for jQuery framework
 - an API for handling HTML, CSS, and JSON fixtures in your specs
@@ -10,7 +10,7 @@ jasmine-jquery provides two extensions for the [Jasmine](http://pivotal.github.c
 
 Choose one of the following options:
 
-- Simply download _jasmine-jquery.js_ from [here](https://raw.github.com/velesin/jasmine-jquery/master/lib/jasmine-jquery.js) and include it in your Jasmine's test runner file (or add it to _jasmine.yml_ file if you're using Ruby with [jasmine-gem](http://github.com/pivotal/jasmine-gem)). Remember to also include the jQuery library as jasmine-jquery relies on it.
+- Simply download _jasmine-jquery.js_ from [here](https://raw.github.com/velesin/jasmine-jquery/master/lib/jasmine-jquery.js) and include it in your Jasmine's test runner file (or add it to _jasmine.yml_ file if you're using Ruby with [jasmine-gem](http://github.com/jasmine/jasmine-gem)). Remember to also include the jQuery library as jasmine-jquery relies on it.
 - Using bower by running ```bower install jasmine-jquery --save```
 - For Ruby on Rails, use this [gem](https://github.com/travisjeffery/jasmine-jquery-rails) or I recommend to comply with the standard RSpec and Jasmine frameworks dir structure and keep your tests in `spec/javascripts/` dir. I put jasmine-jquery (and other libraries like jasmine-ajax) into `spec/javascripts/helpers` dir (so they are automatically loaded) and fixtures into `spec/javascripts/fixtures` dir.
 
@@ -352,7 +352,7 @@ Under Windows 7, you have to launch `C:\Users\[UserName]\AppData\Local\Google\Ch
 
 ## Mocking with jasmine-ajax
 
-[jasmine-ajax](https://github.com/pivotal/jasmine-ajax) library doesn't let user to manually start / stop XMLHttpRequest mocking, but instead it overrides XMLHttpRequest automatically when loaded. This breaks jasmine-jquery fixtures as fixture loading mechanism uses jQuery.ajax, that stops to function the very moment jasmine-ajax is loaded. A workaround for this may be to invoke jasmine-jquery `preloadFixtures` function (specifying all required fixtures) before jasmine-ajax is loaded. This way subsequent calls to `loadFixtures` or `readFixtures` methods will get fixtures content from cache, without need to use jQuery.ajax and thus will work correctly even after jasmine-ajax is loaded.
+[jasmine-ajax](https://github.com/jasmine/jasmine-ajax) library doesn't let user to manually start / stop XMLHttpRequest mocking, but instead it overrides XMLHttpRequest automatically when loaded. This breaks jasmine-jquery fixtures as fixture loading mechanism uses jQuery.ajax, that stops to function the very moment jasmine-ajax is loaded. A workaround for this may be to invoke jasmine-jquery `preloadFixtures` function (specifying all required fixtures) before jasmine-ajax is loaded. This way subsequent calls to `loadFixtures` or `readFixtures` methods will get fixtures content from cache, without need to use jQuery.ajax and thus will work correctly even after jasmine-ajax is loaded.
 
 ## Testing with Javascript Test Driver
 
