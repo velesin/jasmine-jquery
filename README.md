@@ -1,10 +1,11 @@
 # jasmine-jquery [![Build Status](https://travis-ci.org/velesin/jasmine-jquery.png)](https://travis-ci.org/velesin/jasmine-jquery)
 
 
-jasmine-jquery provides two extensions for the [Jasmine](http://jasmine.github.io/) JavaScript Testing Framework:
+jasmine-jquery provides three extensions for the [Jasmine](http://jasmine.github.io/) JavaScript Testing Framework:
 
 - a set of custom matchers for jQuery framework
 - an API for handling HTML, CSS, and JSON fixtures in your specs
+- the function `$expect(selector)`, which is a simple shortcut for `expect( $( selector )  )`.
 
 ## Installation
 
