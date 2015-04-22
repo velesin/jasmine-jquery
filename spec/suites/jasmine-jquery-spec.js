@@ -425,14 +425,14 @@ describe("jasmine.Fixtures using real AJAX call", function () {
       expect($("#anchor_01").length).toBe(1)
     })
   })
-  
+
   describe("When the fixture contains a HTML 5 style checked checkbox", function () {
-	var fixtureUrl = "fixture_with_checkbox_with_checked.html"
-	
-	it("Then the fixture is loaded successfully", function () {
-	  jasmine.getFixtures().load(fixtureUrl)
-	  expect('#' + jasmine.getFixtures().containerId).toContainElement('#checked-box')
-	})
+    var fixtureUrl = "fixture_with_checkbox_with_checked.html"
+
+    it("Then the fixture is loaded successfully", function () {
+      jasmine.getFixtures().load(fixtureUrl)
+      expect('#' + jasmine.getFixtures().containerId).toContainElement('#checked-box')
+    })
   })
 })
 
@@ -511,40 +511,40 @@ describe("jQuery matcher", function () {
   })
 
   describe("toHaveProp", function () {
-      var propertyName = 'prop1'
-      var propertyValue = 'prop1 value'
-      var wrongPropertyName = 'wrongName'
-      var wrongPropertyValue = 'wrong value'
+    var propertyName = 'prop1'
+    var propertyValue = 'prop1 value'
+    var wrongPropertyName = 'wrongName'
+    var wrongPropertyValue = 'wrong value'
 
-      beforeEach(function () {
-        setFixtures(sandbox())
-        var element = $('#sandbox')[0]
-        element[propertyName] = propertyValue
+    beforeEach(function () {
+      setFixtures(sandbox())
+      var element = $('#sandbox')[0]
+      element[propertyName] = propertyValue
+    })
+
+    describe("when only property name is provided", function () {
+      it("should pass if element has matching property", function () {
+        expect($('#sandbox')).toHaveProp(propertyName)
       })
 
-      describe("when only property name is provided", function () {
-        it("should pass if element has matching property", function () {
-          expect($('#sandbox')).toHaveProp(propertyName)
-        })
+      it("should pass negated if element has no matching property", function () {
+        expect($('#sandbox')).not.toHaveProp(wrongPropertyName)
+      })
+    })
 
-        it("should pass negated if element has no matching property", function () {
-          expect($('#sandbox')).not.toHaveProp(wrongPropertyName)
-        })
+    describe("when both property name and value are provided", function () {
+      it("should pass if element has matching property with matching value", function () {
+        expect($('#sandbox')).toHaveProp(propertyName, propertyValue)
       })
 
-      describe("when both property name and value are provided", function () {
-        it("should pass if element has matching property with matching value", function () {
-          expect($('#sandbox')).toHaveProp(propertyName, propertyValue)
-        })
-
-        it("should pass negated if element has matching property but with wrong value", function () {
-          expect($('#sandbox')).not.toHaveProp(propertyName, wrongPropertyValue)
-        })
-
-        it("should pass negated if element has no matching property", function () {
-          expect($('#sandbox')).not.toHaveProp(wrongPropertyName, propertyValue)
-        })
+      it("should pass negated if element has matching property but with wrong value", function () {
+        expect($('#sandbox')).not.toHaveProp(propertyName, wrongPropertyValue)
       })
+
+      it("should pass negated if element has no matching property", function () {
+        expect($('#sandbox')).not.toHaveProp(wrongPropertyName, propertyValue)
+      })
+    })
   })
 
   describe("toHaveCss", function (){
@@ -576,7 +576,21 @@ describe("jQuery matcher", function () {
       $("#sandbox").css("display", "none");
       expect($("#sandbox")).toHaveCss({height: 'auto', 'margin-left': "auto", display: "none"});
     })
-  })
+
+    it("should pass if css property is matching whole number", function () {
+      $("#sandbox").css("opacity", "1");
+      expect($("#sandbox")).toHaveCss({opacity:"1"});
+    });
+
+    it("should pass if css property is matching decimal number", function () {
+      $("#sandbox").css("opacity", "0.3");
+      expect($("#sandbox")).toHaveCss({opacity:"0.3"});
+    });
+    it("should fail if css property is not matching decimal number", function () {
+      $("#sandbox").css("opacity", "0.4");
+      expect($("#sandbox")).not.toHaveCss({opacity:"0.3"});
+    });
+  });
 
   describe("toHaveId", function () {
     beforeEach(function () {
@@ -1382,11 +1396,11 @@ describe("jQuery matcher", function () {
     })
 
     it('should not fail when actual has no matches', function (){
-        expect($('#notreal')).not.toHandle('click')
+      expect($('#notreal')).not.toHandle('click')
     })
 
     it('should not fail when actual is null', function (){
-        expect(null).not.toHandle('click')
+      expect(null).not.toHandle('click')
     })
 
   })
