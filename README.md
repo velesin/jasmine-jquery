@@ -96,6 +96,9 @@ jasmine-jquery provides the following custom matchers (in alphabetical order):
 - `toHaveValue(value)`
   - only for elements on which `val` can be called (`input`, `textarea`, etc)
   - e.g. `expect($('<input type="text" value="some text"/>')).toHaveValue('some text')`
+- `toBeDOMNodeOfType(string)`
+  - Checks to see if a DOM element is of a certain type
+  - e.g. `expect($('<input type="text" />]').toBeDOMNodeOfType('text')`
 
 The same as with standard Jasmine matchers, all of the above custom matchers may be inverted by using `.not` prefix, e.g.:
 
