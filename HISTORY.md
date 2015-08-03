@@ -1,6 +1,37 @@
+
+2.1.0 / 2015-02-16
+==================
+
+ * Added the call count functions found in jasmine
+
+2.0.7 / 2015-02-07
+==================
+
+ * Improved installation advices
+ * Adding test for nulls Correcting indentation
+ * Fix order of arguments to util.equals in wasTriggeredWith.
+ * scriptSrc undefined in loadFixtureIntoCache_
+ * Removed chutzpah.json as requested
+ * Fixed bug with HTML5 style booleans causing parsererror
+ * Added test and improved check
+ * Adding support for when actual is null
+
+2.0.6 / 2015-01-20
+==================
+
+ * Remove debugger
+
 # History
 
 This is an overview and may be incomplete. https://github.com/velesin/jasmine-jquery/commits/master is where to see everything.
+
+## v2.0.5 (2014-06-07)
+
+  - fix: `toHaveText` to match text as in, as well as trimming (#163)
+
+## v2.0.4 (2014-06-07)
+
+  - fix: references to `jQuery` (#190)
 
 ## v2.0.3 (2014-02-49)
 
