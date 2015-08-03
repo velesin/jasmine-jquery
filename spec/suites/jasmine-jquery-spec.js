@@ -1850,17 +1850,18 @@ xdescribe("failing matchers", function () {
     it("should have error message for toHaveAttr when element not found", function () {
       $('#sandbox').append($('<div></div>'))
       expect($('#sandbox span')).toHaveAttr('class', 'notexisting')
-      //Error: Expected to find attribute "class" on selector "#sandbox span", but no element found
+      //Error: Expected attribute "class" on selector "#sandbox span", but no element found
     });
     it("should have error message for toHaveAttr if value does not exist", function () {
       $('#sandbox').append($('<div id></div>'))
       expect($('#sandbox div')).toHaveAttr('readonly', 'notexisting')
-      //Error: Expected to find attribute "readonly" on "#sandbox div"
+      //Error: Expected attribute "readonly" on selector "#sandbox div", but the attribute wasn't defined
     });
     it("should have error message for toHaveAttr if value is incorrect", function () {
       $('#sandbox').append($('<div id="actual"></div>'))
       expect($('#sandbox div')).toHaveAttr('id', 'notexisting')
-      //Error: Expected attribute value "notexisting" but got "actual"
+      //Error: Expected attribute "readonly" on selector "#sandbox div" to have the value: 'notexisting', but instead
+      //       it was: 'actual
     });
   });
 });
