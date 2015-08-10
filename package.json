@@ -6,6 +6,10 @@
     "jasmine",
     "jquery"
   ],
+  "main": "lib/jasmine-jquery.js",
+  "files": [
+    "lib/"
+  ],
   "homepage": "http://github.com/velesin/jasmine-jquery",
   "author": {
     "name": "Travis Jeffery",
