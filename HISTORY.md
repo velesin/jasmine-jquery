@@ -1,4 +1,19 @@
 
+2.1.1 / 2015-09-24
+==================
+
+  * Merge pull request #261 from just-boris/master
+  * add CommonJS module definition
+  * Merge pull request #257 from SimenB/package.json
+  * Add main field to package.json
+  * Merge pull request #254 from kkirsche/patch-1
+  * Remove moot `version` property from bower.json
+  * Fix version (close #253)
+  * Merge pull request #234 from sharifmamun/jasmine-jquery-readme-patch-1
+  * Merge pull request #240 from garrypolley/patch-2
+  * fix jasmine links for repositories and main site
+  * Updated the ReadMe file with toContain description
+
 2.1.0 / 2015-02-16
 ==================
 
