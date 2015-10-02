@@ -576,6 +576,30 @@ describe("jQuery matcher", function () {
       $("#sandbox").css("display", "none");
       expect($("#sandbox")).toHaveCss({height: 'auto', 'margin-left': "auto", display: "none"});
     })
+
+    it("should pass for string properties with quote characters (double quotes)", function() {
+      var fontFace = '"Courier New", monospace'; 
+      $("#sandbox").css("font-family", fontFace);
+      expect($("#sandbox")).toHaveCss({'font-family': fontFace});
+    })
+    
+    it("should pass for string properties with quote characters (single quotes)", function() {
+      var fontFace = "'Courier New', monospace";
+      $("#sandbox").css("font-family", fontFace);
+      expect($("#sandbox")).toHaveCss({'font-family': fontFace});
+    })
+
+    it("should pass for string and color properties (no quotes)", function() {
+      var fontFace = "Courier New, monospace";
+      $("#sandbox").css("font-family", fontFace);
+      expect($("#sandbox")).toHaveCss({'font-family': fontFace});
+    });
+    
+    it("should pass for string properties with no space", function() {
+      var fontFace = '"Courier New",monospace';
+      $("#sandbox").css("font-family", fontFace);
+      expect($("#sandbox")).toHaveCss({'font-family': fontFace});
+    })
   })
 
   describe("toHaveId", function () {
