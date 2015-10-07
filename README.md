@@ -115,7 +115,12 @@ Inside your test:
     $('#my-fixture').myTestedPlugin()
     expect($('#my-fixture')).to...
 
-By default, fixtures are loaded from `spec/javascripts/fixtures`. You can configure this path: `jasmine.getFixtures().fixturesPath = 'my/new/path';`.
+By default, fixtures are loaded from `spec/javascripts/fixtures`. 
+You can configure this path: `jasmine.getFixtures().fixturesPath = 'my/new/path';`.
+
+> _Note:_
+> If you are running your test with **Karma**, remeber that your files are served from a `base/` directory,
+> so your path should be configured to: `jasmine.getFixtures().fixturesPath = 'base/my/new/path';`.
 
 Your fixture is being loaded into the `<div id="jasmine-fixtures"></div>` container that is automatically added to the DOM by the Fixture module (If you _REALLY_ must change the id of this container, try: `jasmine.getFixtures().containerId = 'my-new-id';` in your test runner). To make tests fully independent, fixtures container is automatically cleaned-up between tests, so you don't have to worry about left-overs from fixtures loaded in preceeding test. Also, fixtures are internally cached by the Fixture module, so you can load the same fixture file in several tests without penalty to your test suite's speed.
 
