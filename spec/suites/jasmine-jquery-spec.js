@@ -1470,11 +1470,14 @@ describe("jQuery matcher", function () {
       expect($('#clickme').get(0)).not.toHandleWith("click.namespaced", aDifferentHandler)
     })
 
-    it('should pass if the namespaced event is not bound at all', function () {
+    it('should fail if there is no event bound at all', function () {
       var handler = function (){}
+      expect($('#clickme')).not.toHandleWith('click', handler)
+      expect($('#clickme')).not.toHandleWith('click.namespaced', handler)
+    })
 
+    it('should pass if the namespaced event is not bound at all', function () {
       expect($('#clickme')).not.toHandle("click.namespaced")
-      expect($('#clickme')).not.toHandleWith("click.namespaced", handler)
       expect($('#clickme').get(0)).not.toHandle("click.namespaced")
     })
 
