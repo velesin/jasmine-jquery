@@ -66,15 +66,15 @@ jasmine-jquery provides the following custom matchers (in alphabetical order):
 - `toHaveAttr(attributeName, attributeValue)`
   - attribute value is optional, if omitted it will check only if attribute exists
 - `toHaveBeenTriggeredOn(selector)`
-  - if event has been triggered on `selector` (see "Event Spies", below)
+  - if event has been triggered on `selector` (see "[Event Spies](#event-spies)", below)
 - `toHaveBeenTriggered()`
-  - if event has been triggered on `selector` (see "Event Spies", below)
+  - if event has been triggered on `selector` (see "[Event Spies](#event-spies)", below)
 - `toHaveBeenTriggeredOnAndWith(selector, extraParameters)`
   - if event has been triggered on `selector` and with `extraParameters`
 - `toHaveBeenPreventedOn(selector)`
-  - if event has been prevented on `selector` (see "Event Spies", below)
+  - if event has been prevented on `selector` (see "[Event Spies](#event-spies)", below)
 - `toHaveBeenPrevented()`
-  - if event has been prevented on `selector` (see "Event Spies", below)
+  - if event has been prevented on `selector` (see "[Event Spies](#event-spies)", below)
 - `toHaveClass(className)`
   - e.g. `expect($('<div class="some-class"></div>')).toHaveClass("some-class")`
 - `toHaveCss(css)`
@@ -115,7 +115,7 @@ Inside your test:
     $('#my-fixture').myTestedPlugin()
     expect($('#my-fixture')).to...
 
-By default, fixtures are loaded from `spec/javascripts/fixtures`. 
+By default, fixtures are loaded from `spec/javascripts/fixtures`.
 You can configure this path: `jasmine.getFixtures().fixturesPath = 'my/new/path';`.
 
 > _Note:_
