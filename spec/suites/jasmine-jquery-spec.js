@@ -547,6 +547,28 @@ describe("jQuery matcher", function () {
       })
   })
 
+  describe("toHaveTagName", function () {
+    var tagName = 'div'
+    var mixedCaseTagName = 'DiV'
+    var wrongTagName = 'h1'
+
+    it("should pass when class found", function () {
+      setFixtures(sandbox())
+      expect($('#sandbox')).toHaveTagName(tagName);
+    })
+
+    it("should be case-insensitive", function () {
+      setFixtures(sandbox())
+      expect($('#sandbox')).toHaveTagName(mixedCaseTagName);
+    })
+
+    it("should pass negated when class not found", function () {
+      setFixtures(sandbox())
+      expect($('#sandbox')).not.toHaveTagName(wrongTagName)
+      expect($('#sandbox').get(0)).not.toHaveTagName(wrongTagName)
+    })
+  })
+
   describe("toHaveCss", function (){
     beforeEach(function (){
       setFixtures(sandbox())

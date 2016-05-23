@@ -90,6 +90,8 @@ jasmine-jquery provides the following custom matchers (in alphabetical order):
   - e.g. `expect($('ul > li')).toHaveLength(3)`
 - `toHaveProp(propertyName, propertyValue)`
   - property value is optional, if omitted it will check only if property exists
+- `toHaveTagName(tagName)`
+  - e.g. `expect($('<div></div>')).toHaveTagName('div')`
 - `toHaveText(string)`
   - accepts a String or regular expression
   - e.g. `expect($('<div>some text</div>')).toHaveText('some text')`
