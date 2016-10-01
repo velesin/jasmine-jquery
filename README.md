@@ -99,7 +99,9 @@ jasmine-jquery provides the following custom matchers (in alphabetical order):
 
 The same as with standard Jasmine matchers, all of the above custom matchers may be inverted by using `.not` prefix, e.g.:
 
-    expect($('<div>some text</div>')).not.toHaveText(/other/)
+```js
+expect($('<div>some text</div>')).not.toHaveText(/other/)
+```
 
 ## HTML Fixtures
 
@@ -107,13 +109,17 @@ The Fixture module of jasmine-jquery allows you to load HTML content to be used 
 
 In _myfixture.html_ file:
 
-    <div id="my-fixture">some complex content here</div>
+```html
+<div id="my-fixture">some complex content here</div>
+```
 
 Inside your test:
 
-    loadFixtures('myfixture.html')
-    $('#my-fixture').myTestedPlugin()
-    expect($('#my-fixture')).to...
+```js
+loadFixtures('myfixture.html')
+$('#my-fixture').myTestedPlugin()
+expect($('#my-fixture')).to...
+```
 
 By default, fixtures are loaded from `spec/javascripts/fixtures`.
 You can configure this path: `jasmine.getFixtures().fixturesPath = 'my/new/path';`.
@@ -126,11 +132,15 @@ Your fixture is being loaded into the `<div id="jasmine-fixtures"></div>` contai
 
 To invoke fixture related methods, obtain Fixtures singleton through a factory and invoke a method on it:
 
-    jasmine.getFixtures().load(...)
+```js
+jasmine.getFixtures().load(...)
+```
 
 There are also global short cut functions available for the most used methods, so the above example can be rewritten to just:
 
-    loadFixtures(...)
+```js
+loadFixtures(...)
+```
 
 Several methods for loading fixtures are provided:
 
@@ -155,7 +165,7 @@ All of above methods have matching global short cuts:
 - `setFixtures(html)`
 - `appendSetFixtures(html)`
 
-``` javascript
+```js
 var fixture = setFixtures('<div class="post">foo</div>')
 var post = fixture.find('.post')
 ```
@@ -166,29 +176,39 @@ Also, a helper method for creating HTML elements for your tests is provided:
 
 It creates an empty DIV element with a default id="sandbox". If a hash of attributes is provided, they will be set for this DIV tag. If a hash of attributes contains id attribute it will override the default value. Custom attributes can also be set. So e.g.:
 
-    sandbox()
+```js
+sandbox()
+```
 
 Will return:
 
-    <div id="sandbox"></div>
+```js
+<div id="sandbox"></div>
+```
 
 And:
 
-    sandbox({
-      id: 'my-id',
-      class: 'my-class',
-      myattr: 'my-attr'
-    })
+```js
+sandbox({
+  id: 'my-id',
+  class: 'my-class',
+  myattr: 'my-attr'
+})
+```
 
 Will return:
 
-    <div id="my-id" class="my-class" myattr="my-attr"></div>
+```html
+<div id="my-id" class="my-class" myattr="my-attr"></div>
+```
 
 Sandbox method is useful if you want to quickly create simple fixtures in your tests without polluting them with HTML strings:
 
-    setFixtures(sandbox({class: 'my-class'}))
-    $('#sandbox').myTestedClassRemoverPlugin()
-    expect($('#sandbox')).not.toHaveClass('my-class')
+```js
+setFixtures(sandbox({class: 'my-class'}))
+$('#sandbox').myTestedClassRemoverPlugin()
+expect($('#sandbox')).not.toHaveClass('my-class')
+```
 
 This method also has a global short cut available:
 
@@ -209,13 +229,17 @@ The StyleFixtures module is pretty much like the Fixtures module, but it allows 
 
 In _mycssfixture.css_ file:
 
-    .elem { position: absolute }
+```css
+.elem { position: absolute }
+```
 
 Inside your test:
 
-    loadStyleFixtures('mycssfixture.css')
-    $('#my-fixture').myTestedPlugin()
-    expect($('#my-fixture .elem')).toHaveCss({left: "300px"})
+```js
+loadStyleFixtures('mycssfixture.css')
+$('#my-fixture').myTestedPlugin()
+expect($('#my-fixture .elem')).toHaveCss({left: "300px"})
+```
 
 Notice that if you haven't applied the `position: absolute` rule to the `.elem` and try to test its left position in some browsers (e.g. GoogleChrome) you will allways get the value `auto` even if your plugin did everything correct and applied positioning. So that's why you might need to load style fixtures. In Firefox though you will get the correct value even without the `position: absolute`.
 
@@ -225,11 +249,15 @@ Like in Fixtures module, StyleFixtures are also automatically cleaned-up between
 
 To invoke fixture related methods, obtain StyleFixtures singleton through a factory and invoke a method on it:
 
-    jasmine.getStyleFixtures().load(...)
+```js
+jasmine.getStyleFixtures().load(...)
+```
 
 There are also global short cut functions available for the most used methods, so the above example can be rewritten to just:
 
-    loadStyleFixtures(...)
+```js
+loadStyleFixtures(...)
+```
 
 Several methods for loading fixtures are provided:
 
@@ -266,16 +294,20 @@ The JSONFixtures modules allows you to load JSON data from file (instead of putt
 
 In _myjsonfixture.json_ file:
 
-    {"property1":"value1", "array1":[1,2,3]}
+```json
+{"property1":"value1", "array1":[1,2,3]}
+```
 
 Inside your test:
 
-    var data = getJSONFixture('myjsonfixture.json')
-    // or load and get the JSON two-step
-    var fixtures = loadJSONFixtures('myjsonfixture.json')
-    var data = fixtures['myjsonfixture.json']
+```js
+var data = getJSONFixture('myjsonfixture.json')
+// or load and get the JSON two-step
+var fixtures = loadJSONFixtures('myjsonfixture.json')
+var data = fixtures['myjsonfixture.json']
 
-    expect(myDataManipulator.processData(test_data)).to...)
+expect(myDataManipulator.processData(test_data)).to...)
+```
 
 By default, fixtures are loaded from `spec/javascripts/fixtures/json`. You can configure this path: `jasmine.getJSONFixtures().fixturesPath = 'my/new/path';`.
 
@@ -285,11 +317,15 @@ Because a deep copy of Javascript objects can be a little tricky, this module wi
 
 To invoke fixture related methods, obtain Fixtures singleton through a factory and invoke a method on it:
 
-    jasmine.getJSONFixtures().load(...)
+```js
+jasmine.getJSONFixtures().load(...)
+```
 
 There are also global short cut functions available for the most used methods, so the above example can be rewritten to just:
 
-    loadJSONFixtures(...)
+```js
+loadJSONFixtures(...)
+```
 
 Several methods for loading fixtures are provided:
 
@@ -310,37 +346,45 @@ Spying on jQuery events can be done with `spyOnEvent` and
 `expect(eventName).toHaveBeenTriggeredOn(selector)` or
 `expect(spyEvent).toHaveBeenTriggered()` . First, spy on the event:
 
-    var spyEvent = spyOnEvent('#some_element', 'click')
-    $('#some_element').click()
-    expect('click').toHaveBeenTriggeredOn('#some_element')
-    expect(spyEvent).toHaveBeenTriggered()
+```js
+var spyEvent = spyOnEvent('#some_element', 'click')
+$('#some_element').click()
+expect('click').toHaveBeenTriggeredOn('#some_element')
+expect(spyEvent).toHaveBeenTriggered()
+```
 
 You can reset spy events
 
-    var spyEvent = spyOnEvent('#some_element', 'click')
-    $('#some_element').click()
-    expect('click').toHaveBeenTriggeredOn('#some_element')
-    expect(spyEvent).toHaveBeenTriggered()
-    // reset spy events
-    spyEvent.reset()
-    expect('click').not.toHaveBeenTriggeredOn('#some_element')
-    expect(spyEvent).not.toHaveBeenTriggered()
+```js
+var spyEvent = spyOnEvent('#some_element', 'click')
+$('#some_element').click()
+expect('click').toHaveBeenTriggeredOn('#some_element')
+expect(spyEvent).toHaveBeenTriggered()
+// reset spy events
+spyEvent.reset()
+expect('click').not.toHaveBeenTriggeredOn('#some_element')
+expect(spyEvent).not.toHaveBeenTriggered()
+```
 
 You can similarly check if triggered event was prevented:
 
-    var spyEvent = spyOnEvent('#some_element', 'click')
-    $('#some_element').click(function (event){event.preventDefault();})
-    $('#some_element').click()
-    expect('click').toHaveBeenPreventedOn('#some_element')
-    expect(spyEvent).toHaveBeenPrevented()
+```js
+var spyEvent = spyOnEvent('#some_element', 'click')
+$('#some_element').click(function (event){event.preventDefault();})
+$('#some_element').click()
+expect('click').toHaveBeenPreventedOn('#some_element')
+expect(spyEvent).toHaveBeenPrevented()
+```
 
 You can also check if the triggered event was stopped:
 
-    var spyEvent = spyOnEvent('#some_element', 'click')
-    $('#some_element').click(function (event){event.stopPropagation();})
-    $('#some_element').click()
-    expect('click').toHaveBeenStoppedOn('#some_element')
-    expect(spyEvent).toHaveBeenStopped()
+```js
+var spyEvent = spyOnEvent('#some_element', 'click')
+$('#some_element').click(function (event){event.stopPropagation();})
+$('#some_element').click()
+expect('click').toHaveBeenStoppedOn('#some_element')
+expect(spyEvent).toHaveBeenStopped()
+```
 
 Much thanks to Luiz Fernando Ribeiro for his
 [article on Jasmine event spies](http://luizfar.wordpress.com/2011/01/10/testing-events-on-jquery-objects-with-jasmine/).
