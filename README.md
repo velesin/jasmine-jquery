@@ -12,7 +12,7 @@ Choose one of the following options:
 
 - Simply download _jasmine-jquery.js_ from [here](https://raw.github.com/velesin/jasmine-jquery/master/lib/jasmine-jquery.js) and include it in your Jasmine's test runner file (or add it to _jasmine.yml_ file if you're using Ruby with [jasmine-gem](http://github.com/jasmine/jasmine-gem)). Remember to also include the jQuery library as jasmine-jquery relies on it.
 - Using bower by running ```bower install jasmine-jquery --save```
-- For Ruby on Rails, use this [gem](https://github.com/travisjeffery/jasmine-jquery-rails) or I recommend to comply with the standard RSpec and Jasmine frameworks dir structure and keep your tests in `spec/javascripts/` dir. I put jasmine-jquery (and other libraries like jasmine-ajax) into `spec/javascripts/helpers` dir (so they are automatically loaded) and fixtures into `spec/javascripts/fixtures` dir.
+- For Ruby on Rails, use this [gem](https://github.com/travisjeffery/jasmine-jquery-rails) or I recommend complying with the standard RSpec and Jasmine frameworks dir structure and keep your tests in `spec/javascripts/` dir. I put jasmine-jquery (and other libraries like jasmine-ajax) into `spec/javascripts/helpers` dir (so they are automatically loaded) and fixtures into `spec/javascripts/fixtures` dir.
 
 
 ## jQuery matchers
@@ -119,7 +119,7 @@ By default, fixtures are loaded from `spec/javascripts/fixtures`.
 You can configure this path: `jasmine.getFixtures().fixturesPath = 'my/new/path';`.
 
 > _Note:_
-> If you are running your test with **Karma**, remeber that your files are served from a `base/` directory,
+> If you are running your test with **Karma**, remember that your files are served from a `base/` directory,
 > so your path should be configured to: `jasmine.getFixtures().fixturesPath = 'base/my/new/path';`.
 
 Your fixture is being loaded into the `<div id="jasmine-fixtures"></div>` container that is automatically added to the DOM by the Fixture module (If you _REALLY_ must change the id of this container, try: `jasmine.getFixtures().containerId = 'my-new-id';` in your test runner). To make tests fully independent, fixtures container is automatically cleaned-up between tests, so you don't have to worry about left-overs from fixtures loaded in preceeding test. Also, fixtures are internally cached by the Fixture module, so you can load the same fixture file in several tests without penalty to your test suite's speed.
@@ -128,7 +128,7 @@ To invoke fixture related methods, obtain Fixtures singleton through a factory a
 
     jasmine.getFixtures().load(...)
 
-There are also global short cut functions available for the most used methods, so the above example can be rewritten to just:
+There are also global shortcut functions available for the most used methods, so the above example can be rewritten to just:
 
     loadFixtures(...)
 
@@ -147,7 +147,7 @@ Several methods for loading fixtures are provided:
 - `preload(fixtureUrl[, fixtureUrl, ...])`
   - Pre-loads fixture(s) from one or more files and stores them into cache, without returning them or appending them to the DOM. All subsequent calls to `load` or `read` methods will then get fixtures content from cache, without making any AJAX calls (unless cache is manually purged by using `clearCache` method). Pre-loading all fixtures before a test suite is run may be useful when working with libraries like jasmine-ajax that block or otherwise modify the inner workings of JS or jQuery AJAX calls.
 
-All of above methods have matching global short cuts:
+All of above methods have matching global shortcuts:
 
 - `loadFixtures(fixtureUrl[, fixtureUrl, ...])`
 - `appendLoadFixtures(fixtureUrl[, fixtureUrl, ...])`
@@ -190,7 +190,7 @@ Sandbox method is useful if you want to quickly create simple fixtures in your t
     $('#sandbox').myTestedClassRemoverPlugin()
     expect($('#sandbox')).not.toHaveClass('my-class')
 
-This method also has a global short cut available:
+This method also has a global shortcut available:
 
 - `sandbox([{attributeName: value[, attributeName: value, ...]}])`
 
@@ -201,7 +201,7 @@ Additionally, two clean up methods are provided:
 - `cleanUp()`
   - cleans-up fixtures container (this is done automatically between tests by Fixtures module, so there is no need to ever invoke this manually, unless you're testing a really fancy special case and need to clean-up fixtures in the middle of your test)
 
-These two methods do not have global short cut functions.
+These two methods do not have global shortcut functions.
 
 ## Style Fixtures
 
@@ -227,7 +227,7 @@ To invoke fixture related methods, obtain StyleFixtures singleton through a fact
 
     jasmine.getStyleFixtures().load(...)
 
-There are also global short cut functions available for the most used methods, so the above example can be rewritten to just:
+There are also global shortcut functions available for the most used methods, so the above example can be rewritten to just:
 
     loadStyleFixtures(...)
 
@@ -244,7 +244,7 @@ Several methods for loading fixtures are provided:
 - `preload(fixtureUrl[, fixtureUrl, ...])`
   - Pre-loads fixture(s) from one or more files and stores them into cache, without returning them or appending them to the DOM. All subsequent calls to `load` methods will then get fixtures content from cache, without making any AJAX calls (unless cache is manually purged by using `clearCache` method).
 
-All of above methods have matching global short cuts:
+All of above methods have matching global shortcuts:
 
 - `loadStyleFixtures(fixtureUrl[, fixtureUrl, ...])`
 - `appendLoadStyleFixtures(fixtureUrl[, fixtureUrl, ...])`
@@ -258,7 +258,7 @@ Additionally, two clean up methods are provided:
 - `cleanUp()`
   - cleans-up all existing style fixtures (this is done automatically between tests, so there is no need to ever invoke this manually, unless you're testing a really fancy special case and need to clean-up fixtures in the middle of your test)
 
-These two methods do not have global short cut functions.
+These two methods do not have global shortcut functions.
 
 ## JSON Fixtures
 
@@ -287,7 +287,7 @@ To invoke fixture related methods, obtain Fixtures singleton through a factory a
 
     jasmine.getJSONFixtures().load(...)
 
-There are also global short cut functions available for the most used methods, so the above example can be rewritten to just:
+There are also global shortcut functions available for the most used methods, so the above example can be rewritten to just:
 
     loadJSONFixtures(...)
 
@@ -296,7 +296,7 @@ Several methods for loading fixtures are provided:
 - `load(fixtureUrl[, fixtureUrl, ...])`
   - Loads fixture(s) from one or more files and automatically adds them to the fixture list.  This method returns the entire set of fixtures keyed by their filename.
 
-All of above methods have matching global short cuts:
+All of above methods have matching global shortcuts:
 
 - `loadJSONFixtures(fixtureUrl[, fixtureUrl, ...])`
 
@@ -342,7 +342,7 @@ You can also check if the triggered event was stopped:
     expect('click').toHaveBeenStoppedOn('#some_element')
     expect(spyEvent).toHaveBeenStopped()
 
-Much thanks to Luiz Fernando Ribeiro for his
+Many thanks to Luiz Fernando Ribeiro for his
 [article on Jasmine event spies](http://luizfar.wordpress.com/2011/01/10/testing-events-on-jquery-objects-with-jasmine/).
 
 ## Dependencies
