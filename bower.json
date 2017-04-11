@@ -9,7 +9,7 @@
     "SpecRunner.html"
   ],
   "dependencies": {
-    "jasmine": ">=2",
+    "jasmine": ">=1.4",
     "jquery": ">=2"
   }
 }
