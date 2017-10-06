@@ -1,3 +1,10 @@
+
+# !!! IMPORTANT: WE NEED A NEW MAINTAINER !!!
+
+Neither me (the original lib author) nor Travis (the current lib maintainer) can maintain this library any longer as actively as the GREAT community around it deserves.
+
+So, we're looking for a new maintainer for this lib - if you're interested, ping me [on Twitter](https://twitter.com/velesin) or through a comment in [this GitHub issue](https://github.com/velesin/jasmine-jquery/issues/305).
+
 # jasmine-jquery [![Build Status](https://travis-ci.org/velesin/jasmine-jquery.png)](https://travis-ci.org/velesin/jasmine-jquery)
 
 
