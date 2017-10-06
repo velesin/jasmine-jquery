@@ -425,10 +425,10 @@ describe("jasmine.Fixtures using real AJAX call", function () {
       expect($("#anchor_01").length).toBe(1)
     })
   })
-  
+
   describe("When the fixture contains a HTML 5 style checked checkbox", function () {
 	var fixtureUrl = "fixture_with_checkbox_with_checked.html"
-	
+
 	it("Then the fixture is loaded successfully", function () {
 	  jasmine.getFixtures().load(fixtureUrl)
 	  expect('#' + jasmine.getFixtures().containerId).toContainElement('#checked-box')
@@ -578,11 +578,11 @@ describe("jQuery matcher", function () {
     })
 
     it("should pass for string properties with quote characters (double quotes)", function() {
-      var fontFace = '"Courier New", monospace'; 
+      var fontFace = '"Courier New", monospace';
       $("#sandbox").css("font-family", fontFace);
       expect($("#sandbox")).toHaveCss({'font-family': fontFace});
     })
-    
+
     it("should pass for string properties with quote characters (single quotes)", function() {
       var fontFace = "'Courier New', monospace";
       $("#sandbox").css("font-family", fontFace);
@@ -594,7 +594,7 @@ describe("jQuery matcher", function () {
       $("#sandbox").css("font-family", fontFace);
       expect($("#sandbox")).toHaveCss({'font-family': fontFace});
     });
-    
+
     it("should pass for string properties with no space", function() {
       var fontFace = '"Courier New",monospace';
       $("#sandbox").css("font-family", fontFace);
@@ -1470,6 +1470,12 @@ describe("jQuery matcher", function () {
       expect($('#clickme').get(0)).not.toHandleWith("click.namespaced", aDifferentHandler)
     })
 
+    it('should fail if there is no event bound at all', function () {
+      var handler = function (){}
+      expect($('#clickme')).not.toHandleWith('click', handler)
+      expect($('#clickme')).not.toHandleWith('click.namespaced', handler)
+    })
+
     it('should pass if the namespaced event is not bound at all', function () {
       expect($('#clickme')).not.toHandle("click.namespaced")
       expect($('#clickme').get(0)).not.toHandle("click.namespaced")
@@ -1495,7 +1501,6 @@ describe("jQuery matcher", function () {
     it('should not fail when actual is null', function (){
       expect(null).not.toHandleWith('click')
     })
-
   })
 })
 
