@@ -425,10 +425,10 @@ describe("jasmine.Fixtures using real AJAX call", function () {
       expect($("#anchor_01").length).toBe(1)
     })
   })
-  
+
   describe("When the fixture contains a HTML 5 style checked checkbox", function () {
 	var fixtureUrl = "fixture_with_checkbox_with_checked.html"
-	
+
 	it("Then the fixture is loaded successfully", function () {
 	  jasmine.getFixtures().load(fixtureUrl)
 	  expect('#' + jasmine.getFixtures().containerId).toContainElement('#checked-box')
@@ -1060,7 +1060,7 @@ describe("jQuery matcher", function () {
     beforeEach(function () {
       setFixtures(sandbox().html('<a id="clickme">Click Me</a> <a id="otherlink">Other Link</a>'))
       spyEvents['#clickme'] = spyOnEvent($('#clickme'), 'click')
-      spyOnEvent(document, 'click')
+      spyEvents[document] = spyOnEvent(document, 'click')
       spyOnEvent($('#otherlink'), 'click')
     })
 
@@ -1105,6 +1105,12 @@ describe("jQuery matcher", function () {
       $('#clickme').click()
       expect(spyEvents['#clickme'].calls.count()).toEqual(3);
       expect(spyEvents['#clickme'].calls.any()).toEqual(true);
+    })
+
+    it('should correctly track counts if the spy happened on document', function() {
+      expect(spyEvents[document].calls.count()).toEqual(0);
+      $(document).click()
+      expect(spyEvents[document].calls.count()).toEqual(1);
     })
   })
 
